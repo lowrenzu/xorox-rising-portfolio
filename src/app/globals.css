@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-teal-accent: #25d1f4;
+  --color-gold-accent: #f5b041;
+  
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+:root {
+  --background: #030406;
+  --foreground: #eef1f6;
+  --glass-bg: rgba(10, 15, 20, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Utilities for aesthetic design */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+  }
+  
+  .text-glow-teal {
+    text-shadow: 0 0 15px rgba(37, 209, 244, 0.5);
+  }
+  
+  .text-glow-gold {
+    text-shadow: 0 0 15px rgba(245, 176, 65, 0.5);
+  }
+  
+  .glitch-effect {
+    position: relative;
+    /* Basic glitch placeholder, will be animated by framer motion */
+  }
+}
+
+/* Universally hide all scrollbars as requested by user */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+

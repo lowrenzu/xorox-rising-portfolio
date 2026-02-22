@@ -1,0 +1,230 @@
+Ôû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 10 errors:
+./src/app/page.tsx
+Module not found: Can't resolve '@/components/CharacterGallery'
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx:10:40
+Module not found: Can't resolve '@/components/CharacterGallery'
+   8 |
+   9 | // Dynamic imports for below-the-fold sections to prioritize Hero video loading
+> 10 | const CharacterGallery = dynamic(() => import("@/components/CharacterGallery"), { ssr: false });
+     |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | const StorySection = dynamic(() => import("@/components/StorySection"), { ssr: false });
+  12 | const MediaLibrary = dynamic(() => import("@/components/MediaLibrary"), { ssr: false });
+  13 | const CreationSection = dynamic(() => import("@/components/CreationSection"), { ssr: false });
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx
+Module not found: Can't resolve '@/components/CreationSection'
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx:13:39
+Module not found: Can't resolve '@/components/CreationSection'
+  11 | const StorySection = dynamic(() => import("@/components/StorySection"), { ssr: false });
+  12 | const MediaLibrary = dynamic(() => import("@/components/MediaLibrary"), { ssr: false });
+> 13 | const CreationSection = dynamic(() => import("@/components/CreationSection"), { ssr: false });
+     |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  14 |
+  15 | // Cinematic smooth scroll ÔÇö easeInOutExpo
+  16 | function smoothScrollTo(targetY: number, duration = 1200) {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx:5:1
+Module not found: Can't resolve '@/components/Hero'
+  3 | import { useState, useEffect, useRef } from "react";
+  4 | import { motion } from "framer-motion";
+> 5 | import Hero from "@/components/Hero";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import Navbar from "@/components/Navbar";
+  7 | import dynamic from "next/dynamic";
+  8 |
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx
+Module not found: Can't resolve '@/components/MediaLibrary'
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx:12:36
+Module not found: Can't resolve '@/components/MediaLibrary'
+  10 | const CharacterGallery = dynamic(() => import("@/components/CharacterGallery"), { ssr: false });
+  11 | const StorySection = dynamic(() => import("@/components/StorySection"), { ssr: false });
+> 12 | const MediaLibrary = dynamic(() => import("@/components/MediaLibrary"), { ssr: false });
+     |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | const CreationSection = dynamic(() => import("@/components/CreationSection"), { ssr: false });
+  14 |
+  15 | // Cinematic smooth scroll ÔÇö easeInOutExpo
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx:6:1
+Module not found: Can't resolve '@/components/Navbar'
+  4 | import { motion } from "framer-motion";
+  5 | import Hero from "@/components/Hero";
+> 6 | import Navbar from "@/components/Navbar";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import dynamic from "next/dynamic";
+  8 |
+  9 | // Dynamic imports for below-the-fold sections to prioritize Hero video loading
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx
+Module not found: Can't resolve '@/components/StorySection'
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/app/page.tsx:11:36
+Module not found: Can't resolve '@/components/StorySection'
+   9 | // Dynamic imports for below-the-fold sections to prioritize Hero video loading
+  10 | const CharacterGallery = dynamic(() => import("@/components/CharacterGallery"), { ssr: false });
+> 11 | const StorySection = dynamic(() => import("@/components/StorySection"), { ssr: false });
+     |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 | const MediaLibrary = dynamic(() => import("@/components/MediaLibrary"), { ssr: false });
+  13 | const CreationSection = dynamic(() => import("@/components/CreationSection"), { ssr: false });
+  14 |
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/page.tsx:10:40)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/page.tsx:13:39)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/page.tsx:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/page.tsx:12:36)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/page.tsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/app/page.tsx:11:36)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
