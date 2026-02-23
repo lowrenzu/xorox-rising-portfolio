@@ -6,6 +6,7 @@ import { heroesData, type Character } from "@/data/filmData";
 import CharacterModal from "./CharacterModal";
 import { cn } from "@/lib/utils";
 import SectionHeader from "./SectionHeader";
+import { useSoundEngine } from "@/hooks/useSoundEngine";
 
 const categories = [
     { id: "tous", label: "Tous", color: "#25d1f4" }, // Teal Default
@@ -19,6 +20,14 @@ const categories = [
 export default function CharacterGallery() {
     const [activeCategory, setActiveCategory] = useState<string>("tous");
     const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
+    const { click, hover, modalOpen, modalClose } = useSoundEngine();
+
+    const openCharacter = (char: Character, themeColor: string) => {
+        click(); modalOpen();
+        setSelectedCharacter({ ...char, themeColor } as any);
+    };
+    const closeCharacter = () => { modalClose(); setSelectedCharacter(null); };
+    const changeCategory = (id: string) => { hover(); setActiveCategory(id); };
 
     const filteredCharacters = activeCategory === "tous"
         ? heroesData
@@ -49,7 +58,7 @@ export default function CharacterGallery() {
                         <React.Fragment key={cat.id}>
                             <motion.button
                                 key={cat.id}
-                                onClick={() => setActiveCategory(cat.id)}
+                                onClick={() => changeCategory(cat.id)}
                                 className="group flex items-center gap-2 px-3 py-2 cursor-pointer"
                                 aria-label={cat.label}
                                 whileHover={{ scale: 1.1 }}
@@ -108,7 +117,7 @@ export default function CharacterGallery() {
                                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                                 exit={{ opacity: 0, scale: 0.95, filter: "blur(5px)" }}
                                 transition={{ type: "tween", ease: "easeOut", duration: 0.4 }}
-                                onClick={() => setSelectedCharacter({ ...char, themeColor } as any)}
+                                onClick={() => openCharacter(char, themeColor)}
                                 onMouseEnter={(e) => {
                                     const video = e.currentTarget.querySelector('video');
                                     if (video) {
@@ -195,7 +204,7 @@ export default function CharacterGallery() {
 
             <CharacterModal
                 character={selectedCharacter}
-                onClose={() => setSelectedCharacter(null)}
+                onClose={closeCharacter}
             />
         </div>
     );

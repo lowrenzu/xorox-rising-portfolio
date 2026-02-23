@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import SoundToggle from "@/components/SoundToggle";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
       </head>
       <body className={`${outfit.variable} antialiased bg-background text-foreground`}>
         {children}
+        <SoundToggle />
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { storyData } from "@/data/filmData";
 import SectionHeader from "./SectionHeader";
+import { useSoundEngine } from "@/hooks/useSoundEngine";
 
 // Helper to assign a specific theme and icon to each act
 const getActTheme = (index: number) => {
@@ -24,8 +25,10 @@ const getActTheme = (index: number) => {
 export default function StorySection() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeModal, setActiveModal] = useState<number | null>(null);
+    const { click, hover, modalOpen, modalClose } = useSoundEngine();
 
-    const closeModal = () => setActiveModal(null);
+    const openModal = (i: number) => { click(); modalOpen(); setActiveModal(i); };
+    const closeModal = () => { modalClose(); setActiveModal(null); };
 
     return (
         <section ref={containerRef} id="story" className="relative min-h-screen py-8 flex flex-col justify-center overflow-hidden border-t border-glass-border bg-[#010203]">
@@ -130,7 +133,8 @@ export default function StorySection() {
                                     key={i}
                                     whileHover={{ scale: 1.02, y: -4 }}
                                     whileTap={{ scale: 0.98 }}
-                                    onClick={() => setActiveModal(i)}
+                                    onHoverStart={() => hover()}
+                                    onClick={() => openModal(i)}
                                     className={`relative flex flex-col w-full h-32 md:h-36 group cursor-pointer rounded-none overflow-hidden border border-white/5 bg-[#020304] hover:bg-[#030608] hover:border-[${color}]/[0.3] transition-all duration-500`}
                                 >
                                     {/* Geometric Corners */}

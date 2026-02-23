@@ -6,6 +6,7 @@ import { useState } from "react";
 import dynamic from 'next/dynamic';
 import { storyData } from "@/data/filmData";
 import SectionHeader from "./SectionHeader";
+import { useSoundEngine } from "@/hooks/useSoundEngine";
 
 const packFiles = [
     {
@@ -79,6 +80,12 @@ export default function CreationSection() {
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
     const [activeModal, setActiveModal] = useState<"images" | "videos" | "pack" | null>(null);
     const [selectedItem, setSelectedItem] = useState<any | null>(null);
+    const { click, hover, modalOpen, modalClose } = useSoundEngine();
+
+    const openModal = (type: "images" | "videos" | "pack") => { click(); modalOpen(); setActiveModal(type); };
+    const closeModal = () => { modalClose(); setActiveModal(null); };
+    const openItem = (item: any) => { click(); modalOpen(); setSelectedItem(item); };
+    const closeItem = () => { modalClose(); setSelectedItem(null); };
 
     const handleCopy = (text: string, index: number) => {
         navigator.clipboard.writeText(text);
@@ -92,7 +99,8 @@ export default function CreationSection() {
                 {items.map((item, i) => (
                     <motion.div
                         key={i}
-                        onClick={() => setSelectedItem({ ...item, themeColor, copyIndex: i + (themeColor === '#f5b041' ? 100 : themeColor === '#a855f7' ? 200 : 0) })}
+                        onClick={() => openItem({ ...item, themeColor, copyIndex: i + (themeColor === '#f5b041' ? 100 : themeColor === '#a855f7' ? 200 : 0) })}
+                        onHoverStart={() => hover()}
                         onMouseEnter={(e) => {
                             const video = e.currentTarget.querySelector('video');
                             if (video) video.play().catch(() => { });
@@ -216,7 +224,8 @@ export default function CreationSection() {
                     <motion.button
                         whileHover={{ scale: 1.02, y: -4 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => setActiveModal("images")}
+                        onHoverStart={() => hover()}
+                        onClick={() => openModal("images")}
                         className="glass-panel p-6 sm:p-8 rounded-none relative overflow-hidden group text-left border border-white/5 hover:border-teal-accent/30 transition-all duration-500 bg-[#020304] hover:bg-[#030608]"
                     >
                         {/* Corner Accents */}
@@ -266,7 +275,8 @@ export default function CreationSection() {
                     <motion.button
                         whileHover={{ scale: 1.02, y: -4 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => setActiveModal("videos")}
+                        onHoverStart={() => hover()}
+                        onClick={() => openModal("videos")}
                         className="glass-panel p-6 sm:p-8 rounded-none relative overflow-hidden group text-left border border-white/5 hover:border-gold-accent/30 transition-all duration-500 bg-[#020304] hover:bg-[#060402]"
                     >
                         {/* Corner Accents */}
@@ -316,7 +326,8 @@ export default function CreationSection() {
                     <motion.button
                         whileHover={{ scale: 1.02, y: -4 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => setActiveModal("pack")}
+                        onHoverStart={() => hover()}
+                        onClick={() => openModal("pack")}
                         className="glass-panel p-6 sm:p-8 rounded-none relative overflow-hidden group text-left border border-white/5 hover:border-[#a855f7]/30 transition-all duration-500 bg-[#020304] hover:bg-[#060205]"
                     >
                         {/* Corner Accents */}
@@ -371,7 +382,7 @@ export default function CreationSection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={() => setActiveModal(null)}
+                        onClick={() => closeModal()}
                         className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
                     >
                         {/* Global HUD Layer */}
@@ -387,7 +398,7 @@ export default function CreationSection() {
                         >
                             {/* Close button */}
                             <button
-                                onClick={() => setActiveModal(null)}
+                                onClick={() => closeModal()}
                                 className={`absolute top-6 right-6 text-white/20 transition-colors z-[110] p-2 ${activeModal === 'images' ? 'hover:text-teal-accent' : activeModal === 'videos' ? 'hover:text-gold-accent' : 'hover:text-[#a855f7]'}`}
                             >
                                 <X size={24} strokeWidth={1.5} />
@@ -474,11 +485,11 @@ export default function CreationSection() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-[120] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-pointer"
-                        onClick={() => setSelectedItem(null)}
+                        onClick={() => closeItem()}
                     >
                         <button
                             className="absolute top-6 right-6 text-white/50 hover:text-white z-[130] transition-colors p-2"
-                            onClick={() => setSelectedItem(null)}
+                            onClick={() => closeItem()}
                         >
                             <X size={32} />
                         </button>
