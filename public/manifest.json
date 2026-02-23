@@ -1,0 +1,16 @@
+{
+  "name": "XoroX Rising - L'Artefact de la Vérité",
+  "short_name": "XoroX Rising",
+  "description": "Court-métrage sci-fi captivant mêlant archéologie interdite et technologie alien",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030406",
+  "theme_color": "#25d1f4",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

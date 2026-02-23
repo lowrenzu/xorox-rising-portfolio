@@ -17,11 +17,12 @@ interface MediaItem {
 
 // Combine media and scenes for a richer dataset
 const allMedia: MediaItem[] = [
-    ...sceneBrowserData.map(s => ({ src: `/assets/Scenes_action/${s.media}`, type: s.type, isScene: true, title: s.title, desc: s.desc })),
+    ...sceneBrowserData.map(s => ({ src: `/assets/Scenes_action/${s.media.replace(/\.(png|jpg|jpeg)$/i, '.webp')}`, type: s.type, isScene: true, title: s.title, desc: s.desc })),
     ...mediaFiles.reduce((acc: MediaItem[], m) => {
         // Avoid duplicates if a media file is also a scene
+        const fileName = m.type === 'image' ? m.name.replace(/\.(png|jpg|jpeg)$/i, '.webp') : m.name;
         if (!sceneBrowserData.find(s => s.media === m.name)) {
-            acc.push({ src: `/assets/Scenes_action/${m.name}`, type: m.type, isScene: false, title: m.name.replace(/\.[^/.]+$/, "").replace(/_/g, ' ') });
+            acc.push({ src: `/assets/Scenes_action/${fileName}`, type: m.type, isScene: false, title: fileName.replace(/\.[^/.]+$/, "").replace(/_/g, ' ') });
         }
         return acc;
     }, [])

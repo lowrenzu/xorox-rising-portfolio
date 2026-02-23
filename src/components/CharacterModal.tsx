@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, PlayCircle, Activity, Database, Terminal } from "lucide-react";
+// Unused imports removed: Download, Shield, Cpu, ChevronRight
 import type { Character } from "@/data/filmData";
 
 export default function CharacterModal({
@@ -15,12 +16,10 @@ export default function CharacterModal({
     const [activeIndex, setActiveIndex] = useState(0);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    // Reset index when character changes (React best practice over useEffect)
-    const prevChar = useRef(character?.name);
-    if (character?.name !== prevChar.current) {
+    // Reset index when character changes
+    useEffect(() => {
         setActiveIndex(0);
-        prevChar.current = character?.name;
-    }
+    }, [character?.name]);
 
     const mediaList = useMemo(() => {
         if (!character) return [];
@@ -258,7 +257,7 @@ export default function CharacterModal({
                                 <div className="relative p-6 bg-white/[0.015] border border-white/5 rounded-sm group/essay">
                                     <div className="absolute top-0 left-0 w-[2px] h-6" style={{ backgroundColor: `${themeColor}66` }} />
                                     <blockquote className="text-base text-white/70 leading-relaxed italic font-light">
-                                        &quot;{character.inspiration}&quot;
+                                    &ldquo;{character.inspiration}&rdquo;
                                     </blockquote>
                                 </div>
                             </div>
@@ -266,7 +265,7 @@ export default function CharacterModal({
 
                         {/* Compact Footer */}
                         <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between opacity-20">
-                            <span className="text-[7px] font-mono tracking-widest uppercase">LEVEL: OMEGA-4 // TS: {new Date().toISOString().substring(11, 19)}</span>
+                            <span className="text-[7px] font-mono tracking-widest uppercase">LEVEL: OMEGA-4 // TS: CLASSIFIED</span>
                             <span className="text-[7px] font-mono tracking-[0.6em] uppercase" style={{ color: themeColor }}>STABLE</span>
                         </div>
                     </div>

@@ -1,13 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
-const backgroundVideos = [
+// Priority list for background videos - Optimized lazy loading
+// First 3 videos loaded immediately, rest loaded progressively
+const priorityVideos = [
     "/assets/hero_videos/creature3_optimized.webm",
     "/assets/hero_videos/bea_conspi.webm",
     "/assets/hero_videos/abtf_rue.webm",
+];
+
+const lazyLoadVideos = [
     "/assets/hero_videos/alexis_andre_cave.webm",
     "/assets/hero_videos/atalntis_flood.webm",
     "/assets/hero_videos/atlantis_blue_to_red.webm",
@@ -22,15 +27,18 @@ const backgroundVideos = [
     "/assets/hero_videos/tall_whites.webm"
 ];
 
+const backgroundVideos = [...priorityVideos, ...lazyLoadVideos];
+
 export default function Hero() {
     const [visibleLayer, setVisibleLayer] = useState<0 | 1>(0);
     const [videoIndices, setVideoIndices] = useState<[number, number | null]>([0, null]);
     const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+    const [videosPreloaded, setVideosPreloaded] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const videoRef0 = useRef<HTMLVideoElement>(null);
     const videoRef1 = useRef<HTMLVideoElement>(null);
 
-    // Stable random values to prevent React impure render warnings
+    // Stable random values for glitch effects
     const [glitchDelay1] = useState(() => Math.random() * 5 + 2);
     const [glitchDelay2] = useState(() => Math.random() * 8 + 3);
 
@@ -53,13 +61,29 @@ export default function Hero() {
 
     const handleCanPlay = (layer: 0 | 1) => {
         if (!isVideoLoaded) setIsVideoLoaded(true);
-        // Switch visibility to the new layer once it is ready
         if (layer !== visibleLayer && videoIndices[layer] !== null) {
             setVisibleLayer(layer);
         }
     };
 
-    // Use IntersectionObserver to play/pause video based on viewport visibility
+    // Progressive video preloading - load remaining videos after initial render
+    useEffect(() => {
+        if (!videosPreloaded && isVideoLoaded) {
+            // Wait 2 seconds after first video loads, then preload others
+            const timer = setTimeout(() => {
+                lazyLoadVideos.forEach((videoUrl) => {
+                    const link = document.createElement('link');
+                    link.rel = 'prefetch';
+                    link.as = 'video';
+                    link.href = videoUrl;
+                    document.head.appendChild(link);
+                });
+                setVideosPreloaded(true);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [isVideoLoaded, videosPreloaded]);
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -73,18 +97,16 @@ export default function Hero() {
                     }
                 });
             },
-            { threshold: 0.1 } // Trigger when at least 10% is visible
+            { threshold: 0.1 }
         );
 
         if (containerRef.current) observer.observe(containerRef.current);
 
         return () => observer.disconnect();
-    }, [videoIndices]); // Re-bind if the videos change
+    }, [videoIndices]);
 
     return (
         <section ref={containerRef} className="relative w-full h-screen overflow-hidden bg-black flex flex-col justify-end items-center pb-16">
-
-
 
             {/* Background Video Cover */}
             <motion.div
@@ -93,9 +115,6 @@ export default function Hero() {
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="absolute inset-0 z-0 bg-black"
             >
-                {/* L'attribut preload="auto" indique au navigateur de télécharger la vidéo au plus vite */}
-                {/* Suppression de "isMounted" : la balise existe dès le HTML serveur */}
-                {/* VIDEO LAYER 0 */}
                 <video
                     ref={videoRef0}
                     src={videoIndices[0] !== null ? backgroundVideos[videoIndices[0]] : undefined}
@@ -108,7 +127,6 @@ export default function Hero() {
                     onEnded={() => handleVideoEnd(0)}
                 />
 
-                {/* VIDEO LAYER 1 */}
                 <video
                     ref={videoRef1}
                     src={videoIndices[1] !== null ? backgroundVideos[videoIndices[1]] : undefined}
@@ -116,12 +134,11 @@ export default function Hero() {
                     autoPlay
                     muted
                     playsInline
-                    preload="auto"
+                    preload="metadata"
                     onLoadedData={() => handleCanPlay(1)}
                     onEnded={() => handleVideoEnd(1)}
                 />
 
-                {/* Instant Poster Fallback using Next.js Image optimization */}
                 <Image
                     src="/assets/hero_videos/hero_meditation_fallback.png"
                     alt="Background initialisation"
@@ -130,12 +147,11 @@ export default function Hero() {
                     sizes="100vw"
                     className={`object-cover object-center z-0 transition-opacity duration-[1500ms] ${isVideoLoaded ? 'opacity-0' : 'opacity-60'}`}
                 />
-                {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
             </motion.div>
 
-            {/* Content — pushed to bottom left for cinematic asymmetry */}
-            <div className="relative z-10 w-full max-w-5xl px-4 md:px-8 flex flex-col items-start">
+            {/* Content Container - Centered/Left-aligned text focus */}
+            <div className="relative z-10 w-full max-w-5xl px-4 md:px-8 flex flex-col items-start pb-8">
 
                 {/* Classified label */}
                 <motion.div
@@ -155,13 +171,11 @@ export default function Hero() {
                 <motion.div
                     initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)", y: 20 }}
                     animate={{ opacity: 1, scale: 1, filter: "blur(0px)", y: 0 }}
-                    transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} // Cinematic easeOutExpo
+                    transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className="flex flex-col items-start w-full relative group"
                 >
-                    {/* Decorative vertical line accent */}
                     <div className="absolute -left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-teal-accent/60 via-teal-accent/10 to-transparent" />
 
-                    {/* L'Artefact — Layered Glitch Style */}
                     <div className="relative">
                         <motion.h1
                             className="text-4xl md:text-8xl font-light uppercase leading-none tracking-tighter relative z-10"
@@ -172,7 +186,6 @@ export default function Hero() {
                         >
                             <span className="relative inline-block">
                                 L&apos;Artefact
-                                {/* Glitch Layer 1 - Cyan Shift */}
                                 <motion.span
                                     className="absolute inset-0 text-teal-accent opacity-50 mix-blend-screen pointer-events-none"
                                     animate={{
@@ -187,7 +200,6 @@ export default function Hero() {
                                 >
                                     L&apos;Artefact
                                 </motion.span>
-                                {/* Glitch Layer 2 - Magenta-ish/White Highlight */}
                                 <motion.span
                                     className="absolute inset-0 text-white opacity-0 pointer-events-none"
                                     animate={{
@@ -210,12 +222,9 @@ export default function Hero() {
                                 </motion.span>
                             </span>
                         </motion.h1>
-
-                        {/* Background glowing aura */}
                         <div className="absolute inset-0 bg-teal-accent/5 blur-[80px] -z-10 rounded-full" />
                     </div>
 
-                    {/* Elegant shimmer separator */}
                     <div className="relative w-full max-w-2xl h-px mt-4 mb-2 overflow-hidden bg-white/10">
                         <motion.div
                             className="absolute inset-0"
@@ -226,17 +235,8 @@ export default function Hero() {
                             animate={{ opacity: [0.3, 0.7, 0.3] }}
                             transition={{ duration: 2, repeat: Infinity }}
                         />
-                        <motion.div
-                            className="absolute top-0 h-full w-32"
-                            style={{
-                                background: "linear-gradient(to right, transparent, rgba(37,209,244,0.8), transparent)",
-                            }}
-                            animate={{ x: ["-100%", "500%"] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                        />
                     </div>
 
-                    {/* de la Vérité — Staggered reveal, high technical font */}
                     <motion.div
                         initial={{ opacity: 0, x: -20, filter: "blur(5px)" }}
                         animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
@@ -256,7 +256,6 @@ export default function Hero() {
                                 <motion.h2
                                     className="text-lg sm:text-xl md:text-3xl font-light uppercase tracking-[0.4em] text-teal-accent/90"
                                     style={{
-                                        fontFamily: "var(--font-outfit)",
                                         textShadow: "0 0 20px rgba(37,209,244,0.4)"
                                     }}
                                 >
@@ -264,23 +263,15 @@ export default function Hero() {
                                 </motion.h2>
                                 <motion.div
                                     className="h-[2px] flex-1 bg-gradient-to-r from-teal-accent/40 to-transparent mb-2 hidden md:block"
-                                    style={{ transformOrigin: "left" }}
                                     initial={{ scaleX: 0, opacity: 0 }}
                                     animate={{ scaleX: 1, opacity: 1 }}
                                     transition={{ delay: 1.8, duration: 1.5, ease: "easeOut" }}
                                 />
                             </div>
                         </div>
-
-                        {/* Technical Coordinates / Meta info */}
-                        <div className="text-right hidden sm:block">
-                            <span className="block text-[7px] font-mono text-white/20 tracking-tighter">DATASET_ID: ATF_01-V</span>
-                            <span className="block text-[7px] font-mono text-white/20 tracking-tighter">COORD: 45.4215° N, 75.6972° W</span>
-                        </div>
                     </motion.div>
                 </motion.div>
 
-                {/* Scroll hint */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

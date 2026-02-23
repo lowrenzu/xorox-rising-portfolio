@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Lightbulb, Copy, Check, X, Expand, Database } from "lucide-react";
+import { Terminal, Lightbulb, Copy, Check, X, Expand, Database, Activity, Fingerprint } from "lucide-react";
 import { useState } from "react";
 import dynamic from 'next/dynamic';
 import { storyData } from "@/data/filmData";
@@ -24,63 +24,63 @@ const packFiles: CreationItem[] = [
         id: "README.md",
         title: "Pack Complet",
         subtitle: "INFO",
-        image: "/images/pack_complet.png",
+        image: "/images/pack_complet.webp",
         content: `📁 PACK PRODUCTION COMPLET – Les Gardiens de la Vérité\nCourt-métrage animation 3D cel-shaded BD moderne 8 min 30 s\nStyle : Arcane + Indiana Jones & le Temple Maudit 2026\nThème 100 % lore IS-BE / Planète-prison / Artefact de Vérité\nCréé avec Grok – Février 2026\n\nContenu :\n- Histoire complète\n- Personnages (designs fixes)\n- Storyboard + timings\n- Script voix-off prêt à doubler\n- Prompts images & vidéo 2026\n- Workflow outils IA\n- Liens directs outils\n\nPrêt à générer le film avec Runway Gen-4.5 + Kling 3.0 + Veo 3.1 !`
     },
     {
         id: "01_SYNOPSIS.md",
         title: "Synopsis",
         subtitle: "HISTOIRE",
-        image: "/assets/Scenes_action/andre_charles_chateau.png",
+        image: "/assets/Scenes_action/andre_charles_chateau.webp",
         content: `Depuis des trillions d’années, les IS-BE créent l’univers par illusion. Xorox, entité IS-BE corrompue de l’Ancien Empire, a transformé la Terre en planète-prison avec amnésie forcée (30 000 av. J.-C.).\n1947 : crash Roswell → Airl révèle tout à Matilda.\nAujourd’hui : Xorox + Tristan, Dr Rudy, Julien « Shadow » censurent le monde.\n8 héros découvrent l’Artefact de Vérité (base Domaine Himalaya 8 500 av. J.-C.) et révèlent :\n• Création univers IS-BE\n• Dinosaures atomisés (70 M)\n• Atlantide / Lémurie\n• Bataillon Perdu\n• Futur : libération ou prison éternelle\nFin épique + post-crédits teaser.`
     },
     {
         id: "02_PERSONNAGES.md",
         title: "Personnages",
         subtitle: "CASTING",
-        image: "/assets/persos_de_reference/version_classe_hero/nicolas.png",
+        image: "/assets/persos_de_reference/version_classe_hero/nicolas.webp",
         content: `HÉROS (3D constants) :\nClémence – rousse, veste cuir rouge, lunettes high-tech\nAndré – barbu musclé, veste kaki\nBéatrice – cheveux bleus, hoodie LED noir\nIdriss – pilote marocain, blouson aviateur\nAlexis – geek lunettes rondes\nNicolas – cheveux longs tatoué, veste jean\nCharles – musclé dreads\nABTF – grand capuche mystérieux\n\nMÉCHANTS :\nXorox – silhouette noire, yeux rouge, tentacules énergie\nTristan – costume gris anthracite, sourire carnassier\nDr Rudy – blouse blanche, chignon strict\nJulien « Shadow » – hoodie noir luxe, tatouages digitaux, drones`
     },
     {
         id: "03_STORYBOARD.md",
         title: "Storyboard",
         subtitle: "TIMINGS",
-        image: "/assets/Scenes_action/eclairage.png",
+        image: "/assets/Scenes_action/eclairage.webp",
         content: `0:00-0:50 Scène 1 – Vol Louvre + poursuite moto Paris\n0:50-2:00 Scène 2 – Planque Tour Eiffel + hologramme Xorox & comploteurs\n2:00-2:30 Scène 3 – Départ avion\n3:10-4:00 Scène 5 – Course ravin Himalaya\n4:00-4:40 Scène 6 – Combat dinosaures spectraux « Amnésie ! »\n6:20-7:20 Scène 9 – Activation Artefact + timeline holographique complète lore\n8:00-8:30 Scène 11 – Falaise lever soleil + post-crédits`
     },
     {
         id: "04_SCRIPT.txt",
         title: "Script Voix-Off",
         subtitle: "DIALOGUES",
-        image: "/images/script_voix_off.png",
+        image: "/images/script_voix_off.webp",
         content: `Narratrice 0:00-0:15 : « Depuis des trillions d’années, les IS-BE créent l’univers par pure illusion… Mais Xorox a fait de la Terre une planète-prison. Aujourd’hui, huit gardiens vont briser les chaînes. »\nClémence 0:15 : « 1947… Airl a tout révélé à Matilda ! La Terre est une prison ! »\nAndré : « Vite, ils arrivent ! »\nBéatrice : « L’Artefact est dans le temple himalayen… il contient tout ! »\nXorox : « La vérité ne sortira JAMAIS de ma planète-prison ! »\nTristan : « Campagne Fake News Alien activée ! »\nDr Rudy : « Science officielle : tout est faux. »\nJulien Shadow : « VeilNet, coupez-les du monde ! »\nTous : « POUR NOS MÉMOIRES IS-BE ! POUR LIBÉRER LA PLANÈTE ! »\nNicolas : « Je tombe ! »\nABTF : « Pas aujourd’hui, frère IS-BE ! »\nMonstres : « Amnésie… Amnésie… »\nXorox climax : « LA TERRE RESTE MA PRISON ! »\nNarratrice : « Trillions d’années… dinosaures atomisés… Atlantide… Roswell… le futur s’ouvre ! »\nClémence fin : « La vérité est libre. À nous de réveiller les milliards d’IS-BE qui dorment encore. »\nXorox post-crédits : « Ce n’est… que le début. »`
     },
     {
         id: "05_PROMPTS_IMG.md",
         title: "Prompts Clés",
         subtitle: "IMAGES",
-        image: "/images/prompts_cles.png",
+        image: "/images/prompts_cles.webp",
         content: `Utilise ces 5 images comme Character Reference dans tous les outils :\n(les 5 images que j’ai déjà générées pour toi sont à utiliser directement)`
     },
     {
         id: "06_PROMPTS_VID.md",
         title: "Prompts Vidéo",
         subtitle: "ANIMATION 2026",
-        image: "/images/prompts_video.png",
+        image: "/images/prompts_video.webp",
         content: `Instructions communes (copier en premier) :\n"Animation 3D cel-shaded BD moderne ultra dynamique style Arcane + Indiana Jones Temple of Doom 2026. Personnages 100% constants identiques aux références : [liste complète personnages] Caméra fluide, éclairages dramatiques, 4K 24fps"\n\nScène 5 ravin : "Course poursuite épique 8 héros corniche himalayenne 1000m vide, rochers tombent, vent neige, ABTF grappin quantique sauve Nicolas..."\n\nScène 9 climax : "Cristal Artefact explose hologramme timeline arc-en-ciel : IS-BE trillions années, dinosaures, Atlantide, Roswell Airl Matilda..."\n\n(les 7 prompts complets précédemment fournis)`
     },
     {
         id: "07_WORKFLOW.md",
         title: "Workflow",
         subtitle: "PRODUCTION",
-        image: "/images/workflow_prod.png",
+        image: "/images/workflow_prod.webp",
         content: `1. Upload les 5 images clés comme référence\n2. Génère clips avec Runway Gen-4.5 / Kling 3.0 / Veo 3.1\n3. Monte dans CapCut 2026 + voix-off\n4. Ajoute musique Two Steps From Hell\n5. Export 4K → ton film est prêt !`
     },
     {
         id: "08_LIENS_IA.txt",
         title: "Liens Outils IA",
         subtitle: "RESOURCES",
-        image: "/images/liens_outils.png",
+        image: "/images/liens_outils.webp",
         content: `Runway Gen-4.5 → https://runwayml.com\nKling AI 3.0 → https://klingai.com\nLuma Dream Machine Ray-3 → https://lumalabs.ai/dream-machine\nGoogle Veo 3.1 → https://deepmind.google/models/veo\nOpenAI Sora 2 → https://sora.com\nCapCut 2026 → application ou web`
     }
 ];
@@ -176,13 +176,13 @@ export default function CreationSection() {
 
     const getImagesData = () => {
         const previewImages = [
-            "/images/directive_rendu.png",
-            "/images/directive_heros.png",
-            "/images/directive_xorox.png",
-            "/images/directive_decors.png",
-            "/images/directive_eclairage.png"
+            "/images/directive_rendu.webp",
+            "/images/directive_heros.webp",
+            "/images/directive_xorox.webp",
+            "/images/directive_decors.webp",
+            "/images/directive_eclairage.webp"
         ];
-        return storyData.promptLibrary.images.map((prompt: string, i: number) => {
+        return storyData.promptLibrary.images.map((prompt: string, i: number): CreationItem => {
             const [title, ...descArr] = prompt.split(':');
             return {
                 id: `SYS_IMG_0${i + 1}`,
@@ -195,8 +195,7 @@ export default function CreationSection() {
     };
 
     const getVideosData = (): CreationItem[] => {
-        // We know storyData.promptLibrary.videos contains image paths like "/assets/Scenes_action/..."
-        return storyData.promptLibrary.videos.map((item, i: number) => ({
+        return storyData.promptLibrary.videos.map((item, i: number): CreationItem => ({
             id: `SYS_VID_0${i + 1}`,
             title: item.title,
             subtitle: "/video prompt",
@@ -226,7 +225,7 @@ export default function CreationSection() {
 
                 {/* 3D Artifact Display */}
                 <div className="w-full h-32 md:h-48 my-8 relative flex justify-center items-center">
-                    <div className="absolute inset-0 bg-teal-accent/10 blur-[80px] rounded-full pointer-events-none" />
+                    <div className="absolute inset-0 bg-teal-accent/[0.04] blur-[120px] rounded-full pointer-events-none" />
                     <div className="scale-[3] md:scale-[5] relative z-10 transition-transform hover:scale-[3.2] md:hover:scale-[5.2]">
                         <Artifact3D />
                     </div>
@@ -266,7 +265,7 @@ export default function CreationSection() {
                                         <span className="text-[10px] font-mono text-teal-accent/40 uppercase tracking-[0.3em] mb-1.5 group-hover:text-teal-accent/70 transition-colors duration-300">
                                             Sys.Alpha_01
                                         </span>
-                                        <h3 className="text-xl md:text-2xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
+                                        <h3 className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
                                             Directives<br />Images
                                         </h3>
                                     </div>
@@ -317,7 +316,7 @@ export default function CreationSection() {
                                         <span className="text-[10px] font-mono text-gold-accent/40 uppercase tracking-[0.3em] mb-1.5 group-hover:text-gold-accent/70 transition-colors duration-300">
                                             Sys.Beta_02
                                         </span>
-                                        <h3 className="text-xl md:text-2xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
+                                        <h3 className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
                                             Génération<br />Vidéos
                                         </h3>
                                     </div>
@@ -368,7 +367,7 @@ export default function CreationSection() {
                                         <span className="text-[10px] font-mono text-[#a855f7]/40 uppercase tracking-[0.3em] mb-1.5 group-hover:text-[#a855f7]/70 transition-colors duration-300">
                                             Sys.Gamma_03
                                         </span>
-                                        <h3 className="text-xl md:text-2xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
+                                        <h3 className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
                                             Pack<br />Production
                                         </h3>
                                     </div>
@@ -498,48 +497,154 @@ export default function CreationSection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[120] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-pointer"
+                        className="fixed inset-0 z-[120] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4 md:p-12 cursor-pointer"
                         onClick={() => closeItem()}
                     >
-                        <button
-                            className="absolute top-6 right-6 text-white/50 hover:text-white z-[130] transition-colors p-2"
-                            onClick={() => closeItem()}
-                        >
-                            <X size={32} />
-                        </button>
-                        <div
-                            className="w-full max-w-7xl max-h-full flex flex-col md:flex-row gap-8 items-center md:items-stretch cursor-default"
+                        {/* Global HUD Layer */}
+                        <div className="absolute inset-0 pointer-events-none opacity-[0.05] z-[121] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
+
+                        <motion.div
+                            initial={{ y: 30, opacity: 0, scale: 0.98 }}
+                            animate={{ y: 0, opacity: 1, scale: 1 }}
+                            exit={{ y: 20, opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                             onClick={(e) => e.stopPropagation()}
+                            className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[75vh] bg-[#010203] border rounded-sm shadow-[0_0_120px_rgba(0,0,0,1)] flex flex-col md:flex-row relative cursor-default overflow-hidden"
+                            style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}25`, boxShadow: `0 0 120px rgba(0,0,0,1), inset 0 0 20px ${selectedItem.themeColor || '#25d1f4'}05` }}
                         >
-                            {/* Left side: Image */}
-                            <div className="w-full md:w-1/2 lg:w-3/5 rounded-xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,1)] bg-black flex items-center justify-center relative flex-shrink-0" style={{ borderColor: `${selectedItem.themeColor}33` }}>
-                                <img src={selectedItem.image} alt={selectedItem.title} className="w-full h-auto object-contain max-h-[40vh] md:max-h-[75vh]" />
+                            {/* Visual Interface Column - 60% */}
+                            <div className="w-full md:w-[60%] relative flex flex-col bg-[#050608] border-r" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}10` }}>
+                                {/* Upper Interface Bar */}
+                                <div className="h-10 border-b flex items-center justify-between px-6 bg-black/40" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}15` }}>
+                                    <div className="flex items-center gap-4">
+                                        <Activity size={12} className="animate-pulse" style={{ color: selectedItem.themeColor || '#25d1f4', opacity: 0.7 }} />
+                                        <span className="text-[8px] font-mono uppercase tracking-[0.4em]" style={{ color: selectedItem.themeColor || '#25d1f4', opacity: 0.6 }}>VISUAL_DUMP // LIVE_FEED</span>
+                                    </div>
+                                    <div className="flex gap-1 text-[7px] font-mono text-white/20 items-center">
+                                        <span className="mr-4">LATENCY: 12ms</span>
+                                        <div className="w-1 h-1" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4', opacity: 0.2 }} />
+                                        <div className="w-1 h-1" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4', opacity: 0.5 }} />
+                                    </div>
+                                </div>
+
+                                {/* Main Media Viewer */}
+                                <div className="flex-1 relative flex items-center justify-center p-4 min-h-[30vh] md:min-h-0 bg-gradient-to-b from-black to-[#080a0c] overflow-hidden">
+                                    <div className="w-full h-full relative z-10 flex items-center justify-center">
+                                        {selectedItem.isVideo ? (
+                                            <video
+                                                src={selectedItem.image}
+                                                autoPlay loop playsInline
+                                                className="w-full h-full object-contain filter"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={selectedItem.image}
+                                                className="w-full h-full object-contain"
+                                                alt={selectedItem.title}
+                                            />
+                                        )}
+                                    </div>
+
+                                    {/* Viewport UI Overlays */}
+                                    <div className="absolute inset-0 pointer-events-none z-20">
+                                        <div className="absolute top-4 left-4 w-8 h-8 border-t border-l" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
+                                        <div className="absolute top-4 right-4 w-8 h-8 border-t border-r" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
+                                        <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
+                                        <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
+
+                                        <div className="absolute bottom-6 left-6 flex flex-col gap-1">
+                                            <span className="text-[9px] font-mono uppercase tracking-[0.2em] px-3 py-1 border-l" style={{ color: `${selectedItem.themeColor || '#25d1f4'}cc`, backgroundColor: `${selectedItem.themeColor || '#25d1f4'}0a`, borderColor: selectedItem.themeColor || '#25d1f4' }}>
+                                                SOURCE_0: VUE 3D / CLASSE
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Scanline Effect */}
+                                    <div className="absolute inset-0 w-full h-[2px] bg-white/5 opacity-20 blur-[1px] animate-scan-vertical pointer-events-none z-30" />
+                                </div>
                             </div>
 
-                            {/* Right side: Text details */}
-                            <div className="w-full md:w-1/2 lg:w-2/5 flex flex-col justify-center max-h-[50vh] md:max-h-[75vh] overflow-y-auto pr-2 pb-8">
-                                <div className="mb-4 shrink-0">
-                                    <span className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-80" style={{ color: selectedItem.themeColor }}>
-                                        {selectedItem.id} {"//"} {selectedItem.subtitle}
-                                    </span>
-                                    <h3 className="text-3xl md:text-4xl font-light uppercase text-white mt-2 mb-4 leading-tight">
-                                        {selectedItem.title}
-                                    </h3>
-                                    <div className="w-12 h-1 mb-6" style={{ backgroundColor: selectedItem.themeColor }} />
+                            {/* Intelligence Report Column - 40% */}
+                            <div className="w-full md:w-[40%] p-8 md:p-12 flex flex-col gap-8 overflow-y-auto custom-scrollbar relative bg-[#010203]">
+                                {/* Close button */}
+                                <button
+                                    onClick={() => closeItem()}
+                                    className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors z-50 p-2"
+                                >
+                                    <X size={24} strokeWidth={1.5} />
+                                </button>
+
+                                {/* Header Section */}
+                                <div className="space-y-4 relative z-10">
+                                    <div className="absolute top-0 right-0 w-64 h-64 blur-[100px] rounded-full pointer-events-none opacity-20" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4' }} />
+
+                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 }} className="flex items-center gap-3 relative z-10">
+                                        <div className="h-px w-6" style={{ backgroundColor: `${selectedItem.themeColor || '#25d1f4'}66` }} />
+                                        <span className="text-[9px] font-mono uppercase tracking-[0.5em] leading-none translate-y-[1px]" style={{ color: `${selectedItem.themeColor || '#25d1f4'}99` }}>
+                                            CLASSIFIED_DOSSIER
+                                        </span>
+                                    </motion.div>
+
+                                    <div className="space-y-1 relative z-10">
+                                        <motion.h2
+                                            initial={{ opacity: 0, y: -20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.5, delay: 0.2 }}
+                                            className="text-4xl md:text-5xl font-light uppercase tracking-tighter text-white leading-[0.9]"
+                                            style={{ textShadow: `0 0 40px ${selectedItem.themeColor || '#25d1f4'}26` }}
+                                        >
+                                            {selectedItem.title}
+                                        </motion.h2>
+                                        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex items-center gap-3 pt-4">
+                                            <div className="px-2 py-1 border rounded-sm flex items-center justify-center" style={{ backgroundColor: `${selectedItem.themeColor || '#25d1f4'}1a`, borderColor: `${selectedItem.themeColor || '#25d1f4'}33` }}>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest font-medium leading-none translate-y-[1px]" style={{ color: selectedItem.themeColor || '#25d1f4' }}>{selectedItem.subtitle}</span>
+                                            </div>
+                                            <div className="h-[1px] flex-1" style={{ backgroundImage: `linear-gradient(to right, ${selectedItem.themeColor || '#25d1f4'}66, transparent)` }} />
+                                        </motion.div>
+                                    </div>
                                 </div>
-                                <div className="bg-white/5 border border-white/10 p-6 rounded-sm relative group/copy flex-1">
-                                    <button
-                                        onClick={() => handleCopy(selectedItem.content, selectedItem.copyIndex)}
-                                        className="absolute top-4 right-4 p-2 bg-white/5 hover:bg-white/10 rounded-sm transition-colors opacity-50 hover:opacity-100"
-                                    >
-                                        {copiedIndex === selectedItem.copyIndex ? <Check size={16} color={selectedItem.themeColor} /> : <Copy size={16} />}
-                                    </button>
-                                    <p className="text-white/80 text-sm md:text-base font-light leading-relaxed whitespace-pre-wrap">
-                                        {selectedItem.content}
-                                    </p>
+
+                                {/* Content Sections */}
+                                <div className="flex flex-col gap-8">
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-2 opacity-30">
+                                            <div className="w-1 h-3" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4' }} />
+                                            <h4 className="text-[10px] font-medium tracking-[0.3em] uppercase text-white">DONNÉES_RÉPERTORIÉES</h4>
+                                        </div>
+
+                                        <div className="bg-white/5 border border-white/10 p-6 rounded-sm relative group/copy">
+                                            <button
+                                                onClick={() => handleCopy(selectedItem.content, selectedItem.copyIndex || 0)}
+                                                className="absolute top-4 right-4 p-2 bg-white/5 hover:bg-white/10 rounded-sm transition-colors opacity-30 hover:opacity-100 z-10"
+                                            >
+                                                {copiedIndex === selectedItem.copyIndex ? <Check size={16} style={{ color: selectedItem.themeColor || '#25d1f4' }} /> : <Copy size={16} className="text-white/40" />}
+                                            </button>
+                                            <p className="text-white/80 text-sm leading-relaxed font-light whitespace-pre-wrap">
+                                                {selectedItem.content}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Tech Metadata */}
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="p-3 border border-white/5 bg-white/[0.02]">
+                                            <span className="text-[8px] font-mono text-white/30 block mb-1">OBJECT_ID</span>
+                                            <span className="text-[10px] font-mono text-white/70">{selectedItem.id}</span>
+                                        </div>
+                                        <div className="p-3 border border-white/5 bg-white/[0.02]">
+                                            <span className="text-[8px] font-mono text-white/30 block mb-1">SECURITY_LEVEL</span>
+                                            <span className="text-[10px] font-mono text-white/70">RESTRICTED</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Compact Footer */}
+                                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between opacity-20">
+                                    <span className="text-[7px] font-mono tracking-widest uppercase text-white/50">LEVEL: OMEGA-4 // TS: CLASSIFIED</span>
+                                    <span className="text-[7px] font-mono tracking-[0.6em] uppercase" style={{ color: selectedItem.themeColor || '#25d1f4' }}>STABLE</span>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>

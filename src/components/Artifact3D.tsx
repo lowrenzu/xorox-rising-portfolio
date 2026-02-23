@@ -41,20 +41,20 @@ export default function Artifact3D() {
             <style>{`
                 @keyframes artifact-glitch {
                     0%   { transform: translate(0,0) skewX(0deg);    filter: brightness(1) hue-rotate(0deg); }
-                    10%  { transform: translate(-2px, 1px) skewX(-4deg); filter: brightness(2) hue-rotate(30deg); }
-                    20%  { transform: translate(2px,-1px) skewX(3deg);  filter: brightness(1.5) hue-rotate(-20deg); }
-                    30%  { transform: translate(-1px,2px) skewX(0deg);  filter: brightness(3) hue-rotate(10deg); }
-                    40%  { transform: translate(1px,-2px) skewX(-2deg); filter: brightness(1) hue-rotate(0deg); }
-                    50%  { transform: translate(0,0) skewX(2deg);    filter: brightness(2.5) hue-rotate(-30deg); }
-                    60%  { transform: translate(-2px,0) skewX(0deg);    filter: brightness(1) hue-rotate(20deg); }
-                    70%  { transform: translate(2px,1px) skewX(-3deg);  filter: brightness(2) hue-rotate(-10deg); }
-                    80%  { transform: translate(0,-1px) skewX(0deg);    filter: brightness(1.5) hue-rotate(0deg); }
-                    90%  { transform: translate(-1px,0) skewX(2deg);    filter: brightness(3) hue-rotate(40deg); }
+                    10%  { transform: translate(-1px, 0.5px) skewX(-2deg); filter: brightness(1.2) hue-rotate(15deg); }
+                    20%  { transform: translate(1px,-0.5px) skewX(1.5deg);  filter: brightness(1.1) hue-rotate(-10deg); }
+                    30%  { transform: translate(-0.5px,1px) skewX(0deg);  filter: brightness(1.3) hue-rotate(5deg); }
+                    40%  { transform: translate(0.5px,-1px) skewX(-1deg); filter: brightness(1) hue-rotate(0deg); }
+                    50%  { transform: translate(0,0) skewX(1deg);    filter: brightness(1.2) hue-rotate(-15deg); }
+                    60%  { transform: translate(-1px,0) skewX(0deg);    filter: brightness(1) hue-rotate(10deg); }
+                    70%  { transform: translate(1px,0.5px) skewX(-1.5deg);  filter: brightness(1.1) hue-rotate(-5deg); }
+                    80%  { transform: translate(0,-0.5px) skewX(0deg);    filter: brightness(1.05) hue-rotate(0deg); }
+                    90%  { transform: translate(-0.5px,0) skewX(1deg);    filter: brightness(1.3) hue-rotate(20deg); }
                     100% { transform: translate(0,0) skewX(0deg);    filter: brightness(1) hue-rotate(0deg); }
                 }
                 .artifact-hover-glitch {
                     animation: artifact-glitch 0.4s steps(1) infinite;
-                    filter: drop-shadow(0 0 10px rgba(255,200,0,0.9)) drop-shadow(0 0 20px rgba(37,209,244,0.5)) !important;
+                    filter: drop-shadow(0 0 8px rgba(255,180,0,0.4)) drop-shadow(0 0 15px rgba(37,209,244,0.2)) !important;
                 }
             `}</style>
 
@@ -72,8 +72,8 @@ export default function Artifact3D() {
                     cursor: "pointer",
                     filter: hovered
                         ? undefined // handled by CSS class
-                        : "drop-shadow(0 0 4px rgba(255,160,0,0.6))",
-                    transition: "filter 0.1s",
+                        : "drop-shadow(0 0 3px rgba(255,160,0,0.3))",
+                    transition: "filter 0.3s",
                 }}
             >
                 <div
@@ -98,7 +98,7 @@ export default function Artifact3D() {
                                 backgroundPosition: "center",
                                 transform: face.transform,
                                 backfaceVisibility: "visible",
-                                border: `1px solid rgba(255,180,0,${hovered ? 0.8 : 0.3})`,
+                                border: `0.5px solid rgba(255,180,0,${hovered ? 0.4 : 0.15})`,
                             }}
                         />
                     ))}

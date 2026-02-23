@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Terminal, Users, MapPin, Shield, Zap, Rocket,
-    X, Fingerprint, Activity, Clock
+    X, Fingerprint, Activity, Clock, Copy
 } from "lucide-react";
 import { storyData } from "@/data/filmData";
 import SectionHeader from "./SectionHeader";
@@ -13,11 +13,11 @@ import { useSoundEngine } from "@/hooks/useSoundEngine";
 // Helper to assign a specific theme and icon to each act
 const getActTheme = (index: number) => {
     const themes = [
-        { color: "#3b82f6", label: "Héros", icon: Users, media: "/images/Xorox/XOROX_169.jpg", type: "image", desc: "La réunion secrète et le décryptage." },
-        { color: "#a855f7", label: "Poursuite", icon: MapPin, media: "/assets/Scenes_action/boat_antartic.webm", type: "video", desc: "Le crash et l'ascension périlleuse." },
-        { color: "#f5b041", label: "Découverte", icon: Shield, media: "/assets/Scenes_action/dome_atlantide.png", type: "image", desc: "L'exploration colossale." },
-        { color: "#ef4444", label: "Confrontation", icon: Zap, media: "/assets/persos_de_reference/Xorox/XOROX_GOOD.jpg", type: "image", desc: "Le duel contre l'Architecte." },
-        { color: "#f5b041", label: "Révélation", icon: Rocket, media: "/images/activation_revelation.jpg", type: "image", desc: "L'activation du Cristal." },
+        { color: "#3b82f6", label: "Héros", icon: Users, media: "/images/story/reunion_secrete.webp", type: "image", desc: "La réunion secrète et le décryptage." },
+        { color: "#a855f7", label: "Poursuite", icon: MapPin, media: "/images/story/poursuite_himalaya.webp", type: "image", desc: "Le crash et l'ascension périlleuse." },
+        { color: "#f5b041", label: "Découverte", icon: Shield, media: "/images/story/la_base_du_domaine.webp", type: "image", desc: "L'exploration colossale." },
+        { color: "#ef4444", label: "Confrontation", icon: Zap, media: "/images/story/confrontation_finale.webp", type: "image", desc: "Le duel contre l'Architecte." },
+        { color: "#f5b041", label: "Révélation", icon: Rocket, media: "/images/story/activation_revelation.webp", type: "image", desc: "L'activation du Cristal." },
     ];
     return themes[index % themes.length];
 };
@@ -75,42 +75,90 @@ export default function StorySection() {
 
                     {/* Right: Text Boxes */}
                     <div className="w-full md:w-3/4 lg:w-4/5 flex flex-col justify-between gap-6">
-                        {/* P1 Main Description */}
-                        <motion.p
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-teal-accent/90 text-[13px] md:text-sm lg:text-base font-light leading-relaxed tracking-wide text-left m-0"
-                        >
-                            {storyData.summary.p1}
-                        </motion.p>
-
-                        {/* P2 Context Panel */}
+                        {/* P1 Description Card - Advanced HUD style */}
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="p-4 md:p-5 glass-panel border border-white/5 border-l-2 border-l-teal-accent/50 bg-teal-accent/[0.02] flex-grow flex flex-col justify-center relative group overflow-hidden"
+                            whileHover={{ scale: 1.01, backgroundColor: "rgba(37, 209, 244, 0.04)" }}
+                            className="relative p-6 glass-panel border border-white/5 bg-teal-accent/[0.02] overflow-hidden group"
                         >
-                            <div className="absolute top-0 right-0 p-3 opacity-30"><Terminal size={14} className="text-teal-accent group-hover:text-teal-accent/80 transition-colors" /></div>
-                            <p className="text-[11px] md:text-sm text-white/80 font-light leading-relaxed text-left z-10 m-0">
-                                {storyData.summary.p2}
-                            </p>
+                            {/* HUD Decorative Elements */}
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-teal-accent/40 group-hover:border-teal-accent/80 transition-colors" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-teal-accent/40 group-hover:border-teal-accent/80 transition-colors" />
+
+                            <div className="flex items-start gap-4">
+                                <div className="hidden sm:flex flex-col items-center gap-2 mt-1">
+                                    <div className="w-1 h-8 bg-gradient-to-b from-teal-accent to-transparent opacity-40" />
+                                    <Terminal size={12} className="text-teal-accent opacity-60" />
+                                </div>
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-[8px] font-mono text-teal-accent/50 uppercase tracking-[0.3em]">Synopsys // Entry_01</span>
+                                        <div className="h-[1px] flex-1 bg-gradient-to-r from-teal-accent/20 to-transparent" />
+                                    </div>
+                                    <p className="text-white/90 text-[13px] md:text-sm lg:text-base font-light leading-relaxed tracking-wide text-left m-0">
+                                        {storyData.summary.p1}
+                                    </p>
+                                </div>
+                            </div>
                         </motion.div>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="p-3 md:p-4 glass-panel border border-white/5 border-l-2 border-l-red-900/50 bg-red-950/10 flex-grow flex flex-col justify-center relative group overflow-hidden"
-                        >
-                            <div className="absolute top-0 right-0 p-2 opacity-30"><Activity size={12} className="text-red-500 animate-pulse" /></div>
-                            <p className="text-[10px] md:text-xs text-red-100/70 font-mono leading-relaxed text-left z-10 m-0">
-                                {storyData.summary.p3}
-                            </p>
-                        </motion.div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-grow">
+                            {/* P2 Context Panel - Mission Intel style */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.1 }}
+                                whileHover={{ scale: 1.02, backgroundColor: "rgba(37, 209, 244, 0.05)" }}
+                                className="p-5 glass-panel border border-white/5 border-l-2 border-l-teal-accent/40 bg-teal-accent/[0.01] relative group overflow-hidden flex flex-col justify-center"
+                            >
+                                {/* Scanline Effect */}
+                                <div className="absolute inset-0 w-full h-full bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] opacity-20 pointer-events-none" />
+
+                                <div className="absolute top-2 right-3 opacity-20 group-hover:opacity-50 transition-opacity">
+                                    <Users size={14} className="text-teal-accent" />
+                                </div>
+
+                                <div className="relative z-10">
+                                    <div className="text-[9px] font-mono text-teal-accent/40 uppercase tracking-[0.2em] mb-2 flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-teal-accent/30 animate-pulse" />
+                                        Mission Protocol
+                                    </div>
+                                    <p className="text-[12px] md:text-[13px] text-white/80 font-light leading-relaxed text-left m-0">
+                                        {storyData.summary.p2}
+                                    </p>
+                                </div>
+                            </motion.div>
+
+                            {/* P3 Alert Panel - High Threat style */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                                whileHover={{ scale: 1.02, backgroundColor: "rgba(127, 29, 29, 0.1)" }}
+                                className="p-5 glass-panel border border-white/5 border-l-2 border-l-red-500/30 bg-red-950/[0.03] relative group overflow-hidden flex flex-col justify-center"
+                            >
+                                {/* Warning Glow */}
+                                <div className="absolute -right-4 -top-4 w-12 h-12 bg-red-500/5 blur-2xl rounded-full" />
+
+                                <div className="absolute top-2 right-3 opacity-20 group-hover:opacity-60 transition-opacity">
+                                    <Activity size={14} className="text-red-500 animate-pulse" />
+                                </div>
+
+                                <div className="relative z-10">
+                                    <div className="text-[9px] font-mono text-red-500/50 uppercase tracking-[0.2em] mb-2 flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-red-500/40" />
+                                        Threat Status: Critical
+                                    </div>
+                                    <p className="text-[11px] md:text-[12px] text-red-200/60 font-mono leading-relaxed text-left m-0">
+                                        {storyData.summary.p3}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
                 </div>
 
@@ -200,112 +248,149 @@ export default function StorySection() {
                             exit={{ y: 20, opacity: 0, scale: 0.98 }}
                             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-[1400px] h-[85vh] bg-[#020304] border rounded-sm shadow-[0_0_120px_rgba(0,0,0,1)] flex flex-col relative cursor-default overflow-hidden"
-                            style={{ borderColor: `${getActTheme(activeModal).color}25` }}
+                            className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[75vh] bg-[#010203] border rounded-sm overflow-hidden flex flex-col md:flex-row relative cursor-default"
+                            style={{ borderColor: `${getActTheme(activeModal).color}25`, boxShadow: `0 0 120px rgba(0,0,0,1), inset 0 0 20px ${getActTheme(activeModal).color}05` }}
                         >
-                            {/* Close button */}
-                            <button
-                                onClick={closeModal}
-                                className="absolute top-6 right-6 text-white/40 transition-colors z-[110] p-2 hover:text-white"
-                                style={{ color: getActTheme(activeModal).color }}
-                            >
-                                <X size={24} strokeWidth={1.5} />
-                            </button>
-
-                            <div className="flex flex-col lg:flex-row h-full">
-                                {/* Left Side: Large Media */}
-                                <div className="lg:w-1/2 relative h-64 lg:h-full border-b lg:border-b-0 lg:border-r border-white/10 bg-black overflow-hidden group">
-                                    {getActTheme(activeModal).type === 'video' ? (
-                                        <video
-                                            src={getActTheme(activeModal).media}
-                                            autoPlay muted loop playsInline
-                                            className="absolute inset-0 w-full h-full object-cover opacity-80"
-                                        />
-                                    ) : (
-                                        <img
-                                            src={getActTheme(activeModal).media}
-                                            alt={storyData.acts[activeModal].title}
-                                            className="absolute inset-0 w-full h-full object-cover opacity-80"
-                                        />
-                                    )}
-
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#020304] via-[#020304]/40 to-transparent opacity-90" />
-                                    <div className="absolute inset-0 w-full h-[2px] bg-white/10 opacity-30 blur-[1px] animate-scan-vertical pointer-events-none" />
-
-                                    {/* Overlay Text on Media */}
-                                    <div className="absolute bottom-0 left-0 p-8 w-full z-10">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <Activity size={14} style={{ color: getActTheme(activeModal).color }} className="animate-pulse" />
-                                            <span className="text-[10px] font-mono uppercase tracking-[0.3em]" style={{ color: getActTheme(activeModal).color }}>
-                                                Enregistrement_Act_0{activeModal + 1}
-                                            </span>
-                                        </div>
-                                        <h2 className="text-4xl md:text-5xl font-light text-white uppercase tracking-widest leading-none drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-                                            {storyData.acts[activeModal].title.split(':')[0]}
-                                        </h2>
-                                        <p className="mt-4 text-xs font-mono text-white/70 tracking-widest uppercase border-r-2 pr-4 inline-block" style={{ borderColor: getActTheme(activeModal).color }}>
-                                            {getActTheme(activeModal).desc}
-                                        </p>
+                            {/* Visual Interface Column - 60% */}
+                            <div className="w-full md:w-[60%] relative flex flex-col bg-[#050608] border-r" style={{ borderColor: `${getActTheme(activeModal).color}10` }}>
+                                {/* Upper Interface Bar */}
+                                <div className="h-10 border-b flex items-center justify-between px-6 bg-black/40" style={{ borderColor: `${getActTheme(activeModal).color}15` }}>
+                                    <div className="flex items-center gap-4">
+                                        <Activity size={12} className="animate-pulse" style={{ color: getActTheme(activeModal).color, opacity: 0.7 }} />
+                                        <span className="text-[8px] font-mono uppercase tracking-[0.4em]" style={{ color: getActTheme(activeModal).color, opacity: 0.6 }}>ENREGISTREMENT // ACT_0{activeModal + 1}</span>
+                                    </div>
+                                    <div className="flex gap-1">
+                                        <span className="text-[7px] font-mono text-white/20 mr-4">SYNC_STATUS: ACTIVE</span>
+                                        <div className="w-1 h-1" style={{ backgroundColor: getActTheme(activeModal).color, opacity: 0.2 }} />
+                                        <div className="w-1 h-1" style={{ backgroundColor: getActTheme(activeModal).color, opacity: 0.5 }} />
                                     </div>
                                 </div>
 
-                                {/* Right Side: Content & Prompts (Scrollable) */}
-                                <div className="lg:w-1/2 p-6 lg:p-10 flex flex-col h-full bg-gradient-to-b from-white/[0.02] to-transparent overflow-y-auto custom-scrollbar relative z-10">
-                                    <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4 shrink-0">
-                                        <Terminal size={18} style={{ color: getActTheme(activeModal).color }} />
-                                        <span className="text-[12px] font-mono uppercase tracking-[0.4em] opacity-90" style={{ color: getActTheme(activeModal).color }}>
-                                            Déchiffrement Historique
-                                        </span>
-                                        <div className="ml-auto flex items-center text-[10px] font-mono text-white/30 gap-2">
-                                            <Clock size={12} /> ARCHIVE_{2026 - activeModal}
+                                {/* Main Media Viewer */}
+                                <div className="flex-1 relative flex items-center justify-center p-4 min-h-[30vh] md:min-h-0 bg-gradient-to-b from-black to-[#080a0c] overflow-hidden">
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={activeModal}
+                                            initial={{ opacity: 0, filter: "brightness(2) blur(10px)" }}
+                                            animate={{ opacity: 1, filter: "brightness(1) blur(0px)" }}
+                                            exit={{ opacity: 0 }}
+                                            transition={{ duration: 0.5 }}
+                                            className="w-full h-full relative z-10"
+                                        >
+                                            {getActTheme(activeModal).type === 'video' ? (
+                                                <video
+                                                    src={getActTheme(activeModal).media}
+                                                    autoPlay loop playsInline
+                                                    className="w-full h-full object-cover opacity-80"
+                                                />
+                                            ) : (
+                                                <img
+                                                    src={getActTheme(activeModal).media}
+                                                    className="w-full h-full object-cover opacity-80"
+                                                    alt={storyData.acts[activeModal].title}
+                                                />
+                                            )}
+                                        </motion.div>
+                                    </AnimatePresence>
+
+                                    {/* Viewport UI Overlays */}
+                                    <div className="absolute inset-0 pointer-events-none z-20">
+                                        <div className="absolute top-4 left-4 w-8 h-8 border-t border-l" style={{ borderColor: `${getActTheme(activeModal).color}4d` }} />
+                                        <div className="absolute top-4 right-4 w-8 h-8 border-t border-r" style={{ borderColor: `${getActTheme(activeModal).color}4d` }} />
+                                        <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l" style={{ borderColor: `${getActTheme(activeModal).color}4d` }} />
+                                        <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r" style={{ borderColor: `${getActTheme(activeModal).color}4d` }} />
+
+                                        <div className="absolute bottom-6 left-6 flex flex-col gap-1">
+                                            <span className="text-[9px] font-mono uppercase tracking-[0.2em] px-3 py-1 border-l" style={{ color: `${getActTheme(activeModal).color}cc`, backgroundColor: `${getActTheme(activeModal).color}0a`, borderColor: getActTheme(activeModal).color }}>
+                                                VISUAL_DATA // {storyData.acts[activeModal].title.split(':')[0]}
+                                            </span>
                                         </div>
                                     </div>
 
-                                    <h3 className="text-2xl md:text-3xl font-light text-white uppercase tracking-widest mb-6 leading-tight shrink-0 pl-4 border-l-4" style={{ borderColor: getActTheme(activeModal).color }}>
-                                        {storyData.acts[activeModal].title.split(':')[1]?.trim() || storyData.acts[activeModal].title}
-                                    </h3>
+                                    {/* Scanline Effect */}
+                                    <div className="absolute inset-0 w-full h-[2px] bg-white/5 opacity-20 blur-[1px] animate-scan-vertical pointer-events-none z-30" />
+                                </div>
+                            </div>
 
-                                    <div className="prose prose-invert prose-sm max-w-none text-white/80 mb-10 leading-relaxed font-light text-[15px] shrink-0">
+                            {/* Intelligence Report Column - 40% */}
+                            <div className="w-full md:w-[40%] p-8 md:p-12 flex flex-col gap-8 overflow-y-auto custom-scrollbar relative bg-[#010203]">
+                                {/* Close button */}
+                                <button
+                                    onClick={closeModal}
+                                    className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors z-50 p-2"
+                                >
+                                    <X size={24} strokeWidth={1.5} />
+                                </button>
+
+                                {/* Header Section */}
+                                <div className="space-y-4 relative z-10">
+                                    <div className="absolute top-0 right-0 w-64 h-64 blur-[100px] rounded-full pointer-events-none opacity-20" style={{ backgroundColor: getActTheme(activeModal).color }} />
+
+                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 }} className="flex items-center gap-3 relative z-10">
+                                        <div className="h-px w-6" style={{ backgroundColor: `${getActTheme(activeModal).color}66` }} />
+                                        <span className="text-[9px] font-mono uppercase tracking-[0.5em] leading-none translate-y-[1px]" style={{ color: `${getActTheme(activeModal).color}99` }}>
+                                            DÉCHIFFREMENT_HISTORIQUE
+                                        </span>
+                                    </motion.div>
+
+                                    <div className="space-y-1 relative z-10">
+                                        <motion.h2
+                                            initial={{ opacity: 0, y: -20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.5, delay: 0.2 }}
+                                            className="text-4xl md:text-5xl font-light uppercase tracking-tighter text-white leading-[0.9]"
+                                            style={{ textShadow: `0 0 40px ${getActTheme(activeModal).color}26` }}
+                                        >
+                                            {storyData.acts[activeModal].title.split(':')[1]?.trim() || storyData.acts[activeModal].title}
+                                        </motion.h2>
+                                        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex items-center gap-3 pt-4">
+                                            <div className="px-2 py-1 border rounded-sm flex items-center justify-center" style={{ backgroundColor: `${getActTheme(activeModal).color}1a`, borderColor: `${getActTheme(activeModal).color}33` }}>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest font-medium leading-none translate-y-[1px]" style={{ color: getActTheme(activeModal).color }}>ARCHIVE_{2026 - activeModal}</span>
+                                            </div>
+                                            <div className="h-[1px] flex-1" style={{ backgroundImage: `linear-gradient(to right, ${getActTheme(activeModal).color}66, transparent)` }} />
+                                        </motion.div>
+                                    </div>
+                                </div>
+
+                                {/* Content Sections */}
+                                <div className="flex flex-col gap-8">
+                                    <div className="prose prose-invert prose-sm max-w-none text-white/70 leading-relaxed font-light text-[14px]">
                                         {storyData.acts[activeModal].content.split('. ').map((sentence, i) => {
                                             if (!sentence.trim()) return null;
-                                            return (
-                                                <p key={i} className="mb-4">{sentence}{sentence.endsWith('.') ? '' : '.'}</p>
-                                            )
+                                            return <p key={i} className="mb-4">{sentence}{sentence.endsWith('.') ? '' : '.'}</p>;
                                         })}
                                     </div>
 
-                                    <div className="mt-auto pt-8 border-t border-white/10 shrink-0">
-                                        <div className="flex items-center gap-2 mb-6">
-                                            <Fingerprint size={16} style={{ color: getActTheme(activeModal).color }} />
-                                            <span className="text-[11px] font-mono text-white/50 uppercase tracking-[0.2em]">
-                                                Directives de Génération IA
-                                            </span>
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-2 opacity-30">
+                                            <Fingerprint size={12} style={{ color: getActTheme(activeModal).color }} />
+                                            <h4 className="text-[9px] font-medium tracking-[0.3em] uppercase text-white">DIRECTIVES_IA</h4>
                                         </div>
-                                        <div className="space-y-4">
+
+                                        <div className="space-y-3">
                                             {storyData.acts[activeModal].prompts.map((prompt, i) => (
-                                                <div key={i} className="bg-black/40 border border-white/10 p-4 relative group overflow-hidden transition-colors hover:bg-white/[0.04]">
-                                                    <div
-                                                        className="absolute top-0 left-0 w-1 h-full opacity-70 group-hover:opacity-100 transition-opacity shadow-[0_0_10px_currentColor]"
-                                                        style={{ backgroundColor: getActTheme(activeModal).color, color: getActTheme(activeModal).color }}
-                                                    />
-                                                    <p className="text-xs font-mono text-white/50 group-hover:text-white/90 transition-colors leading-relaxed pl-3 uppercase tracking-wider">
+                                                <div key={i} className="p-3 border rounded-sm relative overflow-hidden group/prompt" style={{ backgroundColor: `${getActTheme(activeModal).color}05`, borderColor: `${getActTheme(activeModal).color}0d` }}>
+                                                    <div className="absolute top-0 left-0 w-0.5 h-full opacity-50 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: getActTheme(activeModal).color }} />
+                                                    <p className="text-[10px] font-mono text-white/50 group-hover:text-white/80 transition-colors uppercase tracking-wider leading-relaxed pr-8">
                                                         {prompt}
                                                     </p>
                                                     <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            navigator.clipboard.writeText(prompt);
-                                                        }}
-                                                        className="absolute top-2 right-2 p-2 bg-black border border-white/20 rounded backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/10 text-white/60 hover:text-white hover:border-white/50"
-                                                        title="Copier le prompt"
+                                                        onClick={() => navigator.clipboard.writeText(prompt)}
+                                                        className="absolute top-2 right-2 p-1.5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/5 rounded-sm"
                                                         style={{ color: getActTheme(activeModal).color }}
                                                     >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+                                                        <Copy size={12} />
                                                     </button>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
+                                </div>
+
+                                {/* Compact Footer */}
+                                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between opacity-20">
+                                    <span className="text-[7px] font-mono tracking-widest uppercase text-white/50">LEVEL: OMEGA-4 // TS: CLASSIFIED</span>
+                                    <span className="text-[7px] font-mono tracking-[0.6em] uppercase" style={{ color: getActTheme(activeModal).color }}>STABLE</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -313,28 +398,7 @@ export default function StorySection() {
                 )}
             </AnimatePresence>
 
-            <style jsx global>{`
-                @keyframes scanVertical {
-                    0% { transform: translateY(-100%); }
-                    100% { transform: translateY(1000%); }
-                }
-                .animate-scan-vertical {
-                    animation: scanVertical 8s linear infinite;
-                }
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: rgba(0, 0, 0, 0.3);
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: rgba(255, 255, 255, 0.3);
-                }
-            `}</style>
+
         </section>
     );
 }

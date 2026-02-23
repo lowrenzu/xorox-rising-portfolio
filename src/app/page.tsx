@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
@@ -34,7 +34,6 @@ function smoothScrollTo(targetY: number, duration = 1200) {
 const SECTION_IDS = ["", "factions", "story", "creation", "media"];
 
 export default function Home() {
-  const [isTrailerModalOpen, setIsTrailerModalOpen] = useState(false);
   const isSnapping = useRef(false);
 
   // Section-snap wheel: only triggers at top/bottom edge of each section
@@ -144,25 +143,7 @@ export default function Home() {
         <MediaLibrary />
       </motion.div>
 
-      {/* Trailer Video Modal */}
-      {isTrailerModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur flex items-center justify-center p-4">
-          <button
-            className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
-            onClick={() => setIsTrailerModalOpen(false)}
-          >
-            Fermer [X]
-          </button>
-          <div className="w-full max-w-5xl aspect-video bg-black rounded-lg overflow-hidden border border-white/10 shadow-2xl">
-            <video
-              src="/assets/trailer.mp4"
-              className="w-full h-full object-cover"
-              controls
-              autoPlay
-            />
-          </div>
-        </div>
-      )}
+
     </main>
   );
 }

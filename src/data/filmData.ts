@@ -25,9 +25,9 @@ export const heroesData: Character[] = [
             fact: "Spécialiste de la critique média et des libertés.",
             power: "Capacité à fédérer les voix dissidentes."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/nicolas.png",
-        classe: "/assets/persos_de_reference/version_classe_hero/nicolas.png",
-        model: "/assets/persos_de_reference/Model_sheet_heros/nicolas.png",
+        img: "/assets/persos_de_reference/version_classe_hero/nicolas.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/nicolas.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/nicolas.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/nicolasclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/nicolas.webm"
     },
@@ -39,9 +39,9 @@ export const heroesData: Character[] = [
             fact: "Reporter de terrain infatigable.",
             power: "Courage face aux menaces."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/clemence.jpg",
-        classe: "/assets/persos_de_reference/version_classe_hero/clemence.jpg",
-        model: "/assets/persos_de_reference/Model_sheet_heros/clemence.jpg",
+        img: "/assets/persos_de_reference/version_classe_hero/clemence.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/clemence.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/clemence.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/clemenceclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/clemence.webm"
     },
@@ -53,9 +53,9 @@ export const heroesData: Character[] = [
             fact: "Expert en neurosciences et biomimétisme.",
             power: "Intelligence stratégique hors norme."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/idriss.jpg",
-        classe: "/assets/persos_de_reference/version_classe_hero/idriss.jpg",
-        model: "/assets/persos_de_reference/Model_sheet_heros/idriss.png",
+        img: "/assets/persos_de_reference/version_classe_hero/idriss.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/idriss.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/idriss.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/idrissclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/idriss.webm"
     },
@@ -67,9 +67,9 @@ export const heroesData: Character[] = [
             fact: "Voix iconique de Sud Radio.",
             power: "Capacité à galvaniser l'opinion publique."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/andre.png",
-        classe: "/assets/persos_de_reference/version_classe_hero/andre.png",
-        model: "/assets/persos_de_reference/Model_sheet_heros/andre.png",
+        img: "/assets/persos_de_reference/version_classe_hero/andre.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/andre.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/andre.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/andreclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/Andre.webm"
     },
@@ -81,9 +81,9 @@ export const heroesData: Character[] = [
             fact: "Star internationale, activiste pour la vérité.",
             power: "Influence médiatique et charisme naturel."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/beatrice.jpg",
-        classe: "/assets/persos_de_reference/version_classe_hero/beatrice.jpg",
-        model: "/assets/persos_de_reference/Model_sheet_heros/beatrice.png",
+        img: "/assets/persos_de_reference/version_classe_hero/beatrice.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/beatrice.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/beatrice.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/batriceclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/beatrice.webm"
     },
@@ -95,9 +95,9 @@ export const heroesData: Character[] = [
             fact: "Spécialiste de l'analyse des courants d'opinion numérique.",
             power: "Capacité d'infiltration et de décryptage réseau."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/abtf.jpg",
-        classe: "/assets/persos_de_reference/version_classe_hero/abtf.jpg",
-        model: "/assets/persos_de_reference/Model_sheet_heros/abtf.png",
+        img: "/assets/persos_de_reference/version_classe_hero/abtf.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/abtf.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/abtf.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/abtfclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/abtf.webm"
     },
@@ -109,9 +109,9 @@ export const heroesData: Character[] = [
             fact: "Expert en décryptage des stratégies de pouvoir.",
             power: "Analyse prédictive et anticipation."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/alexis.jpg",
-        classe: "/assets/persos_de_reference/version_classe_hero/alexis.jpg",
-        model: "/assets/persos_de_reference/Model_sheet_heros/alexis.png",
+        img: "/assets/persos_de_reference/version_classe_hero/alexis.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/alexis.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/alexis.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/alexisclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/Alexis.webm"
     },
@@ -123,9 +123,9 @@ export const heroesData: Character[] = [
             fact: "Défenseur acharné de la souveraineté.",
             power: "Leadership naturel et force de conviction."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/Charles.jpg",
-        classe: "/assets/persos_de_reference/version_classe_hero/Charles.jpg",
-        model: "/assets/persos_de_reference/Model_sheet_heros/charles.png",
+        img: "/assets/persos_de_reference/version_classe_hero/Charles.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/Charles.webp",
+        model: "/assets/persos_de_reference/Model_sheet_heros/charles.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/charlesclean.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/charles.webm"
     },
@@ -137,9 +137,9 @@ export const heroesData: Character[] = [
             fact: "Spécialiste de la lutte contre les fake news.",
             power: "Décryptage des manipulations informationnelles."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/rudy.png",
-        classe: "/assets/persos_de_reference/version_classe_hero/rudy.png",
-        model: "/assets/persos_de_reference/comploteurs/rudy.png",
+        img: "/assets/persos_de_reference/version_classe_hero/rudy.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/rudy.webp",
+        model: "/assets/persos_de_reference/comploteurs/rudy.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/rudy.jpg",
         video: "/assets/persos_de_reference/comploteurs/rudy.webm"
     },
@@ -151,9 +151,9 @@ export const heroesData: Character[] = [
             fact: "Expert en décryptage des médias.",
             power: "Analyse des narratifs dominants."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/julien.png",
-        classe: "/assets/persos_de_reference/version_classe_hero/julien.png",
-        model: "/assets/persos_de_reference/comploteurs/julien_classe.png",
+        img: "/assets/persos_de_reference/version_classe_hero/julien.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/julien.webp",
+        model: "/assets/persos_de_reference/comploteurs/julien_classe.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/julien.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/julien.webm"
     },
@@ -165,9 +165,9 @@ export const heroesData: Character[] = [
             fact: "Expert en cultures web et complotisme.",
             power: "Infiltration des réseaux sociaux."
         },
-        img: "/assets/persos_de_reference/version_classe_hero/tristan.png",
-        classe: "/assets/persos_de_reference/version_classe_hero/tristan.png",
-        model: "/assets/persos_de_reference/comploteurs/tristan.png",
+        img: "/assets/persos_de_reference/version_classe_hero/tristan.webp",
+        classe: "/assets/persos_de_reference/version_classe_hero/tristan.webp",
+        model: "/assets/persos_de_reference/comploteurs/tristan.webp",
         portrait: "/assets/persos_de_reference/portraits_heros/tristan.jpg",
         video: "/assets/persos_de_reference/heros_presentation_video/tristan.webm"
     },
@@ -210,83 +210,82 @@ export const heroesData: Character[] = [
     {
         name: "XoroX", role: "L'Architecte", cat: "mchant",
         inspiration: "Version animée du portrait cyber : gros, menaçant, trône holographique, code binaire et verrous partout, énergie bleu-vert sombre.",
-        img: "/assets/persos_de_reference/XoroX/XOROX_GOOD.jpg",
+        img: "/assets/persos_de_reference/XoroX/XOROX_GOOD.webp",
         video: "/assets/persos_de_reference/heros_presentation_video/xorox.webm"
     }
 ];
 
 export const sceneBrowserData = [
-    { title: "Infiltration New York", media: "abtf_new_york_street.png", type: "image", desc: "AubonTweet repère les sentinelles dans les rues dithered." },
+    { title: "Infiltration New York", media: "abtf_new_york_street.webp", type: "image", desc: "AubonTweet repère les sentinelles dans les rues dithered." },
     { title: "Brèche Antarctique", media: "boat_antartic.webm", type: "video", desc: "L'approche finale du noyau par la mer de glace." },
-    { title: "Complot des 3", media: "3_comploteurs.png", type: "image", desc: "Le triumvirat de l'ombre discute de la censure globale." },
+    { title: "Complot des 3", media: "3_comploteurs.webp", type: "image", desc: "Le triumvirat de l'ombre discute de la censure globale." },
     { title: "Évasion Souterraine", media: "beatrice_entrepot_fuite.webm", type: "video", desc: "Béatrice échappe in extremis aux gardes de XoroX." }
 ];
 
 export const mediaFiles = [
-    { name: "3_comploteurs.png", type: "image" },
-    { name: "3_comploteurs2.png", type: "image" },
+    { name: "3_comploteurs.webp", type: "image" },
+    { name: "3_comploteurs2.webp", type: "image" },
     { name: "abtf.webm", type: "video" },
     { name: "abtf_clem_stop_interview.webm", type: "video" },
     { name: "abtf_clemence_alien_ville.webm", type: "video" },
-    { name: "abtf_new_york_street.png", type: "image" },
+    { name: "abtf_new_york_street.webp", type: "image" },
     { name: "abtf_walk.webm", type: "video" },
     { name: "alexis.webm", type: "video" },
-    { name: "alexis_alien.png", type: "image" },
-    { name: "alexis_et_andre.png", type: "image" },
-    { name: "alexis_et_andre_good.png", type: "image" },
+    { name: "alexis_alien.webp", type: "image" },
+    { name: "alexis_et_andre.webp", type: "image" },
+    { name: "alexis_et_andre_good.webp", type: "image" },
     { name: "alexis_nicolas_entree_grotte.webm", type: "video" },
-    { name: "alie2earth.png", type: "image" },
-    { name: "alien2.jpeg", type: "image" },
+    { name: "alie2earth.webp", type: "image" },
+    { name: "alien2.webp", type: "image" },
     { name: "andre_avion.webm", type: "video" },
     { name: "andre_avion2.webm", type: "video" },
     { name: "andre_avion3.webm", type: "video" },
-    { name: "andre_charles_chateau.png", type: "image" },
-    { name: "andre_pilote.png", type: "image" },
+    { name: "andre_charles_chateau.webp", type: "image" },
+    { name: "andre_pilote.webp", type: "image" },
     { name: "andre_pose_antartique.webm", type: "video" },
     { name: "bea_conspi.webm", type: "video" },
     { name: "bea_flatteuse.webm", type: "video" },
     { name: "bea_idriss_train.webm", type: "video" },
     { name: "beat.webm", type: "video" },
-    { name: "beat_charles.png", type: "image" },
-    { name: "beat_comploteurs.png", type: "image" },
+    { name: "beat_charles.webp", type: "image" },
+    { name: "beat_comploteurs.webp", type: "image" },
     { name: "beat_vol.webm", type: "video" },
-    { name: "beatrice_clemence_serveurs.png", type: "image" },
+    { name: "beatrice_clemence_serveurs.webp", type: "image" },
     { name: "beatrice_entrepot_fuite.webm", type: "video" },
     { name: "beatrice_karate.webm", type: "video" },
     { name: "beatrice_sexy.webm", type: "video" },
-    { name: "beatrice_sexy.png", type: "image" },
+    { name: "beatrice_sexy.webp", type: "image" },
     { name: "beatrice_sexy_good.webm", type: "video" },
     { name: "beatrice_vole_carte.webm", type: "video" },
     { name: "beatrice_vole_carte2.webm", type: "video" },
     { name: "beatrice_vole_carte3.webm", type: "video" },
     { name: "boat_antartic.webm", type: "video" },
-    { name: "charles_foret.png", type: "image" },
-    { name: "charles_run.jpg", type: "image" },
+    { name: "charles_foret.webp", type: "image" },
+    { name: "charles_run.webp", type: "image" },
     { name: "charles_walk.webm", type: "video" },
     { name: "clemence.webm", type: "video" },
     { name: "ef046e70-3216-4041-954d-1489529e3638.webm", type: "video" },
-    { name: "grok-image-1501a5fa-77c8-453b-85f1-7c810bc3b977.png", type: "image" },
-    { name: "grok-image-4e97f32f-57ba-4c25-9bb5-bb68b43f7769.png", type: "image" },
-    { name: "grok-image-6f902406-d092-4aa2-bbc6-e2be03d47989.png", type: "image" },
-    { name: "grok-image-90149e5d-cc33-406d-aadc-a3b2aa67eb15.png", type: "image" },
+    { name: "grok-image-1501a5fa-77c8-453b-85f1-7c810bc3b977.webp", type: "image" },
+    { name: "grok-image-4e97f32f-57ba-4c25-9bb5-bb68b43f7769.webp", type: "image" },
+    { name: "grok-image-6f902406-d092-4aa2-bbc6-e2be03d47989.webp", type: "image" },
+    { name: "grok-image-90149e5d-cc33-406d-aadc-a3b2aa67eb15.webp", type: "image" },
     { name: "grok-video-4e97f32f-57ba-4c25-9bb5-bb68b43f7769.webm", type: "video" },
     { name: "grok-video-6c837a0d-3c8b-4293-9e29-2e0f18ad4d49.webm", type: "video" },
     { name: "grok-video-94403946-71cc-4550-a118-fa164211ae9e.webm", type: "video" },
     { name: "grok-video-a626377b-78e7-4226-b423-aef05f033bfd.webm", type: "video" },
     { name: "grok-video-e50d8679-ea11-4b1f-8b01-07cf743e1b46.webm", type: "video" },
-    { name: "heroes_arriving_antarctica.png", type: "image" },
+    { name: "heroes_arriving_antarctica.webp", type: "image" },
     { name: "idriss.webp", type: "image" },
-    { name: "idriss_action.png", type: "image" },
+    { name: "idriss_action.webp", type: "image" },
     { name: "idriss_base_1.webm", type: "video" },
-    { name: "idriss_charles_key.jpeg", type: "image" },
-    { name: "idriss_eglise.jpg", type: "image" },
+    { name: "idriss_charles_key.webp", type: "image" },
+    { name: "idriss_eglise.webp", type: "image" },
     { name: "idriss_librairie.webm", type: "video" },
     { name: "idriss_presentation_bis.webm", type: "video" },
-    { name: "idrisseglise.png", type: "image" },
-    { name: "image.jpg", type: "image" },
-    { name: "image.png", type: "image" },
+    { name: "idrisseglise.webp", type: "image" },
+    { name: "image.webp", type: "image" },
     { name: "lechoix_dans.webm", type: "video" },
-    { name: "xorox.jpg", type: "image" }
+    { name: "xorox.webp", type: "image" }
 ];
 
 export const storyData = {
@@ -355,22 +354,22 @@ export const storyData = {
             {
                 title: "Évasion Souterraine",
                 prompt: "Fast-paced action tracking shot. Beautiful blonde spy in teal tactical gear sliding elegantly under a closing blast door in a pristine white futuristic corridor. Red emergency alarms flashing, kinetic motion blur, highly stylized 3D cel-shaded rendering, comic-book ink outlines. --ar 16:9 --v 6.0",
-                image: "/assets/Scenes_action/beatrice_clemence_serveurs.png"
+                image: "/assets/Scenes_action/beatrice_clemence_serveurs.webp"
             },
             {
                 title: "L'Anomalie Épineuse",
                 prompt: "Extreme close up, macro shot. A bio-mechanical white insectoid creature with sharp black spines unfurls its limbs with sinister precision. It blends into a rocky canyon background. Glowing teal energy flows through its artificial veins. Highly detailed 3D illustration, dynamic lighting, cel-shaded texture. --ar 16:9 --v 6.0",
-                image: "/assets/persos_de_reference/creatures/insecte/insecte_blanc.png"
+                image: "/assets/persos_de_reference/creatures/insecte/insecte_blanc.webp"
             },
             {
                 title: "Le Dôme Antarctique",
                 prompt: "Epic establishing wide shot. An ancient, massive high-tech fortress embedded in a frozen Himalayan glacial cliff. A glowing teal shield dome hums with energy against a dark, stormy sky. Two small adventurers holding glowing torches look up at the structure. 3D animated style, vibrant contrast, hyper-detailed environment. --ar 16:9 --v 6.0",
-                image: "/assets/Scenes_action/dome_atlantide.png"
+                image: "/assets/Scenes_action/dome_atlantide.webp"
             },
             {
                 title: "Infiltration Numérique",
                 prompt: "Dutch angle dynamic shot. A stealthy hacker in dark streetwear crouches on a wet neon-lit cyberpunk rooftop. Rain falling, reflecting bright teal and gold city lights. Holographic interfaces floating around his arm. Smooth 60fps animation, 3D cel-shaded comic style, intense atmosphere. --ar 16:9 --v 6.0",
-                image: "/assets/Scenes_action/abtf_new_york_street.png"
+                image: "/assets/Scenes_action/abtf_new_york_street.webp"
             }
         ]
     }
