@@ -13,6 +13,7 @@ export type Character = {
     model?: string;
     portrait?: string;
     video?: string;
+    themeColor?: string;
 };
 
 export const heroesData: Character[] = [

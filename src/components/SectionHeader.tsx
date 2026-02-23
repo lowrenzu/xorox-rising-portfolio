@@ -26,8 +26,8 @@ export default function SectionHeader({
     const isCenter = alignment === "center";
 
     // Stable random values to prevent React impure render warnings
-    const glitchDelay1 = React.useMemo(() => Math.random() * 10 + 4, []);
-    const glitchDelay2 = React.useMemo(() => Math.random() * 12 + 6, []);
+    const [glitchDelay1] = React.useState(() => Math.random() * 10 + 4);
+    const [glitchDelay2] = React.useState(() => Math.random() * 12 + 6);
 
     return (
         <div className={`relative flex flex-col ${isCenter ? "items-center text-center" : "items-start text-left"} ${className || "mb-14"}`}>

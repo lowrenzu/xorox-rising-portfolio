@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 
@@ -31,8 +31,8 @@ export default function Hero() {
     const videoRef1 = useRef<HTMLVideoElement>(null);
 
     // Stable random values to prevent React impure render warnings
-    const glitchDelay1 = useMemo(() => Math.random() * 5 + 2, []);
-    const glitchDelay2 = useMemo(() => Math.random() * 8 + 3, []);
+    const [glitchDelay1] = useState(() => Math.random() * 5 + 2);
+    const [glitchDelay2] = useState(() => Math.random() * 8 + 3);
 
     const handleVideoEnd = (layer: 0 | 1) => {
         if (layer !== visibleLayer) return;
@@ -104,7 +104,7 @@ export default function Hero() {
                     muted
                     playsInline
                     preload="auto"
-                    onCanPlay={() => handleCanPlay(0)}
+                    onLoadedData={() => handleCanPlay(0)}
                     onEnded={() => handleVideoEnd(0)}
                 />
 
@@ -117,7 +117,7 @@ export default function Hero() {
                     muted
                     playsInline
                     preload="auto"
-                    onCanPlay={() => handleCanPlay(1)}
+                    onLoadedData={() => handleCanPlay(1)}
                     onEnded={() => handleVideoEnd(1)}
                 />
 

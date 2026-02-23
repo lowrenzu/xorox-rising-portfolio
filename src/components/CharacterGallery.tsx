@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { heroesData, type Character } from "@/data/filmData";
 import CharacterModal from "./CharacterModal";
-import { cn } from "@/lib/utils";
 import SectionHeader from "./SectionHeader";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
 
@@ -24,7 +23,7 @@ export default function CharacterGallery() {
 
     const openCharacter = (char: Character, themeColor: string) => {
         click(); modalOpen();
-        setSelectedCharacter({ ...char, themeColor } as any);
+        setSelectedCharacter({ ...char, themeColor });
     };
     const closeCharacter = () => { modalClose(); setSelectedCharacter(null); };
     const changeCategory = (id: string) => { hover(); setActiveCategory(id); };
@@ -146,7 +145,8 @@ export default function CharacterGallery() {
                                 {char.video || (char.img && char.img.endsWith('.webm')) ? (
                                     <video
                                         src={char.video || char.img}
-                                        className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
+                                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                                        autoPlay
                                         muted
                                         loop
                                         playsInline

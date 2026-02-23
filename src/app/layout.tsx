@@ -26,7 +26,6 @@ export default function RootLayout({
       </head>
       <body className={`${outfit.variable} antialiased bg-background text-foreground`}>
         {children}
-        <SoundToggle />
       </body>
     </html>
   );

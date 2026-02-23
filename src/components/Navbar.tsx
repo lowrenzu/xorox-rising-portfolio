@@ -63,20 +63,10 @@ export default function Navbar() {
         audio.addEventListener("pause", onPause);
         audio.addEventListener("ended", onEnded);
 
-        // Audio Ducking System - Lowers volume when character videos are playing
-        const handleDuck = () => { audio.volume = 0.2; };
-        const handleRestore = () => { audio.volume = 1.0; };
-        window.addEventListener('character-video-start', handleDuck);
-        window.addEventListener('character-video-stop', handleRestore);
-        window.addEventListener('character-modal-close', handleRestore);
-
         return () => {
             audio.removeEventListener("play", onPlay);
             audio.removeEventListener("pause", onPause);
             audio.removeEventListener("ended", onEnded);
-            window.removeEventListener('character-video-start', handleDuck);
-            window.removeEventListener('character-video-stop', handleRestore);
-            window.removeEventListener('character-modal-close', handleRestore);
         };
     }, []);
 

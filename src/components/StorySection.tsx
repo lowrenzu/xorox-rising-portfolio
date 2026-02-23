@@ -60,7 +60,7 @@ export default function StorySection() {
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/4 mx-auto md:mx-0 flex-shrink-0"
+                        className="w-2/3 sm:w-1/2 md:w-1/4 lg:w-1/5 mx-auto md:mx-0 flex-shrink-0"
                     >
                         <div className="relative w-full aspect-[2/3] rounded-sm border border-white/10 overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] group h-full">
                             <img
@@ -74,7 +74,7 @@ export default function StorySection() {
                     </motion.div>
 
                     {/* Right: Text Boxes */}
-                    <div className="w-full md:w-2/3 lg:w-3/4 flex flex-col justify-between gap-4">
+                    <div className="w-full md:w-3/4 lg:w-4/5 flex flex-col justify-between gap-6">
                         {/* P1 Main Description */}
                         <motion.p
                             initial={{ opacity: 0, y: 10 }}
@@ -261,7 +261,7 @@ export default function StorySection() {
                                         </div>
                                     </div>
 
-                                    <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-widest mb-6 leading-tight shrink-0 pl-4 border-l-4" style={{ borderColor: getActTheme(activeModal).color }}>
+                                    <h3 className="text-2xl md:text-3xl font-light text-white uppercase tracking-widest mb-6 leading-tight shrink-0 pl-4 border-l-4" style={{ borderColor: getActTheme(activeModal).color }}>
                                         {storyData.acts[activeModal].title.split(':')[1]?.trim() || storyData.acts[activeModal].title}
                                     </h3>
 

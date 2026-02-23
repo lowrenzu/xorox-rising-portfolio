@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Maximize2, PlayCircle } from "lucide-react";
+import { X, Maximize2 } from "lucide-react";
 import { mediaFiles, sceneBrowserData } from "@/data/filmData";
 import SectionHeader from "./SectionHeader";
 

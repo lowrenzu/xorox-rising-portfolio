@@ -60,7 +60,7 @@ export default function CharacterModal({
     const activeMedia = mediaList[activeIndex];
 
     // Extract dynamic theme color passed from CharacterGallery, or fallback to teal
-    const themeColor = (character as any).themeColor || "#25d1f4";
+    const themeColor = character.themeColor || "#25d1f4";
 
     return (
         <AnimatePresence>
@@ -213,7 +213,7 @@ export default function CharacterModal({
                                 </motion.h2>
                                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex items-center gap-3 pt-4">
                                     <div className="px-2 py-1 border rounded-sm flex items-center justify-center" style={{ backgroundColor: `${themeColor}1a`, borderColor: `${themeColor}33` }}>
-                                        <span className="text-[10px] font-mono uppercase tracking-widest font-bold leading-none translate-y-[1px]" style={{ color: themeColor }}>{character.role}</span>
+                                        <span className="text-[10px] font-mono uppercase tracking-widest font-medium leading-none translate-y-[1px]" style={{ color: themeColor }}>{character.role}</span>
                                     </div>
                                     <div className="h-[1px] flex-1" style={{ backgroundImage: `linear-gradient(to right, ${themeColor}66, transparent)` }} />
                                 </motion.div>
@@ -226,7 +226,7 @@ export default function CharacterModal({
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 opacity-30">
                                     <Database size={12} style={{ color: themeColor }} />
-                                    <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-white">DONNÉES_RÉPERTORIÉES</h4>
+                                    <h4 className="text-[9px] font-medium tracking-[0.3em] uppercase text-white">DONNÉES_RÉPERTORIÉES</h4>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-3">
@@ -252,7 +252,7 @@ export default function CharacterModal({
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 opacity-30">
                                     <Terminal size={12} style={{ color: themeColor }} />
-                                    <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-white">SYNTHÈSE_COMPORTEMENTALE</h4>
+                                    <h4 className="text-[9px] font-medium tracking-[0.3em] uppercase text-white">SYNTHÈSE_COMPORTEMENTALE</h4>
                                 </div>
 
                                 <div className="relative p-6 bg-white/[0.015] border border-white/5 rounded-sm group/essay">

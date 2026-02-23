@@ -8,7 +8,18 @@ import { storyData } from "@/data/filmData";
 import SectionHeader from "./SectionHeader";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
 
-const packFiles = [
+interface CreationItem {
+    id: string;
+    title: string;
+    subtitle: string;
+    image: string;
+    content: string;
+    isVideo?: boolean;
+    themeColor?: string;
+    copyIndex?: number;
+}
+
+const packFiles: CreationItem[] = [
     {
         id: "README.md",
         title: "Pack Complet",
@@ -79,12 +90,12 @@ const Artifact3D = dynamic(() => import("./Artifact3D"), { ssr: false });
 export default function CreationSection() {
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
     const [activeModal, setActiveModal] = useState<"images" | "videos" | "pack" | null>(null);
-    const [selectedItem, setSelectedItem] = useState<any | null>(null);
+    const [selectedItem, setSelectedItem] = useState<CreationItem | null>(null);
     const { click, hover, modalOpen, modalClose } = useSoundEngine();
 
     const openModal = (type: "images" | "videos" | "pack") => { click(); modalOpen(); setActiveModal(type); };
     const closeModal = () => { modalClose(); setActiveModal(null); };
-    const openItem = (item: any) => { click(); modalOpen(); setSelectedItem(item); };
+    const openItem = (item: CreationItem) => { click(); modalOpen(); setSelectedItem(item); };
     const closeItem = () => { modalClose(); setSelectedItem(null); };
 
     const handleCopy = (text: string, index: number) => {
@@ -93,7 +104,7 @@ export default function CreationSection() {
         setTimeout(() => setCopiedIndex(null), 2000);
     };
 
-    const renderFiches = (items: any[], themeColor: string, hoverBorderColor: string) => {
+    const renderFiches = (items: CreationItem[], themeColor: string) => {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2">
                 {items.map((item, i) => (
@@ -120,8 +131,11 @@ export default function CreationSection() {
                             <div className="relative flex-grow w-full overflow-hidden">
                                 <video
                                     src={item.image}
-                                    className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105 filter group-hover:grayscale-0"
-                                    muted loop playsInline
+                                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
                                 />
                             </div>
                         ) : (
@@ -180,9 +194,9 @@ export default function CreationSection() {
         });
     };
 
-    const getVideosData = () => {
+    const getVideosData = (): CreationItem[] => {
         // We know storyData.promptLibrary.videos contains image paths like "/assets/Scenes_action/..."
-        return storyData.promptLibrary.videos.map((item: any, i: number) => ({
+        return storyData.promptLibrary.videos.map((item, i: number) => ({
             id: `SYS_VID_0${i + 1}`,
             title: item.title,
             subtitle: "/video prompt",
@@ -266,7 +280,7 @@ export default function CreationSection() {
                             <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent mb-6 group-hover:from-teal-accent/30 transition-colors duration-500" />
 
                             <p className="text-white/40 text-sm leading-relaxed font-light group-hover:text-white/70 transition-colors duration-300 pr-4">
-                                Ouvrir le terminal pour consulter les 5 règles d'or visuelles structurées formellement pour le rendu 3D cel-shaded.
+                                Ouvrir le terminal pour consulter les 5 règles d&apos;or visuelles structurées formellement pour le rendu 3D cel-shaded.
                             </p>
                         </div>
                     </motion.button>
@@ -317,7 +331,7 @@ export default function CreationSection() {
                             <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent mb-6 group-hover:from-gold-accent/30 transition-colors duration-500" />
 
                             <p className="text-white/40 text-sm leading-relaxed font-light group-hover:text-white/70 transition-colors duration-300 pr-4">
-                                Accéder aux prompts cinématiques pour l'animation des séquences clés, orchestrant rythmes, focales et actions.
+                                Accéder aux prompts cinématiques pour l&apos;animation des séquences clés, orchestrant rythmes, focales et actions.
                             </p>
                         </div>
                     </motion.button>
@@ -412,7 +426,7 @@ export default function CreationSection() {
                                 <div className="space-y-4">
                                     <div className="absolute top-0 right-0 w-96 h-96 blur-[150px] rounded-full pointer-events-none opacity-20" style={{ backgroundColor: activeModal === 'images' ? '#25d1f4' : activeModal === 'videos' ? '#f5b041' : '#a855f7' }} />
 
-                                    <div className="absolute -top-4 -left-2 text-[80px] font-bold font-mono text-white/[0.02] pointer-events-none select-none leading-none tracking-tighter">
+                                    <div className="absolute -top-4 -left-2 text-[80px] font-light font-mono text-white/[0.02] pointer-events-none select-none leading-none tracking-tighter">
                                         TERM
                                     </div>
 
@@ -459,10 +473,10 @@ export default function CreationSection() {
 
                                 <div className="relative z-10 w-full">
                                     {activeModal === "images"
-                                        ? renderFiches(getImagesData(), '#25d1f4', 'teal-accent')
+                                        ? renderFiches(getImagesData(), '#25d1f4')
                                         : activeModal === "videos"
-                                            ? renderFiches(getVideosData(), '#f5b041', 'gold-accent')
-                                            : renderFiches(packFiles, '#a855f7', '[#a855f7]')
+                                            ? renderFiches(getVideosData(), '#f5b041')
+                                            : renderFiches(packFiles, '#a855f7')
                                     }
                                 </div>
                             </div>
@@ -506,7 +520,7 @@ export default function CreationSection() {
                             <div className="w-full md:w-1/2 lg:w-2/5 flex flex-col justify-center max-h-[50vh] md:max-h-[75vh] overflow-y-auto pr-2 pb-8">
                                 <div className="mb-4 shrink-0">
                                     <span className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-80" style={{ color: selectedItem.themeColor }}>
-                                        {selectedItem.id} // {selectedItem.subtitle}
+                                        {selectedItem.id} {"//"} {selectedItem.subtitle}
                                     </span>
                                     <h3 className="text-3xl md:text-4xl font-light uppercase text-white mt-2 mb-4 leading-tight">
                                         {selectedItem.title}
