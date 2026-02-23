@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import SoundToggle from "@/components/SoundToggle";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className={`${outfit.variable} antialiased bg-background text-foreground`}>
         {children}
         <SoundToggle />
+        <SpeedInsights />
       </body>
     </html>
   );
