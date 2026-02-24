@@ -1,4 +1,5 @@
 "use client";
+// Force rebuild v3 - aesthetic fixes
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { X, Maximize2, FileText, Layout, Palette, Play, Layers, MessageSquare, Check, Copy, Share2, ExternalLink, Database, Image as ImageIcon, Terminal } from "lucide-react";
