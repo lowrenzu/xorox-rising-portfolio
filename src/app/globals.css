@@ -5,18 +5,38 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
+
   --color-teal-accent: #25d1f4;
   --color-gold-accent: #f5b041;
-  
+  --color-purple-accent: #a855f7;
+
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 :root {
-  --background: #030406;
+  --background: #010103;
   --foreground: #eef1f6;
   --glass-bg: rgba(10, 15, 20, 0.4);
   --glass-border: rgba(255, 255, 255, 0.05);
+
+  /* Mouse Position Tracking (updated by MouseTracker component)
+     Values range from -1 to 1, normalized from viewport center */
+  --mx: 0;
+  /* Horizontal position: -1 (left) to 1 (right) */
+  --my: 0;
+  /* Vertical position: -1 (top) to 1 (bottom) */
+
+  /* Dynamic Gradient Colors (updated per section by useSectionObserver hook)
+     These change smoothly as user scrolls through different sections
+     Used by .animated-gradient-bg class for immersive backgrounds */
+  --c1: rgba(37, 209, 244, 0.4);
+  /* Primary gradient color (Teal) */
+  --c2: rgba(168, 85, 247, 0.45);
+  /* Secondary gradient color (Purple) */
+  --c3: rgba(245, 176, 65, 0.4);
+  /* Tertiary gradient color (Gold) */
+
+  transition: --c1 1.5s ease, --c2 1.5s ease, --c3 1.5s ease;
 }
 
 body {
@@ -26,6 +46,17 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* Custom Utilities for aesthetic design */
@@ -33,25 +64,84 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .glass-panel {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
     border: 1px solid var(--glass-border);
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
   }
-  
+
+  .glass-panel-opaque {
+    background: rgba(10, 15, 20, 0.7);
+    -webkit-backdrop-filter: blur(32px);
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .dynamic-shadow {
+    /* Shadow moves opposite to mouse: -20px * var(--mx) */
+    box-shadow:
+      calc(var(--mx) * -6px) calc(var(--my) * -6px) 20px rgba(0, 0, 0, 0.35),
+      calc(var(--mx) * -2px) calc(var(--my) * -2px) 8px rgba(0, 0, 0, 0.25);
+    transition: box-shadow 0.2s ease-out;
+  }
+
+  .dynamic-shadow-lg {
+    box-shadow:
+      calc(var(--mx) * -12px) calc(var(--my) * -12px) 45px rgba(0, 0, 0, 0.5),
+      calc(var(--mx) * -4px) calc(var(--my) * -4px) 15px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s ease-out;
+  }
+
   .text-glow-teal {
     text-shadow: 0 0 15px rgba(37, 209, 244, 0.5);
   }
-  
+
   .text-glow-gold {
     text-shadow: 0 0 15px rgba(245, 176, 65, 0.5);
   }
-  
+
   .glitch-effect {
     position: relative;
     /* Basic glitch placeholder, will be animated by framer motion */
+  }
+
+  .animated-gradient-bg {
+    background-color: #010103;
+    background-image:
+      radial-gradient(circle at 20% 30%, var(--c1), transparent 70%),
+      radial-gradient(circle at 80% 20%, var(--c2), transparent 70%),
+      radial-gradient(circle at 10% 80%, var(--c3), transparent 70%),
+      radial-gradient(circle at 90% 90%, var(--c1), transparent 70%),
+      radial-gradient(circle at 50% 50%, var(--c2), transparent 70%);
+    background-size: 200% 200%;
+    transition: background-image 1.5s ease;
+    background-attachment: fixed;
+    animation: meshAnimation 25s ease-in-out infinite alternate;
+  }
+}
+
+/* Optimized mesh animation - Only animates background-position for better performance
+   GPU-friendly: avoids animating background-size which is expensive */
+@keyframes meshAnimation {
+
+  0%,
+  100% {
+    background-position: 0% 0%;
+  }
+
+  25% {
+    background-position: 100% 0%;
+  }
+
+  50% {
+    background-position: 100% 100%;
+  }
+
+  75% {
+    background-position: 0% 100%;
   }
 }
 
@@ -61,22 +151,41 @@ body {
 }
 
 * {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Scan vertical animation — from StorySection */
 @keyframes scanVertical {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(1000%); }
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(1000%);
+  }
 }
+
 .animate-scan-vertical {
   animation: scanVertical 8s linear infinite;
 }
 
 /* Custom scrollbar for modals */
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 6px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
 
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

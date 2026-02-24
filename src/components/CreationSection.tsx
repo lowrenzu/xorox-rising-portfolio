@@ -1,12 +1,12 @@
 "use client";
-
-import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Lightbulb, Copy, Check, X, Expand, Database, Activity, Fingerprint } from "lucide-react";
-import { useState } from "react";
-import dynamic from 'next/dynamic';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import Image from "next/image";
+import { X, Maximize2, FileText, Layout, Palette, Play, Layers, MessageSquare, Check, Copy, Share2, ExternalLink, Database, Image as ImageIcon, Terminal } from "lucide-react";
+import { useState, useRef } from "react";
 import { storyData } from "@/data/filmData";
 import SectionHeader from "./SectionHeader";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
+import { creationData } from "@/data/creationData";
 
 interface CreationItem {
     id: string;
@@ -19,84 +19,55 @@ interface CreationItem {
     copyIndex?: number;
 }
 
-const packFiles: CreationItem[] = [
-    {
-        id: "README.md",
-        title: "Pack Complet",
-        subtitle: "INFO",
-        image: "/images/pack_complet.webp",
-        content: `📁 PACK PRODUCTION COMPLET – Les Gardiens de la Vérité\nCourt-métrage animation 3D cel-shaded BD moderne 8 min 30 s\nStyle : Arcane + Indiana Jones & le Temple Maudit 2026\nThème 100 % lore IS-BE / Planète-prison / Artefact de Vérité\nCréé avec Grok – Février 2026\n\nContenu :\n- Histoire complète\n- Personnages (designs fixes)\n- Storyboard + timings\n- Script voix-off prêt à doubler\n- Prompts images & vidéo 2026\n- Workflow outils IA\n- Liens directs outils\n\nPrêt à générer le film avec Runway Gen-4.5 + Kling 3.0 + Veo 3.1 !`
-    },
-    {
-        id: "01_SYNOPSIS.md",
-        title: "Synopsis",
-        subtitle: "HISTOIRE",
-        image: "/assets/Scenes_action/andre_charles_chateau.webp",
-        content: `Depuis des trillions d’années, les IS-BE créent l’univers par illusion. Xorox, entité IS-BE corrompue de l’Ancien Empire, a transformé la Terre en planète-prison avec amnésie forcée (30 000 av. J.-C.).\n1947 : crash Roswell → Airl révèle tout à Matilda.\nAujourd’hui : Xorox + Tristan, Dr Rudy, Julien « Shadow » censurent le monde.\n8 héros découvrent l’Artefact de Vérité (base Domaine Himalaya 8 500 av. J.-C.) et révèlent :\n• Création univers IS-BE\n• Dinosaures atomisés (70 M)\n• Atlantide / Lémurie\n• Bataillon Perdu\n• Futur : libération ou prison éternelle\nFin épique + post-crédits teaser.`
-    },
-    {
-        id: "02_PERSONNAGES.md",
-        title: "Personnages",
-        subtitle: "CASTING",
-        image: "/assets/persos_de_reference/version_classe_hero/nicolas.webp",
-        content: `HÉROS (3D constants) :\nClémence – rousse, veste cuir rouge, lunettes high-tech\nAndré – barbu musclé, veste kaki\nBéatrice – cheveux bleus, hoodie LED noir\nIdriss – pilote marocain, blouson aviateur\nAlexis – geek lunettes rondes\nNicolas – cheveux longs tatoué, veste jean\nCharles – musclé dreads\nABTF – grand capuche mystérieux\n\nMÉCHANTS :\nXorox – silhouette noire, yeux rouge, tentacules énergie\nTristan – costume gris anthracite, sourire carnassier\nDr Rudy – blouse blanche, chignon strict\nJulien « Shadow » – hoodie noir luxe, tatouages digitaux, drones`
-    },
-    {
-        id: "03_STORYBOARD.md",
-        title: "Storyboard",
-        subtitle: "TIMINGS",
-        image: "/assets/Scenes_action/eclairage.webp",
-        content: `0:00-0:50 Scène 1 – Vol Louvre + poursuite moto Paris\n0:50-2:00 Scène 2 – Planque Tour Eiffel + hologramme Xorox & comploteurs\n2:00-2:30 Scène 3 – Départ avion\n3:10-4:00 Scène 5 – Course ravin Himalaya\n4:00-4:40 Scène 6 – Combat dinosaures spectraux « Amnésie ! »\n6:20-7:20 Scène 9 – Activation Artefact + timeline holographique complète lore\n8:00-8:30 Scène 11 – Falaise lever soleil + post-crédits`
-    },
-    {
-        id: "04_SCRIPT.txt",
-        title: "Script Voix-Off",
-        subtitle: "DIALOGUES",
-        image: "/images/script_voix_off.webp",
-        content: `Narratrice 0:00-0:15 : « Depuis des trillions d’années, les IS-BE créent l’univers par pure illusion… Mais Xorox a fait de la Terre une planète-prison. Aujourd’hui, huit gardiens vont briser les chaînes. »\nClémence 0:15 : « 1947… Airl a tout révélé à Matilda ! La Terre est une prison ! »\nAndré : « Vite, ils arrivent ! »\nBéatrice : « L’Artefact est dans le temple himalayen… il contient tout ! »\nXorox : « La vérité ne sortira JAMAIS de ma planète-prison ! »\nTristan : « Campagne Fake News Alien activée ! »\nDr Rudy : « Science officielle : tout est faux. »\nJulien Shadow : « VeilNet, coupez-les du monde ! »\nTous : « POUR NOS MÉMOIRES IS-BE ! POUR LIBÉRER LA PLANÈTE ! »\nNicolas : « Je tombe ! »\nABTF : « Pas aujourd’hui, frère IS-BE ! »\nMonstres : « Amnésie… Amnésie… »\nXorox climax : « LA TERRE RESTE MA PRISON ! »\nNarratrice : « Trillions d’années… dinosaures atomisés… Atlantide… Roswell… le futur s’ouvre ! »\nClémence fin : « La vérité est libre. À nous de réveiller les milliards d’IS-BE qui dorment encore. »\nXorox post-crédits : « Ce n’est… que le début. »`
-    },
-    {
-        id: "05_PROMPTS_IMG.md",
-        title: "Prompts Clés",
-        subtitle: "IMAGES",
-        image: "/images/prompts_cles.webp",
-        content: `Utilise ces 5 images comme Character Reference dans tous les outils :\n(les 5 images que j’ai déjà générées pour toi sont à utiliser directement)`
-    },
-    {
-        id: "06_PROMPTS_VID.md",
-        title: "Prompts Vidéo",
-        subtitle: "ANIMATION 2026",
-        image: "/images/prompts_video.webp",
-        content: `Instructions communes (copier en premier) :\n"Animation 3D cel-shaded BD moderne ultra dynamique style Arcane + Indiana Jones Temple of Doom 2026. Personnages 100% constants identiques aux références : [liste complète personnages] Caméra fluide, éclairages dramatiques, 4K 24fps"\n\nScène 5 ravin : "Course poursuite épique 8 héros corniche himalayenne 1000m vide, rochers tombent, vent neige, ABTF grappin quantique sauve Nicolas..."\n\nScène 9 climax : "Cristal Artefact explose hologramme timeline arc-en-ciel : IS-BE trillions années, dinosaures, Atlantide, Roswell Airl Matilda..."\n\n(les 7 prompts complets précédemment fournis)`
-    },
-    {
-        id: "07_WORKFLOW.md",
-        title: "Workflow",
-        subtitle: "PRODUCTION",
-        image: "/images/workflow_prod.webp",
-        content: `1. Upload les 5 images clés comme référence\n2. Génère clips avec Runway Gen-4.5 / Kling 3.0 / Veo 3.1\n3. Monte dans CapCut 2026 + voix-off\n4. Ajoute musique Two Steps From Hell\n5. Export 4K → ton film est prêt !`
-    },
-    {
-        id: "08_LIENS_IA.txt",
-        title: "Liens Outils IA",
-        subtitle: "RESOURCES",
-        image: "/images/liens_outils.webp",
-        content: `Runway Gen-4.5 → https://runwayml.com\nKling AI 3.0 → https://klingai.com\nLuma Dream Machine Ray-3 → https://lumalabs.ai/dream-machine\nGoogle Veo 3.1 → https://deepmind.google/models/veo\nOpenAI Sora 2 → https://sora.com\nCapCut 2026 → application ou web`
-    }
-];
 
-const Artifact3D = dynamic(() => import("./Artifact3D"), { ssr: false });
 
 export default function CreationSection() {
+    const { playSound } = useSoundEngine() as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-    const [activeModal, setActiveModal] = useState<"images" | "videos" | "pack" | null>(null);
-    const [selectedItem, setSelectedItem] = useState<CreationItem | null>(null);
-    const { click, hover, modalOpen, modalClose } = useSoundEngine();
+    const [activeModal, setActiveModal] = useState<"images" | "videos" | "pack" | "genese" | "art" | "casting" | "storyboard" | "scenario" | null>(null);
+    const [selectedItem, setSelectedItem] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
 
-    const openModal = (type: "images" | "videos" | "pack") => { click(); modalOpen(); setActiveModal(type); };
-    const closeModal = () => { modalClose(); setActiveModal(null); };
-    const openItem = (item: CreationItem) => { click(); modalOpen(); setSelectedItem(item); };
-    const closeItem = () => { modalClose(); setSelectedItem(null); };
+    const containerRef = useRef<HTMLDivElement>(null);
+    const mouseX = useMotionValue<number>(0);
+    const mouseY = useMotionValue<number>(0);
+
+    const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        mouseX.set(x);
+        mouseY.set(y);
+    };
+
+    const parallaxX3 = useTransform(springX, [-0.5, 0.5], [-15, 15]);
+    const parallaxY3 = useTransform(springY, [-0.5, 0.5], [-15, 15]);
+
+    const openModal = (type: "images" | "videos" | "pack" | "genese" | "art" | "casting" | "storyboard" | "scenario") => {
+        playSound?.("click");
+        setActiveModal(type);
+    };
+
+    const closeModal = () => {
+        playSound?.("click");
+        setActiveModal(null);
+    };
+
+    const openItem = (item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+        playSound?.("hover");
+        setSelectedItem(item);
+    };
+
+    const closeItem = () => {
+        playSound?.("click");
+        setSelectedItem(null);
+    };
+
+    const hover = () => playSound?.("hover");
 
     const handleCopy = (text: string, index: number) => {
         navigator.clipboard.writeText(text);
@@ -112,57 +83,38 @@ export default function CreationSection() {
                         key={i}
                         onClick={() => openItem({ ...item, themeColor, copyIndex: i + (themeColor === '#f5b041' ? 100 : themeColor === '#a855f7' ? 200 : 0) })}
                         onHoverStart={() => hover()}
-                        onMouseEnter={(e) => {
-                            const video = e.currentTarget.querySelector('video');
-                            if (video) video.play().catch(() => { });
-                        }}
-                        onMouseLeave={(e) => {
-                            const video = e.currentTarget.querySelector('video');
-                            if (video) video.pause();
-                        }}
-                        className={`relative flex flex-col w-full aspect-[4/3] sm:aspect-[4/3] lg:aspect-video xl:aspect-[4/3] group cursor-pointer rounded-none overflow-hidden border border-white/5 bg-[#020304] hover:bg-[#030608] hover:border-[${themeColor}]/[0.3] transition-all duration-500`}
+                        className="relative flex flex-col w-full aspect-[4/3] group cursor-pointer rounded-none overflow-hidden border border-white/5 bg-black/70 hover:bg-black/90 transition-all duration-500"
                     >
-                        {/* Geometric Corners */}
                         <div className="absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none" style={{ borderColor: themeColor }} />
                         <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none" style={{ borderColor: themeColor }} />
 
-                        {/* Image/Video Layer */}
                         {item.isVideo ? (
                             <div className="relative flex-grow w-full overflow-hidden">
                                 <video
                                     src={item.image}
                                     className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                                    autoPlay
-                                    muted
-                                    loop
-                                    playsInline
+                                    autoPlay muted loop playsInline
                                 />
                             </div>
                         ) : (
                             <div className="relative flex-grow w-full overflow-hidden">
-                                <img
+                                <Image
                                     src={item.image}
                                     alt={item.title}
-                                    className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
-                                    onError={(e) => {
-                                        (e.target as HTMLImageElement).src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='; // transparent 1x1 fallback
-                                    }}
+                                    fill
+                                    className="object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
                                 />
                             </div>
                         )}
 
-                        {/* Dark Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#010203] via-[#010203]/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500 z-10 pointer-events-none" />
 
-                        {/* Content Layer */}
-                        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 flex flex-col justify-end z-20 pointer-events-none">
+                        <div className="absolute inset-x-0 bottom-0 p-4 flex flex-col justify-end z-20 pointer-events-none">
                             <div className="transform transition-all duration-500 flex flex-col items-start w-full">
-                                <div className="flex justify-between items-center w-full mb-2">
-                                    <span className="text-[9px] font-mono tracking-widest uppercase opacity-80 drop-shadow-md" style={{ color: themeColor }}>
-                                        {item.id} {"//"} {item.subtitle}
-                                    </span>
-                                </div>
-                                <h3 className="text-lg md:text-xl font-light uppercase text-white/90 group-hover:text-white tracking-widest leading-none transition-colors duration-300 border-l pl-2" style={{ borderColor: themeColor }}>
+                                <span className="text-[9px] font-mono tracking-widest uppercase opacity-80 drop-shadow-md mb-2" style={{ color: themeColor }}>
+                                    {item.id} {"//"} {item.subtitle}
+                                </span>
+                                <h3 className="text-lg font-light uppercase text-white/90 group-hover:text-white tracking-widest leading-none transition-colors duration-300 border-l pl-2" style={{ borderColor: themeColor }}>
                                     {item.title}
                                 </h3>
                                 <div className="h-px w-full mt-2" style={{ background: `linear-gradient(to right, ${themeColor}, transparent)` }} />
@@ -185,220 +137,264 @@ export default function CreationSection() {
         return storyData.promptLibrary.images.map((prompt: string, i: number): CreationItem => {
             const [title, ...descArr] = prompt.split(':');
             return {
-                id: `SYS_IMG_0${i + 1}`,
+                id: `SYS_IMG_0${i + 1} `,
                 title: title.trim(),
                 subtitle: "/imagine prompt",
                 image: previewImages[i] || previewImages[0],
-                content: `/imagine prompt:\n${descArr.join(':').trim()}\n--ar 16:9 --v 6.0`
+                content: `/imagine prompt: \n${descArr.join(':').trim()} \n--ar 16:9 --v 6.0`
             };
         });
     };
 
     const getVideosData = (): CreationItem[] => {
         return storyData.promptLibrary.videos.map((item, i: number): CreationItem => ({
-            id: `SYS_VID_0${i + 1}`,
+            id: `SYS_VID_0${i + 1} `,
             title: item.title,
             subtitle: "/video prompt",
-            image: item.image, // Some are .png, some are .jpg. If it's a video file, we play it.
-            content: `/video prompt:\n${item.prompt}`,
+            image: item.image,
+            content: `/video prompt: \n${item.prompt}`,
             isVideo: item.image?.endsWith('.webm') || item.image?.endsWith('.mp4')
         }));
     };
 
     return (
-        <section className="py-24 bg-[#010203] relative border-t border-glass-border overflow-hidden">
-            {/* Cyberpunk Grid Background */}
-            <div
-                className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                style={{
-                    backgroundImage: `linear-gradient(var(--teal-accent) 1px, transparent 1px), linear-gradient(90deg, var(--teal-accent) 1px, transparent 1px)`,
-                    backgroundSize: '40px 40px',
-                }}
-            />
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-                <SectionHeader
-                    title="Création & Synthèse"
-                    label="// DOSSIER : GENÈSE"
-                    description="Accès au terminal de création — visualisez les instructions qui ont façonné l'esthétique et les séquences animées."
-                    alignment="center"
-                />
+        <section
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            className="min-h-screen py-24 relative bg-[#010103]/40 flex flex-col justify-center"
+        >
+            {/* Background removed - cleaner look */}
 
-                {/* 3D Artifact Display */}
-                <div className="w-full h-32 md:h-48 my-8 relative flex justify-center items-center">
-                    <div className="absolute inset-0 bg-teal-accent/[0.04] blur-[120px] rounded-full pointer-events-none" />
-                    <div className="scale-[3] md:scale-[5] relative z-10 transition-transform hover:scale-[3.2] md:hover:scale-[5.2]">
-                        <Artifact3D />
-                    </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full">
+                <div className="mb-12">
+                    <SectionHeader
+                        title="Création & Synthèse"
+                        label="// STORYBOARD : SYNTHÈSE"
+                        description="Accès au terminal de création — visualisez les instructions qui ont façonné l'esthétique et les séquences animées."
+                        alignment="center"
+                    />
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    {/* Images Card Button */}
-                    {/* Images Card Button */}
-                    <motion.button
-                        whileHover={{ scale: 1.02, y: -4 }}
-                        whileTap={{ scale: 0.98 }}
-                        onHoverStart={() => hover()}
-                        onClick={() => openModal("images")}
-                        className="glass-panel p-6 sm:p-8 rounded-none relative overflow-hidden group text-left border border-white/5 hover:border-teal-accent/30 transition-all duration-500 bg-[#020304] hover:bg-[#030608]"
-                    >
-                        {/* Corner Accents */}
-                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-teal-accent/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-teal-accent/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative w-full">
 
-                        <div className="absolute top-0 right-0 w-[50%] h-[1px] bg-gradient-to-l from-teal-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                        <div className="absolute bottom-0 left-0 w-[50%] h-[1px] bg-gradient-to-r from-teal-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                        <div className="absolute -right-16 -top-16 w-64 h-64 bg-teal-accent/10 blur-[80px] rounded-full transition-all duration-700 group-hover:bg-teal-accent/20" />
-
-                        <div className="relative z-10 w-full">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="flex items-center gap-5">
-                                    {/* Tech Icon Container */}
-                                    <div className="relative flex items-center justify-center w-12 h-12 shrink-0">
-                                        <div className="absolute inset-0 bg-teal-accent/5 transition-transform duration-700 group-hover:scale-110" />
-                                        <div className="absolute inset-0 border border-teal-accent/20 transition-all duration-700 group-hover:border-teal-accent/50 group-hover:rotate-180" />
-                                        <div className="absolute inset-2 border border-teal-accent/10 transition-all duration-700 group-hover:border-teal-accent/30 group-hover:-rotate-90" />
-                                        <Lightbulb className="text-teal-accent relative z-10 transition-transform duration-500 group-hover:scale-110" size={20} />
-                                    </div>
-
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-mono text-teal-accent/40 uppercase tracking-[0.3em] mb-1.5 group-hover:text-teal-accent/70 transition-colors duration-300">
-                                            Sys.Alpha_01
-                                        </span>
-                                        <h3 className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
-                                            Directives<br />Images
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <div className="w-8 h-8 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-300 shrink-0">
-                                    <Expand className="text-teal-accent w-5 h-5" />
+                    {/* Main Interaction Cards - Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-30">
+                        {/* Card 1: Dossier Genèse */}
+                        <motion.button
+                            whileHover={{ scale: 1.02, y: -5 }}
+                            whileTap={{ scale: 0.98 }}
+                            onHoverStart={() => hover()}
+                            onClick={() => openModal("genese")}
+                            className="bg-[#0a0a0c] p-6 md:p-8 rounded-none relative overflow-hidden group text-left border border-teal-accent/20 transition-all duration-500 dynamic-shadow-lg w-full"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-teal-accent z-20" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-teal-accent z-20" />
+                            <div className="mb-4">
+                                <span className="text-[9px] text-teal-accent font-mono tracking-[0.2em] uppercase block mb-2 opacity-50">DATA.CORE_01</span>
+                                <div className="flex items-center gap-4">
+                                    <motion.div
+                                        animate={{ y: [0, -4, 0] }}
+                                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                        className="p-3 bg-teal-accent/10 border border-teal-accent/20 rounded-full group-hover:bg-teal-accent/20 transition-colors"
+                                    >
+                                        <Database className="text-teal-accent w-5 h-5" />
+                                    </motion.div>
+                                    <h3 className="text-xl md:text-2xl font-light uppercase text-white tracking-[0.1em]">Dossier Genèse</h3>
                                 </div>
                             </div>
+                            <p className="text-[13px] text-white/40 leading-relaxed font-light mb-6">Origines des IS-BE, Roswell 1947 et la Terre comme planète-prison.</p>
+                            <div className="flex items-center gap-2 text-[10px] font-mono text-teal-accent tracking-widest opacity-40 group-hover:opacity-100 transition-opacity">
+                                <span>ACCESS_CORE</span>
+                                <Share2 size={10} />
+                            </div>
+                        </motion.button>
 
-                            <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent mb-6 group-hover:from-teal-accent/30 transition-colors duration-500" />
-
-                            <p className="text-white/40 text-sm leading-relaxed font-light group-hover:text-white/70 transition-colors duration-300 pr-4">
-                                Ouvrir le terminal pour consulter les 5 règles d&apos;or visuelles structurées formellement pour le rendu 3D cel-shaded.
-                            </p>
-                        </div>
-                    </motion.button>
-
-                    {/* Videos Card Button */}
-                    <motion.button
-                        whileHover={{ scale: 1.02, y: -4 }}
-                        whileTap={{ scale: 0.98 }}
-                        onHoverStart={() => hover()}
-                        onClick={() => openModal("videos")}
-                        className="glass-panel p-6 sm:p-8 rounded-none relative overflow-hidden group text-left border border-white/5 hover:border-gold-accent/30 transition-all duration-500 bg-[#020304] hover:bg-[#060402]"
-                    >
-                        {/* Corner Accents */}
-                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-gold-accent/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-gold-accent/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                        <div className="absolute top-0 right-0 w-[50%] h-[1px] bg-gradient-to-l from-gold-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                        <div className="absolute bottom-0 left-0 w-[50%] h-[1px] bg-gradient-to-r from-gold-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                        <div className="absolute -right-16 -top-16 w-64 h-64 bg-gold-accent/10 blur-[80px] rounded-full transition-all duration-700 group-hover:bg-gold-accent/20" />
-
-                        <div className="relative z-10 w-full">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="flex items-center gap-5">
-                                    {/* Tech Icon Container */}
-                                    <div className="relative flex items-center justify-center w-12 h-12 shrink-0">
-                                        <div className="absolute inset-0 bg-gold-accent/5 transition-transform duration-700 group-hover:scale-110" />
-                                        <div className="absolute inset-0 border border-gold-accent/20 transition-all duration-700 group-hover:border-gold-accent/50 group-hover:rotate-180" />
-                                        <div className="absolute inset-2 border border-gold-accent/10 transition-all duration-700 group-hover:border-gold-accent/30 group-hover:-rotate-90" />
-                                        <Terminal className="text-gold-accent relative z-10 transition-transform duration-500 group-hover:scale-110" size={20} />
-                                    </div>
-
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-mono text-gold-accent/40 uppercase tracking-[0.3em] mb-1.5 group-hover:text-gold-accent/70 transition-colors duration-300">
-                                            Sys.Beta_02
-                                        </span>
-                                        <h3 className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
-                                            Génération<br />Vidéos
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <div className="w-8 h-8 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-300 shrink-0">
-                                    <Expand className="text-gold-accent w-5 h-5" />
+                        {/* Card 2: Direction Artistique */}
+                        <motion.button
+                            whileHover={{ scale: 1.02, y: -5 }}
+                            whileTap={{ scale: 0.98 }}
+                            onHoverStart={() => hover()}
+                            onClick={() => openModal("art")}
+                            className="bg-[#0a0a0c] p-6 md:p-8 rounded-none relative overflow-hidden group text-left border border-amber-400/20 transition-all duration-500 dynamic-shadow-lg w-full"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-amber-400 z-20" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-amber-400 z-20" />
+                            <div className="mb-4">
+                                <span className="text-[9px] text-amber-400 font-mono tracking-[0.2em] uppercase block mb-2 opacity-50">VISUAL.ALPHA_02</span>
+                                <div className="flex items-center gap-4">
+                                    <motion.div
+                                        animate={{ rotate: [0, 5, -5, 0] }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                        className="p-3 bg-amber-400/10 border border-amber-400/20 rounded-full group-hover:bg-amber-400/20 transition-colors"
+                                    >
+                                        <ImageIcon className="text-amber-400 w-5 h-5" />
+                                    </motion.div>
+                                    <h3 className="text-xl md:text-2xl font-light uppercase text-white tracking-[0.1em]">Direction Art</h3>
                                 </div>
                             </div>
+                            <p className="text-[13px] text-white/40 leading-relaxed font-light mb-6">Style 3D Cel-shaded, lignes BD dynamiques et esthétique premium 2026.</p>
+                            <div className="flex items-center gap-2 text-[10px] font-mono text-amber-400 tracking-widest opacity-40 group-hover:opacity-100 transition-opacity">
+                                <span>VIEW_RENDER</span>
+                                <Share2 size={10} />
+                            </div>
+                        </motion.button>
 
-                            <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent mb-6 group-hover:from-gold-accent/30 transition-colors duration-500" />
-
-                            <p className="text-white/40 text-sm leading-relaxed font-light group-hover:text-white/70 transition-colors duration-300 pr-4">
-                                Accéder aux prompts cinématiques pour l&apos;animation des séquences clés, orchestrant rythmes, focales et actions.
-                            </p>
-                        </div>
-                    </motion.button>
-
-                    {/* Pack Card Button */}
-                    <motion.button
-                        whileHover={{ scale: 1.02, y: -4 }}
-                        whileTap={{ scale: 0.98 }}
-                        onHoverStart={() => hover()}
-                        onClick={() => openModal("pack")}
-                        className="glass-panel p-6 sm:p-8 rounded-none relative overflow-hidden group text-left border border-white/5 hover:border-[#a855f7]/30 transition-all duration-500 bg-[#020304] hover:bg-[#060205]"
-                    >
-                        {/* Corner Accents */}
-                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#a855f7]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#a855f7]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                        <div className="absolute top-0 right-0 w-[50%] h-[1px] bg-gradient-to-l from-[#a855f7]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                        <div className="absolute bottom-0 left-0 w-[50%] h-[1px] bg-gradient-to-r from-[#a855f7]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                        <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#a855f7]/10 blur-[80px] rounded-full transition-all duration-700 group-hover:bg-[#a855f7]/20" />
-
-                        <div className="relative z-10 w-full">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="flex items-center gap-5">
-                                    {/* Tech Icon Container */}
-                                    <div className="relative flex items-center justify-center w-12 h-12 shrink-0">
-                                        <div className="absolute inset-0 bg-[#a855f7]/5 transition-transform duration-700 group-hover:scale-110" />
-                                        <div className="absolute inset-0 border border-[#a855f7]/20 transition-all duration-700 group-hover:border-[#a855f7]/50 group-hover:rotate-180" />
-                                        <div className="absolute inset-2 border border-[#a855f7]/10 transition-all duration-700 group-hover:border-[#a855f7]/30 group-hover:-rotate-90" />
-                                        <Database className="text-[#a855f7] relative z-10 transition-transform duration-500 group-hover:scale-110" size={20} />
-                                    </div>
-
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-mono text-[#a855f7]/40 uppercase tracking-[0.3em] mb-1.5 group-hover:text-[#a855f7]/70 transition-colors duration-300">
-                                            Sys.Gamma_03
-                                        </span>
-                                        <h3 className="text-lg md:text-xl font-light tracking-[0.2em] uppercase text-white/90 group-hover:text-white transition-colors duration-300 leading-tight">
-                                            Pack<br />Production
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <div className="w-8 h-8 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-300 shrink-0">
-                                    <Expand className="text-[#a855f7] w-5 h-5" />
+                        {/* Card 3: Casting IS-BE */}
+                        <motion.button
+                            whileHover={{ scale: 1.02, y: -5 }}
+                            whileTap={{ scale: 0.98 }}
+                            onHoverStart={() => hover()}
+                            onClick={() => openModal('storyboard')}
+                            className="bg-[#0a0a0c] p-6 md:p-8 rounded-none relative overflow-hidden group text-left border border-emerald-400/20 transition-all duration-500 dynamic-shadow-lg w-full"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-emerald-400 z-20" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-emerald-400 z-20" />
+                            <div className="mb-4">
+                                <span className="text-[9px] text-emerald-400 font-mono tracking-[0.2em] uppercase block mb-2 opacity-50">STORY.BETA_03</span>
+                                <div className="flex items-center gap-4">
+                                    <motion.div
+                                        animate={{ scale: [1, 1.1, 1] }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                        className="p-3 bg-emerald-400/10 border border-emerald-400/20 rounded-full group-hover:bg-emerald-400/20 transition-colors"
+                                    >
+                                        <ImageIcon className="text-emerald-400 w-5 h-5" />
+                                    </motion.div>
+                                    <h3 className="text-xl md:text-2xl font-light uppercase text-white tracking-[0.1em]">Storyboard</h3>
                                 </div>
                             </div>
+                            <p className="text-[13px] text-white/40 leading-relaxed font-light mb-6">Découpage intégral des séquences et narration visuelle du film.</p>
+                            <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-400 tracking-widest opacity-40 group-hover:opacity-100 transition-opacity">
+                                <span>OPEN_STORY</span>
+                                <Share2 size={10} />
+                            </div>
+                        </motion.button>
 
-                            <div className="h-px w-full bg-gradient-to-r from-white/10 to-transparent mb-6 group-hover:from-[#a855f7]/30 transition-colors duration-500" />
+                        {/* Card 4: Storyboard 20 Plans */}
+                        <motion.button
+                            whileHover={{ scale: 1.02, y: -5 }}
+                            whileTap={{ scale: 0.98 }}
+                            onHoverStart={() => hover()}
+                            onClick={() => openModal("storyboard")}
+                            className="bg-[#0a0a0c] p-6 md:p-8 rounded-none relative overflow-hidden group text-left border border-blue-400/20 transition-all duration-500 dynamic-shadow-lg w-full"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-blue-400 z-20" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-blue-400 z-20" />
+                            <div className="mb-4">
+                                <span className="text-[9px] text-blue-400 font-mono tracking-[0.2em] uppercase block mb-2 opacity-50">SEQ.BETA_04</span>
+                                <div className="flex items-center gap-4">
+                                    <motion.div
+                                        animate={{ x: [-2, 2, -2] }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                        className="p-3 bg-blue-400/10 border border-blue-400/20 rounded-full group-hover:bg-blue-400/20 transition-colors"
+                                    >
+                                        <FileText className="text-blue-400 w-5 h-5" />
+                                    </motion.div>
+                                    <h3 className="text-xl md:text-2xl font-light uppercase text-white tracking-[0.1em]">Plans Clés 20</h3>
+                                </div>
+                            </div>
+                            <p className="text-[13px] text-white/40 leading-relaxed font-light mb-6">Découpage intégral des 20 plans clés, de l&apos;Himalaya au combat final.</p>
+                            <div className="flex items-center gap-2 text-[10px] font-mono text-blue-400 tracking-widest opacity-40 group-hover:opacity-100 transition-opacity">
+                                <span>LOAD_FRAMES</span>
+                                <Share2 size={10} />
+                            </div>
+                        </motion.button>
 
-                            <p className="text-white/40 text-sm leading-relaxed font-light group-hover:text-white/70 transition-colors duration-300 pr-4">
-                                Dossier complet du film : Histoire, Personnages, Storyboard, Scripts, Workflows et ressources connectées.
-                            </p>
+                        {/* Card 5: Séquences Scénario */}
+                        <motion.button
+                            whileHover={{ scale: 1.02, y: -5 }}
+                            whileTap={{ scale: 0.98 }}
+                            onHoverStart={() => hover()}
+                            onClick={() => openModal("scenario")}
+                            className="bg-[#0a0a0c] p-6 md:p-8 rounded-none relative overflow-hidden group text-left border border-red-400/20 transition-all duration-500 dynamic-shadow-lg w-full"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-red-400 z-20" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-red-400 z-20" />
+                            <div className="mb-4">
+                                <span className="text-[9px] text-red-400 font-mono tracking-[0.2em] uppercase block mb-2 opacity-50">SCR.GAMMA_05</span>
+                                <div className="flex items-center gap-4">
+                                    <motion.div
+                                        animate={{ opacity: [1, 0.5, 1] }}
+                                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                                        className="p-3 bg-red-400/10 border border-red-400/20 rounded-full group-hover:bg-red-400/20 transition-colors"
+                                    >
+                                        <Terminal className="text-red-400 w-5 h-5" />
+                                    </motion.div>
+                                    <h3 className="text-xl md:text-2xl font-light uppercase text-white tracking-[0.1em]">Séquences Script</h3>
+                                </div>
+                            </div>
+                            <p className="text-[13px] text-white/40 leading-relaxed font-light mb-6">Développement complet des 3 actes pour une immersion multimodale.</p>
+                            <div className="flex items-center gap-2 text-[10px] font-mono text-red-400 tracking-widest opacity-40 group-hover:opacity-100 transition-opacity">
+                                <span>EXEC_SCRIPT</span>
+                                <Share2 size={10} />
+                            </div>
+                        </motion.button>
+
+                        {/* Card 6: Pack Production */}
+                        <motion.button
+                            whileHover={{ scale: 1.02, y: -5 }}
+                            whileTap={{ scale: 0.98 }}
+                            onHoverStart={() => hover()}
+                            onClick={() => openModal('pack')}
+                            className="bg-[#0a0a0c] p-6 md:p-8 rounded-none relative overflow-hidden group text-left border border-purple-400/20 transition-all duration-500 dynamic-shadow-lg w-full"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-purple-400 z-20" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-purple-400 z-20" />
+                            <div className="mb-4">
+                                <span className="text-[9px] text-purple-400 font-mono tracking-[0.2em] uppercase block mb-2 opacity-50">SYS.OMN_06</span>
+                                <div className="flex items-center gap-4">
+                                    <motion.div
+                                        animate={{ rotate: [0, 360] }}
+                                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                                        className="p-3 bg-purple-400/10 border border-purple-400/20 rounded-full group-hover:bg-purple-400/20 transition-colors"
+                                    >
+                                        <Share2 className="text-purple-400 w-5 h-5" />
+                                    </motion.div>
+                                    <h3 className="text-xl md:text-2xl font-light uppercase text-white tracking-[0.1em]">Terminal Prod</h3>
+                                </div>
+                            </div>
+                            <p className="text-[13px] text-white/40 leading-relaxed font-light mb-6">Workflow IA 2026 complet : outils, prompts vidéo et liens directs.</p>
+                            <div className="flex items-center gap-2 text-[10px] font-mono text-purple-400 tracking-widest opacity-40 group-hover:opacity-100 transition-opacity">
+                                <span>READY_ALL</span>
+                                <Share2 size={10} />
+                            </div>
+                        </motion.button>
+                    </div>
+
+                    {/* Bottom Technical Widget - Parallax 3 */}
+                    <motion.div
+                        style={{ x: parallaxX3, y: parallaxY3 }}
+                        className="mt-12 flex justify-center z-10 pointer-events-none hidden md:flex"
+                    >
+                        <div className="flex gap-8 border-t border-white/5 pt-6">
+                            <div className="flex flex-col gap-1">
+                                <span className="text-[9px] font-mono text-teal-accent/60 uppercase">Node Hierarchy</span>
+                                <div className="flex items-center gap-2">
+                                    <Database size={10} className="text-teal-accent" />
+                                    <span className="text-[8px] font-mono text-white/40">DB_CONNECTION: SECURE</span>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-1 items-end">
+                                <span className="text-[9px] font-mono text-gold-accent/60 uppercase">System Status</span>
+                                <span className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Operation: Ready</span>
+                            </div>
                         </div>
-                    </motion.button>
+                    </motion.div>
                 </div>
             </div>
 
-            {/* Modal Overlay */}
+            {/* Modals remain similarly structured but refined */}
+            {/* ===== CATEGORY LEVEL MODAL (TRANSPARENT HUD STYLE) ===== */}
             <AnimatePresence>
                 {activeModal && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={() => closeModal()}
-                        className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
+                        onClick={closeModal}
+                        className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
                     >
-                        {/* Global HUD Layer */}
+                        {/* Global HUD Layer for Modal */}
                         <div className="absolute inset-0 pointer-events-none opacity-[0.05] z-[101] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
 
                         <motion.div
@@ -407,101 +403,102 @@ export default function CreationSection() {
                             exit={{ y: 20, opacity: 0, scale: 0.98 }}
                             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                             onClick={(e) => e.stopPropagation()}
-                            className={`w-full max-w-[1400px] max-h-[85vh] bg-[#010203] border rounded-sm shadow-[0_0_120px_rgba(0,0,0,1)] flex flex-col relative cursor-default ${activeModal === 'images' ? 'border-teal-accent/15' : activeModal === 'videos' ? 'border-gold-accent/15' : 'border-[#a855f7]/15'}`}
+                            className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[85vh] bg-[#08080a] backdrop-blur-3xl border-none rounded-none overflow-hidden flex flex-col md:flex-row relative cursor-default shadow-2xl"
+                            style={{
+                                borderColor: `${(activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7'}11`,
+                                borderStyle: 'solid',
+                                borderWidth: '1px',
+                                boxShadow: `0 0 80px rgba(0, 0, 0, 0.9), inset 0 0 40px ${(activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7'}03`
+                            }}
                         >
-                            {/* Close button */}
-                            <button
-                                onClick={() => closeModal()}
-                                className={`absolute top-6 right-6 text-white/20 transition-colors z-[110] p-2 ${activeModal === 'images' ? 'hover:text-teal-accent' : activeModal === 'videos' ? 'hover:text-gold-accent' : 'hover:text-[#a855f7]'}`}
-                            >
-                                <X size={24} strokeWidth={1.5} />
-                            </button>
-
-                            {/* Modal Header */}
-                            <div className={`p-6 md:p-10 relative bg-[#010203] z-50 border-b border-white/5`}>
-                                {/* Glowing top edge */}
-                                <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-current to-transparent opacity-50 ${activeModal === 'images' ? 'text-teal-accent' : activeModal === 'videos' ? 'text-gold-accent' : 'text-[#a855f7]'}`} />
-
-                                <div className="space-y-4">
-                                    <div className="absolute top-0 right-0 w-96 h-96 blur-[150px] rounded-full pointer-events-none opacity-20" style={{ backgroundColor: activeModal === 'images' ? '#25d1f4' : activeModal === 'videos' ? '#f5b041' : '#a855f7' }} />
-
-                                    <div className="absolute -top-4 -left-2 text-[80px] font-light font-mono text-white/[0.02] pointer-events-none select-none leading-none tracking-tighter">
-                                        TERM
+                            {/* Visual Interface Column - 60% */}
+                            <div className="w-full md:w-[60%] relative flex flex-col bg-[#050608] border-r-0" style={{ borderRight: `1px solid ${(activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7'}08` }}>
+                                {/* Upper Interface Bar */}
+                                <div className="h-10 border-b-0 flex items-center justify-between px-6 bg-black/40" style={{ borderBottom: `1px solid ${(activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7'}08` }}>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: (activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7' }} />
+                                        <span className="text-[8px] font-mono uppercase tracking-[0.4em]" style={{ color: (activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7', opacity: 0.6 }}>TERMINAL // {activeModal.toUpperCase()}</span>
                                     </div>
+                                    <div className="flex gap-1 opacity-40">
+                                        <div className="w-4 h-[1px] bg-white/40" />
+                                        <div className="w-1 h-1 bg-white/20" />
+                                    </div>
+                                </div>
 
-                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 }} className="flex items-center gap-3 relative z-10">
-                                        <div className={`h-px w-6 ${activeModal === 'images' ? 'bg-teal-accent/40' : activeModal === 'videos' ? 'bg-gold-accent/40' : 'bg-[#a855f7]/40'}`} />
-                                        <span className={`text-[9px] font-mono uppercase tracking-[0.5em] leading-none translate-y-[1px] ${activeModal === 'images' ? 'text-teal-accent/80' : activeModal === 'videos' ? 'text-gold-accent/80' : 'text-[#a855f7]/80'}`}>
-                                            CLASSIFIED_DOSSIER
+                                {/* Content Grid Viewer */}
+                                <div className="flex-1 relative overflow-y-auto custom-scrollbar p-6 bg-gradient-to-b from-black to-[#080a0c]">
+                                    {activeModal === "images" ? renderFiches(getImagesData(), '#2dd4bf') :
+                                        activeModal === "videos" ? renderFiches(getVideosData(), '#fbbf24') :
+                                            activeModal === "pack" ? renderFiches(creationData.production, '#a855f7') :
+                                                activeModal === "genese" ? renderFiches(creationData.genese, '#2dd4bf') :
+                                                    activeModal === "art" ? renderFiches(creationData.art, '#fbbf24') :
+                                                        activeModal === "storyboard" ? renderFiches(creationData.storyboard, '#10b981') :
+                                                            activeModal === "scenario" ? renderFiches(creationData.scenario, '#f43f5e') : null}
+
+                                    {/* Scanline Effect */}
+                                    <div className="absolute inset-0 w-full h-[2px] bg-white/5 opacity-5 blur-[1px] animate-scan-vertical pointer-events-none z-30" />
+                                </div>
+                            </div>
+
+                            {/* Info Column - 40% */}
+                            <div className="w-full md:w-[40%] p-8 md:p-12 flex flex-col gap-8 relative bg-[#010203]">
+                                <button onClick={closeModal} className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors z-50 p-2">
+                                    <X size={24} strokeWidth={1.5} />
+                                </button>
+
+                                <div className="space-y-4 relative z-10">
+                                    <div className="flex items-center gap-3 relative z-10">
+                                        <div className="h-px w-6" style={{ backgroundColor: `${(activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7'} 66` }} />
+                                        <span className="text-[9px] font-mono uppercase tracking-[0.5em] leading-none translate-y-[1px]" style={{ color: (activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7', opacity: 0.6 }}>
+                                            FICHE_CREATION
                                         </span>
-                                    </motion.div>
-
-                                    <div className="space-y-1 relative z-10">
-                                        <motion.h2 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-3xl sm:text-4xl md:text-5xl font-light uppercase tracking-tighter text-white leading-[0.9] flex items-center gap-4">
-                                            {activeModal === "images" ? (
-                                                <div className="p-3 bg-teal-accent/10 border border-teal-accent/20 rounded-lg shadow-[0_0_20px_rgba(37,209,244,0.2)]">
-                                                    <Lightbulb className="text-teal-accent" size={32} />
-                                                </div>
-                                            ) : activeModal === "videos" ? (
-                                                <div className="p-3 bg-gold-accent/10 border border-gold-accent/20 rounded-lg shadow-[0_0_20px_rgba(245,176,65,0.2)]">
-                                                    <Terminal className="text-gold-accent" size={32} />
-                                                </div>
-                                            ) : (
-                                                <div className="p-3 bg-[#a855f7]/10 border border-[#a855f7]/20 rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.2)]">
-                                                    <Database className="text-[#a855f7]" size={32} />
-                                                </div>
-                                            )}
-                                            <span className="translate-y-1">{activeModal === "images" ? "Directives Visuelles" : activeModal === "videos" ? "Séquences Vidéo" : "Dossier Production"}</span>
-                                        </motion.h2>
-                                        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex items-center gap-3 pt-6">
-                                            <div className={`px-2 py-1 border rounded-sm flex items-center justify-center ${activeModal === 'images' ? 'bg-teal-accent/10 border-teal-accent/20' : activeModal === 'videos' ? 'bg-gold-accent/10 border-gold-accent/20' : 'bg-[#a855f7]/10 border-[#a855f7]/20'}`}>
-                                                <span className={`text-[9px] font-mono uppercase tracking-[0.2em] font-medium leading-none translate-y-[1px] ${activeModal === 'images' ? 'text-teal-accent' : activeModal === 'videos' ? 'text-gold-accent' : 'text-[#a855f7]'}`}>
-                                                    {activeModal === "images" ? "RÉFÉRENCES_CONCEPTS" : activeModal === "videos" ? "PROMPTS_ANIMATION" : "ARCHIVES_COMPLÈTES"}
-                                                </span>
-                                            </div>
-                                            <div className={`h-[1px] flex-1 bg-gradient-to-r to-transparent ${activeModal === 'images' ? 'from-teal-accent/40' : activeModal === 'videos' ? 'from-gold-accent/40' : 'from-[#a855f7]/40'}`} />
-                                        </motion.div>
                                     </div>
+
+                                    <h2 className="text-4xl md:text-5xl font-light uppercase tracking-tighter text-white leading-[0.9]">
+                                        {activeModal === "images" ? "Directives Visuelles" :
+                                            activeModal === "videos" ? "Séquences Vidéo" :
+                                                activeModal === "pack" ? "Dossier Production" :
+                                                    activeModal === "genese" ? "Dossier Genèse" :
+                                                        activeModal === "art" ? "Direction Artistique" :
+                                                            activeModal === "storyboard" ? "Storyboard 20 Plans" :
+                                                                activeModal === "scenario" ? "Séquences Script" : "Archive"}
+                                    </h2>
+
+                                    <div className="h-px w-full" style={{ backgroundImage: `linear-gradient(to right, ${(activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7'}11, transparent)` }} />
                                 </div>
-                            </div>
 
-                            {/* Modal Body / Scrollable Content */}
-                            <div className="p-4 sm:p-6 md:p-10 overflow-y-auto custom-scrollbar flex-1 relative bg-black/40 backdrop-blur-md z-40">
-                                {/* Inner Grid */}
-                                <div className={`absolute inset-0 opacity-[0.02] pointer-events-none ${activeModal === 'images' ? 'bg-[linear-gradient(var(--teal-accent)_1px,transparent_1px),linear-gradient(90deg,var(--teal-accent)_1px,transparent_1px)]' : activeModal === 'videos' ? 'bg-[linear-gradient(var(--gold-accent)_1px,transparent_1px),linear-gradient(90deg,var(--gold-accent)_1px,transparent_1px)]' : 'bg-[linear-gradient(#a855f7_1px,transparent_1px),linear-gradient(90deg,#a855f7_1px,transparent_1px)]'}`} style={{ backgroundSize: '20px 20px' }} />
-
-                                <div className="relative z-10 w-full">
-                                    {activeModal === "images"
-                                        ? renderFiches(getImagesData(), '#25d1f4')
-                                        : activeModal === "videos"
-                                            ? renderFiches(getVideosData(), '#f5b041')
-                                            : renderFiches(packFiles, '#a855f7')
-                                    }
+                                <div className="prose prose-invert prose-sm max-w-none text-white/50 leading-relaxed font-light text-[13px]">
+                                    {activeModal === "images" && "Bibliothèque de prompts Midjourney utilisés pour générer l'esthétique visuelle du film, du rendu cel-shaded aux environnements complexes."}
+                                    {activeModal === "videos" && "Séquences animées de référence et prompts vidéo Runway/Luma capturant l'essence du mouvement et des effets FX."}
+                                    {activeModal === "storyboard" && "Découpage technique et artistique des séquences narratives clés, structuré selon le flux émotionnel de l'histoire."}
+                                    {activeModal === "scenario" && "Transcription textuelle des trois actes du film, incluant les dialogues et les directives de mise en scène multimodale."}
+                                    {activeModal === "genese" && "Documentation sur les origines du projet, l'inspiration historique (Roswell 1947) et le développement du concept IS-BE."}
+                                    {activeModal === "art" && "Spécifications techniques de la direction artistique : palette colorimétrique, shaders 3D et styles de contours BD."}
+                                    {activeModal === "pack" && "Accès complet aux ressources de production, outils IA utilisés et informations de contact pour les contributeurs."}
                                 </div>
-                            </div>
 
-                            {/* Compact Footer */}
-                            <div className="pt-4 pb-4 px-4 sm:px-8 border-t border-white/5 flex items-center justify-between opacity-50 bg-[#010203] z-50">
-                                <span className="text-[7px] font-mono tracking-widest uppercase text-white/50">LEVEL: OMEGA-4 // TS: 2026-02-22T12:05:37</span>
-                                <span className={`text-[8px] font-mono tracking-[0.6em] font-medium uppercase ${activeModal === 'images' ? 'text-teal-accent' : activeModal === 'videos' ? 'text-gold-accent' : 'text-[#a855f7]'}`}>STABLE</span>
+                                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between opacity-20">
+                                    <span className="text-[7px] font-mono tracking-widest uppercase text-white/50">NODE: CREATIVE_CORE // {activeModal.toUpperCase()}</span>
+                                    <span className="text-[7px] font-mono tracking-[0.6em] uppercase" style={{ color: (activeModal === 'images' || activeModal === 'genese' || activeModal === 'storyboard') ? '#2dd4bf' : (activeModal === 'videos' || activeModal === 'art' || activeModal === 'scenario') ? '#fbbf24' : '#a855f7' }}>READY</span>
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* Individual Item Lightbox Modal */}
+            {/* ===== ITEM LEVEL MODAL (TRANSPARENT HUD STYLE) ===== */}
             <AnimatePresence>
                 {selectedItem && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[120] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4 md:p-12 cursor-pointer"
+                        className="fixed inset-0 z-[120] bg-black/40 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-pointer"
                         onClick={() => closeItem()}
                     >
-                        {/* Global HUD Layer */}
-                        <div className="absolute inset-0 pointer-events-none opacity-[0.05] z-[121] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
+                        {/* Global HUD Layer for Modal */}
+                        <div className="absolute inset-0 pointer-events-none opacity-[0.05] z-[121] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,255,0.06),rgba(0,255,255,0.02),rgba(255,255,0,0.06))] bg-[length:100%_2px,3px_100%]" />
 
                         <motion.div
                             initial={{ y: 30, opacity: 0, scale: 0.98 }}
@@ -509,139 +506,76 @@ export default function CreationSection() {
                             exit={{ y: 20, opacity: 0, scale: 0.98 }}
                             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[75vh] bg-[#010203] border rounded-sm shadow-[0_0_120px_rgba(0,0,0,1)] flex flex-col md:flex-row relative cursor-default overflow-hidden"
-                            style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}25`, boxShadow: `0 0 120px rgba(0,0,0,1), inset 0 0 20px ${selectedItem.themeColor || '#25d1f4'}05` }}
+                            className="w-full max-w-[1200px] max-h-[85vh] bg-[#08080a] backdrop-blur-3xl border-none rounded-none flex flex-col md:flex-row relative cursor-default overflow-hidden shadow-2xl"
+                            style={{
+                                borderColor: `${selectedItem.themeColor}11`,
+                                borderStyle: 'solid',
+                                borderWidth: '1px',
+                                boxShadow: `0 0 60px rgba(0, 0, 0, 0.9), inset 0 0 40px ${selectedItem.themeColor}03`
+                            }}
                         >
-                            {/* Visual Interface Column - 60% */}
-                            <div className="w-full md:w-[60%] relative flex flex-col bg-[#050608] border-r" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}10` }}>
-                                {/* Upper Interface Bar */}
-                                <div className="h-10 border-b flex items-center justify-between px-6 bg-black/40" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}15` }}>
-                                    <div className="flex items-center gap-4">
-                                        <Activity size={12} className="animate-pulse" style={{ color: selectedItem.themeColor || '#25d1f4', opacity: 0.7 }} />
-                                        <span className="text-[8px] font-mono uppercase tracking-[0.4em]" style={{ color: selectedItem.themeColor || '#25d1f4', opacity: 0.6 }}>VISUAL_DUMP // LIVE_FEED</span>
-                                    </div>
-                                    <div className="flex gap-1 text-[7px] font-mono text-white/20 items-center">
-                                        <span className="mr-4">LATENCY: 12ms</span>
-                                        <div className="w-1 h-1" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4', opacity: 0.2 }} />
-                                        <div className="w-1 h-1" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4', opacity: 0.5 }} />
+                            {/* Visual Column - 60% */}
+                            <div className="w-full md:w-[60%] relative bg-black flex items-center justify-center overflow-hidden border-r-0" style={{ borderRight: `1px solid ${selectedItem.themeColor}08` }}>
+                                {selectedItem.isVideo ? (
+                                    <video src={selectedItem.image} autoPlay loop muted playsInline className="w-full h-full object-cover opacity-80" />
+                                ) : (
+                                    <Image
+                                        src={selectedItem.image}
+                                        alt={selectedItem.title}
+                                        fill
+                                        className="object-cover opacity-80"
+                                    />
+                                )}
+
+                                {/* Overlay HUD elements */}
+                                <div className="absolute inset-0 pointer-events-none">
+                                    <div className="absolute top-4 left-4 w-4 h-4 border-t border-l opacity-30" style={{ borderColor: selectedItem.themeColor }} />
+                                    <div className="absolute top-4 right-4 w-4 h-4 border-t border-r opacity-30" style={{ borderColor: selectedItem.themeColor }} />
+                                    <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l opacity-30" style={{ borderColor: selectedItem.themeColor }} />
+                                    <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r opacity-30" style={{ borderColor: selectedItem.themeColor }} />
+
+                                    <div className="absolute bottom-6 left-6">
+                                        <span className="text-[8px] font-mono uppercase tracking-widest px-2 py-1 bg-black/40 border-l-2" style={{ color: selectedItem.themeColor, borderColor: selectedItem.themeColor }}>
+                                            DATA_STREAM // {selectedItem.id}
+                                        </span>
                                     </div>
                                 </div>
-
-                                {/* Main Media Viewer */}
-                                <div className="flex-1 relative flex items-center justify-center p-4 min-h-[30vh] md:min-h-0 bg-gradient-to-b from-black to-[#080a0c] overflow-hidden">
-                                    <div className="w-full h-full relative z-10 flex items-center justify-center">
-                                        {selectedItem.isVideo ? (
-                                            <video
-                                                src={selectedItem.image}
-                                                autoPlay loop playsInline
-                                                className="w-full h-full object-contain filter"
-                                            />
-                                        ) : (
-                                            <img
-                                                src={selectedItem.image}
-                                                className="w-full h-full object-contain"
-                                                alt={selectedItem.title}
-                                            />
-                                        )}
-                                    </div>
-
-                                    {/* Viewport UI Overlays */}
-                                    <div className="absolute inset-0 pointer-events-none z-20">
-                                        <div className="absolute top-4 left-4 w-8 h-8 border-t border-l" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
-                                        <div className="absolute top-4 right-4 w-8 h-8 border-t border-r" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
-                                        <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
-                                        <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r" style={{ borderColor: `${selectedItem.themeColor || '#25d1f4'}4d` }} />
-
-                                        <div className="absolute bottom-6 left-6 flex flex-col gap-1">
-                                            <span className="text-[9px] font-mono uppercase tracking-[0.2em] px-3 py-1 border-l" style={{ color: `${selectedItem.themeColor || '#25d1f4'}cc`, backgroundColor: `${selectedItem.themeColor || '#25d1f4'}0a`, borderColor: selectedItem.themeColor || '#25d1f4' }}>
-                                                SOURCE_0: VUE 3D / CLASSE
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {/* Scanline Effect */}
-                                    <div className="absolute inset-0 w-full h-[2px] bg-white/5 opacity-20 blur-[1px] animate-scan-vertical pointer-events-none z-30" />
-                                </div>
+                                <div className="absolute inset-0 w-full h-[2px] bg-white/5 opacity-10 animate-scan-vertical pointer-events-none" />
                             </div>
 
-                            {/* Intelligence Report Column - 40% */}
-                            <div className="w-full md:w-[40%] p-8 md:p-12 flex flex-col gap-8 overflow-y-auto custom-scrollbar relative bg-[#010203]">
-                                {/* Close button */}
-                                <button
-                                    onClick={() => closeItem()}
-                                    className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors z-50 p-2"
-                                >
-                                    <X size={24} strokeWidth={1.5} />
-                                </button>
+                            {/* Details Column - 40% */}
+                            <div className="w-full md:w-[40%] p-8 md:p-12 flex flex-col gap-8 relative overflow-y-auto custom-scrollbar bg-[#010203]">
+                                <button onClick={closeItem} className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors z-50 p-2"><X size={24} /></button>
 
-                                {/* Header Section */}
-                                <div className="space-y-4 relative z-10">
-                                    <div className="absolute top-0 right-0 w-64 h-64 blur-[100px] rounded-full pointer-events-none opacity-20" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4' }} />
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-px w-6" style={{ backgroundColor: `${selectedItem.themeColor} 66` }} />
+                                        <span className="text-[10px] font-mono uppercase tracking-[0.4em] leading-none" style={{ color: selectedItem.themeColor, opacity: 0.8 }}>{selectedItem.subtitle}</span>
+                                    </div>
+                                    <h2 className="text-3xl md:text-4xl font-light uppercase tracking-tighter text-white leading-tight">
+                                        {selectedItem.title}
+                                    </h2>
+                                </div>
 
-                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 }} className="flex items-center gap-3 relative z-10">
-                                        <div className="h-px w-6" style={{ backgroundColor: `${selectedItem.themeColor || '#25d1f4'}66` }} />
-                                        <span className="text-[9px] font-mono uppercase tracking-[0.5em] leading-none translate-y-[1px]" style={{ color: `${selectedItem.themeColor || '#25d1f4'}99` }}>
-                                            CLASSIFIED_DOSSIER
-                                        </span>
-                                    </motion.div>
-
-                                    <div className="space-y-1 relative z-10">
-                                        <motion.h2
-                                            initial={{ opacity: 0, y: -20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ duration: 0.5, delay: 0.2 }}
-                                            className="text-4xl md:text-5xl font-light uppercase tracking-tighter text-white leading-[0.9]"
-                                            style={{ textShadow: `0 0 40px ${selectedItem.themeColor || '#25d1f4'}26` }}
+                                <div className="flex-grow space-y-6">
+                                    <div className="p-5 border-none relative overflow-hidden group/copy bg-white/[0.02]" style={{ border: `1px solid ${selectedItem.themeColor}08` }}>
+                                        <div className="absolute top-0 left-0 w-[2px] h-full" style={{ backgroundColor: selectedItem.themeColor }} />
+                                        <button
+                                            onClick={() => handleCopy(selectedItem.content, selectedItem.copyIndex || 0)}
+                                            className="absolute top-3 right-3 p-1.5 opacity-20 hover:opacity-100 transition-opacity bg-white/5 rounded-sm"
+                                            style={{ color: selectedItem.themeColor }}
                                         >
-                                            {selectedItem.title}
-                                        </motion.h2>
-                                        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex items-center gap-3 pt-4">
-                                            <div className="px-2 py-1 border rounded-sm flex items-center justify-center" style={{ backgroundColor: `${selectedItem.themeColor || '#25d1f4'}1a`, borderColor: `${selectedItem.themeColor || '#25d1f4'}33` }}>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest font-medium leading-none translate-y-[1px]" style={{ color: selectedItem.themeColor || '#25d1f4' }}>{selectedItem.subtitle}</span>
-                                            </div>
-                                            <div className="h-[1px] flex-1" style={{ backgroundImage: `linear-gradient(to right, ${selectedItem.themeColor || '#25d1f4'}66, transparent)` }} />
-                                        </motion.div>
+                                            {copiedIndex === selectedItem.copyIndex ? <Check size={14} /> : <Copy size={14} />}
+                                        </button>
+                                        <p className="text-white/70 text-[13px] whitespace-pre-wrap font-light leading-relaxed">
+                                            {selectedItem.content}
+                                        </p>
                                     </div>
                                 </div>
 
-                                {/* Content Sections */}
-                                <div className="flex flex-col gap-8">
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-2 opacity-30">
-                                            <div className="w-1 h-3" style={{ backgroundColor: selectedItem.themeColor || '#25d1f4' }} />
-                                            <h4 className="text-[10px] font-medium tracking-[0.3em] uppercase text-white">DONNÉES_RÉPERTORIÉES</h4>
-                                        </div>
-
-                                        <div className="bg-white/5 border border-white/10 p-6 rounded-sm relative group/copy">
-                                            <button
-                                                onClick={() => handleCopy(selectedItem.content, selectedItem.copyIndex || 0)}
-                                                className="absolute top-4 right-4 p-2 bg-white/5 hover:bg-white/10 rounded-sm transition-colors opacity-30 hover:opacity-100 z-10"
-                                            >
-                                                {copiedIndex === selectedItem.copyIndex ? <Check size={16} style={{ color: selectedItem.themeColor || '#25d1f4' }} /> : <Copy size={16} className="text-white/40" />}
-                                            </button>
-                                            <p className="text-white/80 text-sm leading-relaxed font-light whitespace-pre-wrap">
-                                                {selectedItem.content}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Tech Metadata */}
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="p-3 border border-white/5 bg-white/[0.02]">
-                                            <span className="text-[8px] font-mono text-white/30 block mb-1">OBJECT_ID</span>
-                                            <span className="text-[10px] font-mono text-white/70">{selectedItem.id}</span>
-                                        </div>
-                                        <div className="p-3 border border-white/5 bg-white/[0.02]">
-                                            <span className="text-[8px] font-mono text-white/30 block mb-1">SECURITY_LEVEL</span>
-                                            <span className="text-[10px] font-mono text-white/70">RESTRICTED</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Compact Footer */}
-                                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between opacity-20">
-                                    <span className="text-[7px] font-mono tracking-widest uppercase text-white/50">LEVEL: OMEGA-4 // TS: CLASSIFIED</span>
-                                    <span className="text-[7px] font-mono tracking-[0.6em] uppercase" style={{ color: selectedItem.themeColor || '#25d1f4' }}>STABLE</span>
+                                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between opacity-30">
+                                    <span className="text-[7px] font-mono tracking-widest uppercase">SYST_LOG // INDEX_{selectedItem.id}</span>
+                                    <Share2 size={12} className="opacity-40" />
                                 </div>
                             </div>
                         </motion.div>
