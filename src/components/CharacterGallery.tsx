@@ -79,14 +79,14 @@ export default function CharacterGallery() {
                                 </div>
                                 <div className="relative flex flex-col items-center justify-center">
                                     <div className="flex items-center gap-1.5">
-                                        <span className={`text-[10px] font-mono font-normal transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`} style={{ color: cat.color }}>⌜</span>
+                                        <span className={`text-[10px] font-mono font-light transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`} style={{ color: cat.color }}>⌜</span>
                                         <span
                                             className={`text-[9px] font-mono uppercase tracking-[0.25em] transition-colors duration-200 z-10 ${isActive ? "" : "text-white/60 group-hover:text-white"}`}
                                             style={isActive ? { color: cat.color, textShadow: `0 0 8px ${cat.color}cc` } : {}}
                                         >
                                             {cat.label}
                                         </span>
-                                        <span className={`text-[10px] font-mono font-normal transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`} style={{ color: cat.color }}>⌟</span>
+                                        <span className={`text-[10px] font-mono font-light transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`} style={{ color: cat.color }}>⌟</span>
                                     </div>
                                     <div className={`absolute -bottom-1.5 left-0 right-0 h-[1px] transition-all duration-300 origin-center pointer-events-none ${isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"}`} style={{ backgroundImage: `linear-gradient(to right, transparent, ${cat.color}, transparent)` }} />
                                 </div>
@@ -132,7 +132,8 @@ export default function CharacterGallery() {
                                         video.pause();
                                     }
                                 }}
-                                className={`group cursor-pointer relative overflow-hidden aspect-[3/4] border border-white/5 bg-[#020304] hover:bg-[#030608] transition-all duration-500 hover:border-[${themeColor}]/[0.3]`}
+                                className={`group cursor-pointer relative overflow-hidden aspect-[3/4] border border-white/10 bg-black/70 hover:bg-black/90 transition-all duration-500 dynamic-shadow`}
+                                style={{ borderColor: 'rgba(255, 255, 255, 0.05)' }}
                             >
                                 {/* Geometric Corner Accents */}
                                 <div className="absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" style={{ borderColor: themeColor }} />

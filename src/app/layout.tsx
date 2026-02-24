@@ -37,6 +37,8 @@ export const metadata: Metadata = {
   },
 };
 
+import MouseTracker from "@/components/MouseTracker";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -50,6 +52,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#25d1f4" />
       </head>
       <body className={`${outfit.variable} antialiased bg-background text-foreground`}>
+        <MouseTracker />
         {children}
       </body>
     </html>

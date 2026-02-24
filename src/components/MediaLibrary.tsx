@@ -34,7 +34,7 @@ export default function MediaLibrary() {
 
     const filteredMedia = allMedia.filter(m => filter === "all" || m.type === filter);
     return (
-        <section className="min-h-screen py-24 bg-[#020305] relative border-t border-glass-border">
+        <section className="min-h-screen py-24 relative">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-accent/5 blur-[150px] rounded-full mix-blend-screen pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -74,13 +74,13 @@ export default function MediaLibrary() {
                                         </div>
                                         <div className="relative flex flex-col items-center justify-center">
                                             <div className="flex items-center gap-1.5">
-                                                <span className={`text-teal-accent text-[10px] font-mono font-normal transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}>⌜</span>
+                                                <span className={`text-teal-accent text-[10px] font-mono font-light transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}>⌜</span>
                                                 <span
                                                     className={`text-[9px] font-mono uppercase tracking-[0.25em] transition-colors duration-200 z-10 ${isActive ? "text-teal-accent drop-shadow-[0_0_8px_rgba(37,209,244,0.8)]" : "text-white/60 group-hover:text-white group-hover:drop-shadow-[0_0_5px_rgba(37,209,244,0.5)]"}`}
                                                 >
                                                     {label}
                                                 </span>
-                                                <span className={`text-teal-accent text-[10px] font-mono font-normal transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}>⌟</span>
+                                                <span className={`text-teal-accent text-[10px] font-mono font-light transition-all duration-300 ${isActive ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}>⌟</span>
                                             </div>
                                             <div className={`absolute -bottom-1.5 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-teal-accent to-transparent transition-all duration-300 origin-center pointer-events-none ${isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100"}`} />
                                         </div>
@@ -103,7 +103,7 @@ export default function MediaLibrary() {
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 transition={{ duration: 0.3 }}
                                 key={media.src}
-                                className="relative group cursor-pointer break-inside-avoid rounded-none overflow-hidden border border-white/5 bg-[#020304] hover:bg-[#030608] hover:border-teal-accent/30 transition-all duration-500 mb-6"
+                                className="relative group cursor-pointer break-inside-avoid rounded-none overflow-hidden border border-white/10 bg-black/70 hover:bg-black/90 hover:border-teal-accent/50 transition-all duration-500 mb-6 dynamic-shadow"
                                 onClick={() => setSelectedMedia(media)}
                                 onMouseEnter={(e) => {
                                     const video = e.currentTarget.querySelector('video');

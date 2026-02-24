@@ -18,8 +18,8 @@ export type Character = {
 
 export const heroesData: Character[] = [
     {
-        name: "Nicolas Vidal", role: "Leader Charismatique", cat: "hros",
-        inspiration: "Leader charismatique, archéologue/hacker, veste marron et sac à dos, regard déterminé.",
+        name: "Nicolas Vidal", role: "Leader & Expert Décryptage", cat: "hros",
+        inspiration: "Leader charismatique, archéologue/hacker, expert en décryptage de l'Ancien Empire. Regard déterminé, veste marron et sac à dos.",
         realLife: {
             occ: "Journaliste & Fondateur de Putsch",
             fact: "Spécialiste de la critique média et des libertés.",
@@ -33,7 +33,7 @@ export const heroesData: Character[] = [
     },
     {
         name: "Clémence", role: "Reporter Intrépide", cat: "hros",
-        inspiration: "Reporter intrépide, cheveux bouclés roux, chemise bleu foncé, toujours prête à foncer en première ligne.",
+        inspiration: "Reporter de terrain, moteur de l'enquête. Cheveux bouclés roux, chemise bleu foncé, toujours prête à foncer en première ligne.",
         realLife: {
             occ: "Journaliste chez Tocsin",
             fact: "Reporter de terrain infatigable.",
@@ -47,7 +47,7 @@ export const heroesData: Character[] = [
     },
     {
         name: "Idriss Aberkane", role: "Génie Scientifique", cat: "hros",
-        inspiration: "Génie scientifique excentrique, veste camouflage, maîtrise la tech et les pièges anciens.",
+        inspiration: "Génie excentrique, maître de l'ancienne technologie et des pièges IS-BE. Veste camouflage, intelligence stratégique.",
         realLife: {
             occ: "Chercheur & Conférencier",
             fact: "Expert en neurosciences et biomimétisme.",
@@ -60,8 +60,8 @@ export const heroesData: Character[] = [
         video: "/assets/persos_de_reference/heros_presentation_video/idriss.webm"
     },
     {
-        name: "André Bercoff", role: "Mentor Sage", cat: "hros",
-        inspiration: "Mentor sage et historien, chauve avec lunettes, voix grave, connaît tous les secrets oubliés.",
+        name: "André Bercoff", role: "Mentor Historien", cat: "hros",
+        inspiration: "Gardien des secrets oubliés de l'humanité. Chauve avec lunettes, voix grave, connaît l'histoire occulte de la Planète-Prison.",
         realLife: {
             occ: "Journaliste & Animateur Radio",
             fact: "Voix iconique de Sud Radio.",
@@ -74,8 +74,8 @@ export const heroesData: Character[] = [
         video: "/assets/persos_de_reference/heros_presentation_video/Andre.webm"
     },
     {
-        name: "Béatrice Rosen", role: "Stratège Glamour", cat: "hros",
-        inspiration: "Stratège glamour et combative, chemise bleue, pose assurée, utilise son charisme pour désamorcer les situations.",
+        name: "Béatrice Rosen", role: "Stratège Combative", cat: "hros",
+        inspiration: "Combative et déterminée, utilise son charisme pour désamorcer les pièges. Chemise bleue, pose assurée, spécialiste en infiltration.",
         realLife: {
             occ: "Actrice & Productrice",
             fact: "Star internationale, activiste pour la vérité.",
@@ -89,7 +89,7 @@ export const heroesData: Character[] = [
     },
     {
         name: "AubonTweet", role: "Expert Infiltration", cat: "hros",
-        inspiration: "Mystérieux et discret, expert en infiltration, toujours calme sous pression.",
+        inspiration: "Vigie numérique, expert en infiltration et décryptage réseau. Mystérieux, discret, toujours calme sous pression.",
         realLife: {
             occ: "Vigie Méditique & Analyste",
             fact: "Spécialiste de l'analyse des courants d'opinion numérique.",
@@ -103,7 +103,7 @@ export const heroesData: Character[] = [
     },
     {
         name: "Alexis Poulin", role: "Analyste & Pilote", cat: "hros",
-        inspiration: "Analyste géopolitique et pilote, gère les véhicules et les stratégies macro.",
+        inspiration: "Stratège géopolitique et pilote d'élite. Gère les véhicules et l'anticipation des manoeuvres de XoroX.",
         realLife: {
             occ: "Analyste Politique & Stratège",
             fact: "Expert en décryptage des stratégies de pouvoir.",
@@ -116,8 +116,8 @@ export const heroesData: Character[] = [
         video: "/assets/persos_de_reference/heros_presentation_video/Alexis.webm"
     },
     {
-        name: "Charles Alloncle", role: "Aventurier Politique", cat: "hros",
-        inspiration: "Aventurier politique, force morale du groupe, motivant tout le monde dans les moments critiques.",
+        name: "Charles Alloncle", role: "Force Morale", cat: "hros",
+        inspiration: "Aventurier politique, incarne la résistance et la souveraineté. Force morale du groupe dans les moments critiques.",
         realLife: {
             occ: "Homme Politique (Député)",
             fact: "Défenseur acharné de la souveraineté.",
@@ -291,49 +291,49 @@ export const mediaFiles = [
 export const storyData = {
     summary: {
         title: "L’ARTEFACT DE VÉRITÉ",
-        p1: "Un court-métrage haletant inspiré des épopées d'aventure les plus épiques. Entre archéologie interdite et technologie du futur, une équipe de 8 héros déterminés — incluant le hacker Nicolas Vidal, la reporter Clémence, et le sage André Bercoff — doit s'emparer d'un Artefact millénaire pour briser les chaînes de l'illusion mondiale et révéler la sinistre vérité derrière la Planète-Prison.",
-        p2: "Tout commence par la découverte d'une clé USB dorée issue du crash de Roswell, contenant une carte holographique vers une base secrète enfouie sous les neiges éternelles de l'Himalaya. C’est une course contre la montre désespérée pour activer le cristal d'Airl avant que XoroX et ses comploteurs ne verrouillent définitivement notre destin.",
-        p3: "Face aux drones de suppression et aux illusions holographiques de l'Ancien Empire, l'union des huit deviendra leur seule arme. Une révélation finale qui changera à jamais notre regard sur le ciel et les piliers de notre civilisation."
+        p1: "Inspiré du lore IS-BE, ce court-métrage révèle la Terre comme une Planète-Prison sous amnésie forcée depuis 30 000 ans. Un groupe de 8 héros modernes, mené par Nicolas Vidal et Clémence, découvre un Cristal millénaire capable de briser les chaînes de l'illusion mondiale imposées par XoroX et l'Ancien Empire.",
+        p2: "Tout commence par la clé USB dorée de Roswell 1947, révélant la base cachée du Domaine en Himalaya. L'équipe doit assembler les fragments de l'Artefact pour réinitialiser la conscience humaine avant que XoroX et ses comploteurs ne verrouillent définitivement notre destin.",
+        p3: "Entre combats contre des monstres insectoïdes et révélations sur les dinosaures atomisés il y a 70 millions d'années, l'union des huit devient l'ultime rempart. Une odyssée épique qui redéfinit notre place dans l'univers et les secrets du ciel."
     },
     acts: [
         {
-            title: "ACTE I : RÉUNION SECRÈTE (PARIS)",
-            content: "Dans un entrepôt clandestin à Paris, Nicolas Vidal convoque l'équipe. Il branche la clé USB de Roswell : une carte holographique de la base Himalaya (6500 av. J.-C.) surgit. André Bercoff explique en voix off la timeline : IS-BE, Ancien Empire, Bataillon Perdu. XoroX est déjà en route.",
+            title: "ACTE I : L'ÉVEIL HIMALAYEN",
+            content: "À 8500 av. J.-C., dans la base secrète du Domaine, les 8 héros activent les Portes IS-BE. Une explosion de lumière dorée révèle la création des galaxies par la pensée. Première confrontation brutale avec les Vortrax insectoïdes au bord d'un ravin abyssal.",
             prompts: [
-                "Cinematic interior, Paris warehouse at night. Nicolas Vidal standing before a glowing teal holographic 3D map of the Himalayas. The 8 heroes gathered around. High contrast, film noir vibes. --ar 16:9",
-                "Close-up: A glowing gold USB key (Roswell symbol) being inserted into a glitched terminal. --v 6.0"
+                "Cinematic wide shot: 8 heroes in single file on a vertical Himalayan ridge at sunset. Teal and gold glowing ruins in the background. --ar 16:9",
+                "Close-up: Nicolas and Clémence activating ancient stone IS-BE gates, blue and gold energy radiating. --v 6.0"
             ]
         },
         {
-            title: "ACTE II : POURSUITE & HIMALAYA",
-            content: "Alexis Poulin pilote l'avion cargo. Des drones de XoroX attaquent, provoquant un crash dans les neiges éternelles. L'équipe escalade des falaises, traverse des ponts de glace qui s'effondrent sous une avalanche. Clémence et Idriss sauvent le groupe. AubonTweet repère l'entrée secrète.",
+            title: "ACTE II : CHASSE ET CITÉS PERDUES",
+            content: "Poursuite en Jeep dans la jungle amazonienne, suivie d'une plongée dans une cité atlante aux reflets bleu électrique. Idriss et André décodent le 2e fragment lié au Bataillon Perdu, traqués sans relâche par les drones de suppression de XoroX.",
             prompts: [
-                "Action sequence: Cargo plane burning over snowy mountain peaks, pursued by swarm of teal-eyed drones. --ar 16:9",
-                "Extreme wide shot: 8 heroes climbing a vertical ice cliff, massive avalanche cascading in background. Cinematic scale. --ar 16:9"
+                "Underwater cinematic: Ancient Atlantean city with blue bioluminescent energy. Heroes swimming towards a glowing fragment. --ar 16:9",
+                "Action shot: Mud-covered Jeep flying through dense jungle, chased by bio-mechanical insectoid drones. --ar 16:9"
             ]
         },
         {
-            title: "ACTE III : LA BASE DU DOMAINE",
-            content: "L'intérieur est grandiose. Des couloirs illuminés par des cristaux anciens et des grilles de force de l'Ancien Empire. Des dinosaures atomiques holographiques prennent vie. Scène culte : course au bord d'un ravin, Béatrice Rosen fait un saut héroïque pour rattraper Charles Alloncle au-dessus du vide.",
+            title: "ACTE III : LE SECRET DE ROSWELL",
+            content: "Infiltration d'un bunker en 1947. L'hologramme d'Airl révèle la vérité sur Matilda et la Planète-Prison. Combat intense dans les couloirs du bunker contre les commandos comploteurs menés par le Dr Rudy et Julien Shadow.",
             prompts: [
-                "Grand ancient base interior, glowing giant crystals. A holographic Atomic Dinosaur (luminous blue energy) roaring in a high-tech hallway. --ar 16:9",
-                "Heroic slow motion: Béatrice Rosen jumping across a massive canyon to catch Charles Alloncle's hand. Cinematic lighting. --v 6.0"
+                "Historic bunker interior 1947. A glowing holographic alien (Airl) floating before Matilda and the heroes. High contrast cinematic lighting. --ar 16:9",
+                "Close combat: Heroes fighting technocratic guards in a retro-futuristic bunker corridor. --v 6.0"
             ]
         },
         {
-            title: "ACTE IV : CONFRONTATION FINALE",
-            content: "Salle de l'Artefact. XoroX sur son trône holographique. Combat épique : Idriss désactive les grilles, Clémence et Béatrice coordonnent les assauts. Nicolas affronte XoroX au duel (fouet improvsé vs énergie sombre). André hurle la vérité sur la planète-prison pour affaiblir XoroX.",
+            title: "ACTE IV : BASE ANTARCTIQUE",
+            content: "Dans les profondeurs glaciaires, l'Artefact complet s'assemble. Combat final à 360° : les chiens Nala et Zorz percutent les monstres Skritch en slow-motion. Charles et André affrontent le Dr Rudy possédé par l'énergie de XoroX.",
             prompts: [
-                "Epic combat: Nicolas Vidal wielding an improvised whip wrapped in code-energy against a giant shadowy XoroX. Dark blue vs teal light. --ar 16:9",
-                "Portrait: André Bercoff yelling defiantly, his words appearing as gold binary code breaking through teal energy walls. --v 6.0"
+                "Epic battle in an Antarctic ice base. Glowing artifact floating in the center. Explosions and debris in zero-gravity style. --ar 16:9",
+                "Heroic duo: Nala the dog jumping at a bio-mechanical monster mid-air, sparks and cyber-parts flying. --ar 16:9"
             ]
         },
         {
-            title: "ACTE V : ACTIVATION & RÉVÉLATION",
-            content: "Nicolas active le cristal. Voix d'Airl + montage rapide de la timeline (Roswell, Dinosaures, Bataillon Perdu). XoroX disparaît dans un portail. Les héros sortent au sommet des cimes au lever du soleil, déterminés... mais un drone les observe au loin.",
+            title: "ACTE V : ACTIVATION MONDIALE",
+            content: "Nicolas active le cristal final. XoroX est dissous par une vague de lumière dorée qui parcourt la Terre. Les IS-BE se souviennent. Les héros voient la Terre depuis l'espace, libérée, avec un teaser pointant vers les mystères de l'Égypte.",
             prompts: [
-                "Blinding gold light from an ancient crystal artifact, reflecting in Nicolas's eyes. Montage overlays of atom clouds and prehistoric ruins. --ar 16:9",
-                "Wide shot: 8 heroes standing on a snowy Himalayan peak at sunrise. Small shadow of a drone watching from the clouds. End title 'XORO X RISING'. --ar 16:9"
+                "Global revelation: A wave of golden energy washing over the Earth's atmosphere, breaking teal digital grids. --ar 16:9",
+                "Grand finale: 8 heroes standing together, looking at the sunrise over the planet. Teaser text floating in the clouds. --v 6.0"
             ]
         }
     ],

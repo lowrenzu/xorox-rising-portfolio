@@ -2,9 +2,10 @@
 
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import {
     Terminal, Users, MapPin, Shield, Zap, Rocket,
-    X, Fingerprint, Activity, Clock, Copy
+    X, Fingerprint, Activity, Copy, Maximize2, Share2
 } from "lucide-react";
 import { storyData } from "@/data/filmData";
 import SectionHeader from "./SectionHeader";
@@ -25,13 +26,14 @@ const getActTheme = (index: number) => {
 export default function StorySection() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeModal, setActiveModal] = useState<number | null>(null);
+    const [storyDetail, setStoryDetail] = useState<{ title: string, content: string, label: string } | null>(null);
     const { click, hover, modalOpen, modalClose } = useSoundEngine();
 
     const openModal = (i: number) => { click(); modalOpen(); setActiveModal(i); };
     const closeModal = () => { modalClose(); setActiveModal(null); };
 
     return (
-        <section ref={containerRef} id="story" className="relative min-h-screen py-8 flex flex-col justify-center overflow-hidden border-t border-glass-border bg-[#010203]">
+        <section ref={containerRef} id="story" className="relative min-h-screen py-8 flex flex-col justify-center overflow-hidden">
             {/* Cyberpunk Grid Background */}
             <div
                 className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -47,7 +49,7 @@ export default function StorySection() {
                 <div className="w-full max-w-6xl mx-auto mb-4">
                     <SectionHeader
                         title="L'Histoire"
-                        label="// ARCHIVES_ROOT"
+                        label="// ARCHIVES_ISBE"
                         alignment="left"
                         className="mb-0"
                     />
@@ -62,11 +64,13 @@ export default function StorySection() {
                         viewport={{ once: true }}
                         className="w-2/3 sm:w-1/2 md:w-1/4 lg:w-1/5 mx-auto md:mx-0 flex-shrink-0"
                     >
-                        <div className="relative w-full aspect-[2/3] rounded-sm border border-white/10 overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] group h-full">
-                            <img
-                                src="/images/REAL_AFFICHE.jpg"
-                                alt="XoroX Rising Poster"
-                                className="absolute inset-0 w-full h-full object-cover object-top filter brightness-90 group-hover:brightness-110 transition-all duration-700 group-hover:scale-105"
+                        <div className="relative aspect-[2/3] w-full max-w-[340px] mx-auto rounded-none overflow-hidden group shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-white/10">
+                            <Image
+                                src="/assets/poster.png"
+                                alt="L'Artefact de la Vérité Affiche"
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                priority
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#010203] via-transparent to-transparent opacity-80" />
                             <div className="absolute inset-0 w-full h-[1px] bg-white/20 opacity-0 group-hover:opacity-50 blur-[1px] animate-scan-vertical pointer-events-none" />
@@ -80,8 +84,18 @@ export default function StorySection() {
                             initial={{ opacity: 0, x: 20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            whileHover={{ scale: 1.01, backgroundColor: "rgba(37, 209, 244, 0.04)" }}
-                            className="relative p-6 glass-panel border border-white/5 bg-teal-accent/[0.02] overflow-hidden group"
+                            whileHover={{ scale: 1.01, backgroundColor: "rgba(37, 209, 244, 0.08)" }}
+                            onHoverStart={() => hover()}
+                            onClick={() => {
+                                click();
+                                modalOpen();
+                                setStoryDetail({
+                                    title: "Synopsys // Entry_01",
+                                    label: "// ARCHIVES_INTEL",
+                                    content: storyData.summary.p1
+                                });
+                            }}
+                            className="relative p-6 glass-panel border border-white/20 bg-black/80 overflow-hidden group dynamic-shadow cursor-pointer"
                         >
                             {/* HUD Decorative Elements */}
                             <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-teal-accent/40 group-hover:border-teal-accent/80 transition-colors" />
@@ -93,11 +107,14 @@ export default function StorySection() {
                                     <Terminal size={12} className="text-teal-accent opacity-60" />
                                 </div>
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className="text-[8px] font-mono text-teal-accent/50 uppercase tracking-[0.3em]">Synopsys // Entry_01</span>
-                                        <div className="h-[1px] flex-1 bg-gradient-to-r from-teal-accent/20 to-transparent" />
+                                    <div className="flex items-center justify-between mb-2">
+                                        <div className="flex items-center gap-2 flex-1">
+                                            <span className="text-[8px] font-mono text-teal-accent/50 uppercase tracking-[0.3em]">Synopsys // Entry_01</span>
+                                            <div className="h-[1px] flex-1 bg-gradient-to-r from-teal-accent/20 to-transparent" />
+                                        </div>
+                                        <span className="text-[7px] font-mono text-teal-accent/0 group-hover:text-teal-accent/60 transition-all duration-300 ml-4 tracking-widest uppercase">Lire l&apos;archive →</span>
                                     </div>
-                                    <p className="text-white/90 text-[13px] md:text-sm lg:text-base font-light leading-relaxed tracking-wide text-left m-0">
+                                    <p className="text-white/90 text-[13px] md:text-sm lg:text-base font-light leading-relaxed tracking-wide text-left m-0 line-clamp-3 md:line-clamp-none">
                                         {storyData.summary.p1}
                                     </p>
                                 </div>
@@ -111,14 +128,25 @@ export default function StorySection() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.1 }}
-                                whileHover={{ scale: 1.02, backgroundColor: "rgba(37, 209, 244, 0.05)" }}
-                                className="p-5 glass-panel border border-white/5 border-l-2 border-l-teal-accent/40 bg-teal-accent/[0.01] relative group overflow-hidden flex flex-col justify-center"
+                                whileHover={{ scale: 1.02, backgroundColor: "rgba(37, 209, 244, 0.1)" }}
+                                onHoverStart={() => hover()}
+                                onClick={() => {
+                                    click();
+                                    modalOpen();
+                                    setStoryDetail({
+                                        title: "Mission Protocol",
+                                        label: "// OPS_DATALINK",
+                                        content: storyData.summary.p2
+                                    });
+                                }}
+                                className="p-5 glass-panel border border-white/20 border-l-2 border-l-teal-accent/60 bg-black/80 relative group overflow-hidden flex flex-col justify-center dynamic-shadow cursor-pointer"
                             >
                                 {/* Scanline Effect */}
                                 <div className="absolute inset-0 w-full h-full bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px] opacity-20 pointer-events-none" />
 
-                                <div className="absolute top-2 right-3 opacity-20 group-hover:opacity-50 transition-opacity">
-                                    <Users size={14} className="text-teal-accent" />
+                                <div className="absolute top-2 right-3 flex items-center gap-2">
+                                    <span className="text-[6px] font-mono text-teal-accent/0 group-hover:text-teal-accent/40 transition-all duration-300 tracking-widest uppercase">Détails</span>
+                                    <Users size={14} className="text-teal-accent opacity-20 group-hover:opacity-50" />
                                 </div>
 
                                 <div className="relative z-10">
@@ -126,7 +154,7 @@ export default function StorySection() {
                                         <div className="w-1.5 h-1.5 rounded-full bg-teal-accent/30 animate-pulse" />
                                         Mission Protocol
                                     </div>
-                                    <p className="text-[12px] md:text-[13px] text-white/80 font-light leading-relaxed text-left m-0">
+                                    <p className="text-[12px] md:text-[13px] text-white/80 font-light leading-relaxed text-left m-0 line-clamp-4">
                                         {storyData.summary.p2}
                                     </p>
                                 </div>
@@ -138,14 +166,25 @@ export default function StorySection() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.2 }}
-                                whileHover={{ scale: 1.02, backgroundColor: "rgba(127, 29, 29, 0.1)" }}
-                                className="p-5 glass-panel border border-white/5 border-l-2 border-l-red-500/30 bg-red-950/[0.03] relative group overflow-hidden flex flex-col justify-center"
+                                whileHover={{ scale: 1.02, backgroundColor: "rgba(127, 29, 29, 0.15)" }}
+                                onHoverStart={() => hover()}
+                                onClick={() => {
+                                    click();
+                                    modalOpen();
+                                    setStoryDetail({
+                                        title: "Threat Status: Critical",
+                                        label: "// SYSTEM_WARNING",
+                                        content: storyData.summary.p3
+                                    });
+                                }}
+                                className="p-5 glass-panel border border-white/20 border-l-2 border-l-red-500/60 bg-black/80 relative group overflow-hidden flex flex-col justify-center dynamic-shadow cursor-pointer"
                             >
                                 {/* Warning Glow */}
                                 <div className="absolute -right-4 -top-4 w-12 h-12 bg-red-500/5 blur-2xl rounded-full" />
 
-                                <div className="absolute top-2 right-3 opacity-20 group-hover:opacity-60 transition-opacity">
-                                    <Activity size={14} className="text-red-500 animate-pulse" />
+                                <div className="absolute top-2 right-3 flex items-center gap-2">
+                                    <span className="text-[6px] font-mono text-red-500/0 group-hover:text-red-500/40 transition-all duration-300 tracking-widest uppercase">Alerte</span>
+                                    <Activity size={14} className="text-red-500 opacity-20 group-hover:opacity-60 animate-pulse" />
                                 </div>
 
                                 <div className="relative z-10">
@@ -153,7 +192,7 @@ export default function StorySection() {
                                         <div className="w-1.5 h-1.5 rounded-full bg-red-500/40" />
                                         Threat Status: Critical
                                     </div>
-                                    <p className="text-[11px] md:text-[12px] text-red-200/60 font-mono leading-relaxed text-left m-0">
+                                    <p className="text-[11px] md:text-[12px] text-red-200/60 font-mono leading-relaxed text-left m-0 line-clamp-4">
                                         {storyData.summary.p3}
                                     </p>
                                 </div>
@@ -167,7 +206,7 @@ export default function StorySection() {
                     <div className="flex items-center gap-2 mb-3 border-b border-white/10 pb-1">
                         <Terminal size={12} className="text-teal-accent" />
                         <span className="text-[9px] font-mono text-teal-accent/80 uppercase tracking-[0.3em]">
-                            Chronologie Dossier
+                            CHRONOLOGIE IS-BE
                         </span>
                     </div>
 
@@ -183,7 +222,7 @@ export default function StorySection() {
                                     whileTap={{ scale: 0.98 }}
                                     onHoverStart={() => hover()}
                                     onClick={() => openModal(i)}
-                                    className={`relative flex flex-col w-full h-32 md:h-36 group cursor-pointer rounded-none overflow-hidden border border-white/5 bg-[#020304] hover:bg-[#030608] hover:border-[${color}]/[0.3] transition-all duration-500`}
+                                    className={`relative flex flex-col w-full h-32 md:h-36 group cursor-pointer rounded-none overflow-hidden border border-white/10 bg-black/70 hover:bg-black/90 hover:border-[${color}]/[0.5] transition-all duration-500 dynamic-shadow`}
                                 >
                                     {/* Geometric Corners */}
                                     <div className="absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none" style={{ borderColor: color }} />
@@ -216,7 +255,7 @@ export default function StorySection() {
                                                     {label} {"//"} 0{i + 1}
                                                 </span>
                                             </div>
-                                            <h3 className="text-sm font-medium uppercase text-white/90 group-hover:text-white tracking-widest leading-none transition-colors duration-300 border-l-2 pl-2" style={{ borderColor: color }}>
+                                            <h3 className="text-sm font-light uppercase text-white/90 group-hover:text-white tracking-widest leading-none transition-colors duration-300 border-l-2 pl-2" style={{ borderColor: color }}>
                                                 {actTitle}
                                             </h3>
                                             <div className="h-px w-full mt-3" style={{ background: `linear-gradient(to right, ${color}, transparent)` }} />
@@ -237,7 +276,7 @@ export default function StorySection() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={closeModal}
-                        className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
+                        className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
                     >
                         {/* Global HUD Layer for Modal */}
                         <div className="absolute inset-0 pointer-events-none opacity-[0.05] z-[101] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
@@ -248,8 +287,11 @@ export default function StorySection() {
                             exit={{ y: 20, opacity: 0, scale: 0.98 }}
                             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[75vh] bg-[#010203] border rounded-sm overflow-hidden flex flex-col md:flex-row relative cursor-default"
-                            style={{ borderColor: `${getActTheme(activeModal).color}25`, boxShadow: `0 0 120px rgba(0,0,0,1), inset 0 0 20px ${getActTheme(activeModal).color}05` }}
+                            className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[75vh] bg-black/60 backdrop-blur-3xl border rounded-sm overflow-hidden flex flex-col md:flex-row relative cursor-default"
+                            style={{
+                                borderColor: `${getActTheme(activeModal).color}33`,
+                                boxShadow: `calc(var(--mx) * -15px) calc(var(--my) * -15px) 60px rgba(0,0,0,0.8), inset 0 0 40px ${getActTheme(activeModal).color}10`
+                            }}
                         >
                             {/* Visual Interface Column - 60% */}
                             <div className="w-full md:w-[60%] relative flex flex-col bg-[#050608] border-r" style={{ borderColor: `${getActTheme(activeModal).color}10` }}>
@@ -399,6 +441,56 @@ export default function StorySection() {
             </AnimatePresence>
 
 
+            {/* ===== STORY DETAIL MODAL (TRANSPARENT) ===== */}
+            <AnimatePresence>
+                {storyDetail !== null && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => { modalClose(); setStoryDetail(null); }}
+                        className="fixed inset-0 z-[110] bg-black/60 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
+                    >
+                        <motion.div
+                            initial={{ y: 30, opacity: 0, scale: 0.95 }}
+                            animate={{ y: 0, opacity: 1, scale: 1 }}
+                            exit={{ y: 20, opacity: 0, scale: 0.95 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-full max-w-2xl bg-black/80 backdrop-blur-3xl border border-teal-accent/50 rounded-sm p-8 md:p-12 relative cursor-default dynamic-shadow-lg"
+                        >
+                            <button
+                                onClick={() => { modalClose(); setStoryDetail(null); }}
+                                className="absolute top-6 right-6 text-white/20 hover:text-teal-accent transition-colors"
+                            >
+                                <X size={24} />
+                            </button>
+
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-px w-8 bg-teal-accent/50" />
+                                    <span className="text-[10px] font-mono text-teal-accent uppercase tracking-[0.5em]">{storyDetail.label}</span>
+                                </div>
+
+                                <h2 className="text-4xl md:text-5xl font-light uppercase tracking-tighter text-white">
+                                    {storyDetail.title}
+                                </h2>
+
+                                <div className="prose prose-invert prose-lg max-w-none">
+                                    <p className="text-white/80 font-light leading-relaxed text-lg">
+                                        {storyDetail.content}
+                                    </p>
+                                </div>
+
+                                <div className="pt-8 border-t border-white/10">
+                                    <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest">
+                                        End of Log // Level 4 Clearance
+                                    </span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }

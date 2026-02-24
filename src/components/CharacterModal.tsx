@@ -16,9 +16,11 @@ export default function CharacterModal({
     const [activeIndex, setActiveIndex] = useState(0);
     const videoRef = useRef<HTMLVideoElement>(null);
 
-    // Reset index when character changes
     useEffect(() => {
-        setActiveIndex(0);
+        const timer = requestAnimationFrame(() => {
+            setActiveIndex(0);
+        });
+        return () => cancelAnimationFrame(timer);
     }, [character?.name]);
 
     const mediaList = useMemo(() => {
@@ -68,7 +70,7 @@ export default function CharacterModal({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={onClose}
-                className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
+                className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 cursor-pointer"
             >
                 {/* Global HUD Layer */}
                 <div className="absolute inset-0 pointer-events-none opacity-[0.05] z-[101] bg-[length:100%_2px,3px_100%]" style={{ backgroundImage: `linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%), linear-gradient(90deg, ${themeColor}10, transparent, transparent)` }} />
@@ -79,8 +81,11 @@ export default function CharacterModal({
                     exit={{ y: 20, opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     onClick={(e) => e.stopPropagation()}
-                    className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[75vh] bg-[#010203] border rounded-sm overflow-hidden flex flex-col md:flex-row relative cursor-default"
-                    style={{ borderColor: `${themeColor}25`, boxShadow: `0 0 120px rgba(0,0,0,1), inset 0 0 20px ${themeColor}05` }}
+                    className="w-full max-w-[1400px] max-h-[90vh] md:max-h-[75vh] bg-black/60 backdrop-blur-3xl border rounded-sm overflow-hidden flex flex-col md:flex-row relative cursor-default"
+                    style={{
+                        borderColor: `${themeColor}33`,
+                        boxShadow: `calc(var(--mx) * -15px) calc(var(--my) * -15px) 60px rgba(0,0,0,0.8), inset 0 0 40px ${themeColor}10`
+                    }}
                 >
                     {/* Visual Interface Column - 60% Width for Cinematic focus */}
                     <div className="w-full md:w-[60%] relative flex flex-col bg-[#050608] border-r" style={{ borderColor: `${themeColor}10` }}>
@@ -212,7 +217,7 @@ export default function CharacterModal({
                                 </motion.h2>
                                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex items-center gap-3 pt-4">
                                     <div className="px-2 py-1 border rounded-sm flex items-center justify-center" style={{ backgroundColor: `${themeColor}1a`, borderColor: `${themeColor}33` }}>
-                                        <span className="text-[10px] font-mono uppercase tracking-widest font-medium leading-none translate-y-[1px]" style={{ color: themeColor }}>{character.role}</span>
+                                        <span className="text-[10px] font-mono uppercase tracking-widest font-light leading-none translate-y-[1px]" style={{ color: themeColor }}>{character.role}</span>
                                     </div>
                                     <div className="h-[1px] flex-1" style={{ backgroundImage: `linear-gradient(to right, ${themeColor}66, transparent)` }} />
                                 </motion.div>
@@ -225,7 +230,7 @@ export default function CharacterModal({
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 opacity-30">
                                     <Database size={12} style={{ color: themeColor }} />
-                                    <h4 className="text-[9px] font-medium tracking-[0.3em] uppercase text-white">DONNÉES_RÉPERTORIÉES</h4>
+                                    <h4 className="text-[9px] font-light tracking-[0.3em] uppercase text-white">DONNÉES_RÉPERTORIÉES</h4>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-3">
@@ -251,13 +256,13 @@ export default function CharacterModal({
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 opacity-30">
                                     <Terminal size={12} style={{ color: themeColor }} />
-                                    <h4 className="text-[9px] font-medium tracking-[0.3em] uppercase text-white">SYNTHÈSE_COMPORTEMENTALE</h4>
+                                    <h4 className="text-[9px] font-light tracking-[0.3em] uppercase text-white">SYNTHÈSE_COMPORTEMENTALE</h4>
                                 </div>
 
                                 <div className="relative p-6 bg-white/[0.015] border border-white/5 rounded-sm group/essay">
                                     <div className="absolute top-0 left-0 w-[2px] h-6" style={{ backgroundColor: `${themeColor}66` }} />
                                     <blockquote className="text-base text-white/70 leading-relaxed italic font-light">
-                                    &ldquo;{character.inspiration}&rdquo;
+                                        &ldquo;{character.inspiration}&rdquo;
                                     </blockquote>
                                 </div>
                             </div>

@@ -106,7 +106,7 @@ export default function Hero() {
     }, [videoIndices]);
 
     return (
-        <section ref={containerRef} className="relative w-full h-screen overflow-hidden bg-black flex flex-col justify-end items-center pb-16">
+        <section ref={containerRef} id="hero" className="relative w-full h-screen overflow-hidden bg-black flex flex-col justify-end items-center pb-16">
 
             {/* Background Video Cover */}
             <motion.div

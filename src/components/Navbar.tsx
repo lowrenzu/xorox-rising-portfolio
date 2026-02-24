@@ -100,6 +100,45 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Dynamic background colors based on section
+    useEffect(() => {
+        const root = document.documentElement;
+
+        const palettes = {
+            "#": {
+                c1: "rgba(37, 209, 244, 0.4)", // Teal
+                c2: "rgba(168, 85, 247, 0.45)", // Purple
+                c3: "rgba(245, 176, 65, 0.4)"  // Gold
+            },
+            "#factions": {
+                c1: "rgba(168, 85, 247, 0.4)", // Purple
+                c2: "rgba(239, 68, 68, 0.35)",  // Red
+                c3: "rgba(37, 209, 244, 0.3)"  // Teal
+            },
+            "#story": {
+                c1: "rgba(30, 64, 175, 0.45)", // Dark Blue
+                c2: "rgba(37, 209, 244, 0.35)", // Teal
+                c3: "rgba(168, 85, 247, 0.3)"  // Purple
+            },
+            "#creation": {
+                c1: "rgba(245, 176, 65, 0.45)", // Gold
+                c2: "rgba(220, 38, 38, 0.35)",  // Crimson
+                c3: "rgba(168, 85, 247, 0.3)"  // Purple
+            },
+            "#media": {
+                c1: "rgba(37, 209, 244, 0.4)", // Teal
+                c2: "rgba(168, 85, 247, 0.45)", // Purple
+                c3: "rgba(30, 64, 175, 0.4)"  // Dark Blue
+            }
+        };
+
+        const active = palettes[activeSection as keyof typeof palettes] || palettes["#"];
+
+        root.style.setProperty("--c1", active.c1);
+        root.style.setProperty("--c2", active.c2);
+        root.style.setProperty("--c3", active.c3);
+    }, [activeSection]);
+
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
         setIsMenuOpen(false); // Close mobile menu if open
@@ -118,13 +157,13 @@ export default function Navbar() {
     return (
         <>
             {/* Mobile Hamburger Button */}
-            <div className="md:hidden fixed top-6 right-6 z-[110] flex items-center gap-4">
+            <div className="md:hidden fixed bottom-8 right-6 z-[130] flex items-center gap-4">
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="p-3 bg-black/80 backdrop-blur-xl border border-white/10 rounded-full text-teal-accent hover:border-teal-accent/50 transition-all shadow-2xl"
+                    className="p-4 bg-black/80 backdrop-blur-xl border border-teal-accent/30 rounded-full text-teal-accent hover:border-teal-accent/50 transition-all shadow-[0_0_20px_rgba(37,209,244,0.3)] active:scale-90"
                     aria-label="Toggle menu"
                 >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
                 </button>
             </div>
 
